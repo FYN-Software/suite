@@ -1,0 +1,21 @@
+{
+    "name": "@fyn-software/suite",
+    "description": "FYN Component Suite",
+    "version": "0.0.1",
+    "main": "grammer.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/FYN-Software/suite"
+    },
+    "keywords": [],
+    "author": "Chris Kruining",
+    "license": "BSD",
+    "bugs": {
+        "url": "https://github.com/FYN-Software/suite/issues"
+    },
+    "homepage": "https://github.com/FYN-Software/suite",
+    "publishConfig": {
+        "access": "public"
+    }
+}
