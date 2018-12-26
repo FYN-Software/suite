@@ -1,0 +1,129 @@
+<style>
+    :host {
+        display: grid;
+        grid-gap: 1em;
+        align-content: start;
+        grid-template-rows: auto 1fr auto;
+        position: fixed;
+        padding: 1em;
+        margin: 0;
+        border: none;
+        box-shadow: 0 0 1em #0007;
+        background-color: #333;
+        color: #eee;
+        opacity: 0;
+        pointer-events: none;
+        width: 60vw;
+        height: auto;
+        max-height: 90vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        z-index: 1000;
+        border-radius: var(--radius);
+    }
+    
+    :host([open]) {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    :host > handlers {
+        z-index: -1;
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        background: transparent;
+    }
+    
+    :host > handlers > handler                 { display: block; position: absolute; background: inherit; }
+    :host > handlers > handler:nth-child(odd)  {                       width: 5px;                 height: 5px; }
+    :host > handlers > handler:nth-child(3)    { top: 0;    left: 0;                                                           cursor: nwse-resize; }
+    :host > handlers > handler:nth-child(5)    { top: 0;    right: 0;                                                          cursor: nesw-resize; }
+    :host > handlers > handler:nth-child(7)    { bottom: 0; right: 0;                                                          cursor: nwse-resize; }
+    :host > handlers > handler:nth-child(1)    { bottom: 0; left: 0;                                                           cursor: nesw-resize; }
+    :host > handlers > handler:nth-child(4)    { top: 0;    left: 5px; width: calc(100% - 10px);   height: 5px;                cursor: ns-resize; }
+    :host > handlers > handler:nth-child(6)    { top: 5px;  right: 0;  width: 5px;                 height: calc(100% - 10px);  cursor: ew-resize; }
+    :host > handlers > handler:nth-child(8)    { bottom: 0; left: 5px; width: calc(100% - 10px);   height: 5px;                cursor: ns-resize; }
+    :host > handlers > handler:nth-child(2)    { top: 5px;  left: 0;   width: 5px;                 height: calc(100% - 10px);  cursor: ew-resize; }
+    
+    :host > *:not(style) {
+        display: grid;
+    }
+    
+    :host > header {
+        width: 100%;
+    }
+    
+    :host > header h1 {
+        margin: -.4em;
+        margin-bottom: 0;
+        padding: 0 .5em;
+        
+        background-color: inherit;
+        color: inherit;
+        
+        height: 2em;
+        min-height: 2em;
+        
+        line-height: 2em;
+        font-size: 2.5em;
+        text-transform: uppercase;
+        font-weight: 900;
+    }
+    
+    :host > header h1 span {
+        display: block;
+        
+        width: 100%;
+        height: 100%;
+        
+        margin: 0;
+        padding: 0;
+        
+        font-size: 1em;
+        color: inherit;
+        
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    
+    :host > article {
+        overflow-y: auto;
+    }
+    
+    :host > footer {
+        justify-content: end;
+    }
+</style>
+
+<handlers if="{{ resizable }}">
+    <handler corner="bottom-left"></handler>
+    <handler side="left"></handler>
+    <handler corner="top-left"></handler>
+    <handler side="top"></handler>
+    <handler corner="top-right"></handler>
+    <handler side="right"></handler>
+    <handler corner="bottom-right"></handler>
+    <handler side="bottom"></handler>
+</handlers>
+
+<header>
+    <h1 if="{{ title.length > 0 }}"><span>{{ title }}</span></h1>
+    
+    <fyn-common-graphics-image src="{{ img }}" if="{{ img.length > 0 }}"></fyn-common-graphics-image>
+    
+    <slot name="header"></slot>
+</header>
+
+<article>
+    <slot></slot>
+</article>
+
+<footer>
+    <slot name="footer"></slot>
+</footer>

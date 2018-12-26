@@ -1,0 +1,161 @@
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid-template-rows: auto 1fr;
+    }
+
+    #bar {
+        border-bottom: 1px solid #fff2;
+    }
+
+    #bar > tab {
+        display: grid;
+        grid-auto-flow: column;
+        background-color: transparent;
+        border-radius: var(--radius) var(--radius) 0 0;
+        padding: .5em 1em;
+        user-select: none;
+        cursor: pointer;
+        transition: .3s background-color ease-in-out;
+    }
+
+    #bar > tab:only-child {
+        width: 100%;
+    }
+
+    #bar > tab:not(:only-child):hover {
+        background-color: #fff1;
+    }
+
+    #bar > tab:not(:only-child)[active] {
+        background-color: #fff2;
+    }
+    
+    content {
+        position: relative;
+        display: grid;
+        grid-auto-rows: 100%;
+        grid-auto-columns: 100%;
+    }
+    
+    content > slot::slotted(*) {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    content > slot::slotted(*[active]) {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    :host > overlay {
+        display: grid;
+        grid: 1fr repeat(3, 3em) 1fr / 1fr repeat(3, 3em) 1fr;
+        grid-gap: .5em;
+        grid-template-areas:
+            '. . static-top . .'
+            '. . top . .'
+            'static-left left center right static-right'
+            '. . bottom . . '
+            '. . static-bottom . . '
+        ;
+        align-content: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+    }
+
+    :host > overlay > block {
+        position: relative;
+        display: block;
+        background-color: #fff1;
+        border-radius: var(--radius);
+        box-shadow: 0 0 1em #0003;
+    }
+
+    :host > overlay > block[hovering] {
+        background-color: var(--info);
+    }
+
+    :host > overlay > [top] { grid-area: top; }
+    :host > overlay > [left] { grid-area: left; }
+    :host > overlay > [center] { grid-area: center; }
+    :host > overlay > [right] { grid-area: right; }
+    :host > overlay > [bottom] { grid-area: bottom; }
+
+    :host > overlay > [static] {
+        --size: 1.5em;
+    }
+    :host > overlay > [static][top] {
+        grid-area: static-top;
+        width: calc(var(--size) * 2);
+        height: var(--size);
+    }
+    :host > overlay > [static][left] {
+        grid-area: static-left;
+        width: var(--size);
+        height: calc(var(--size) * 2);
+    }
+    :host > overlay > [static][right] {
+        grid-area: static-right;
+        justify-self: end;
+        width: var(--size);
+        height: calc(var(--size) * 2);
+    }
+    :host > overlay > [static][bottom] {
+        grid-area: static-bottom;
+        align-self: end;
+        width: calc(var(--size) * 2);
+        height: var(--size);
+    }
+
+    :host > placeholder {
+        --x: 0;
+        --y: 0;
+        --w: 0;
+        --h: 0;
+        display: block;
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        width: var(--w);
+        height: var(--h);
+        background-color: var(--info);
+        opacity: .2;
+        box-shadow: 0 0 1em #0003;
+        z-index: 9;
+        transition: .3s ease-out .1s;
+        box-sizing: border-box;
+    }
+</style>
+
+<fyn-common-layout-list horizontal sortable id="bar"></fyn-common-layout-list>
+
+<content>
+    <slot></slot>
+</content>
+
+<overlay hidden>
+    <block top></block>
+    <block left></block>
+    <block center></block>
+    <block right></block>
+    <block bottom></block>
+    
+    <block static top></block>
+    <block static left></block>
+    <block static right></block>
+    <block static bottom></block>
+</overlay>
+
+<placeholder hidden>
+</placeholder>

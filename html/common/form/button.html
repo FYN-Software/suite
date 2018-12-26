@@ -1,0 +1,151 @@
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+<style>
+    :host {
+        position: relative;
+        display: grid;
+        grid-template-areas: 'icon';
+        grid-auto-flow: column;
+        grid-gap: .5em;
+        padding: .25em 1em;
+        background-color: #fff1;
+        color: inherit;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        line-height: 2em;
+        font-family: inherit;
+        font-size: 1em;
+        user-select: none;
+    }
+
+    :host([icon-after]) {
+        grid-template-areas: '. icon';
+    }
+
+    :host([flat]) {
+        background-color: transparent;
+    }
+    
+    :host > * {
+        pointer-events: none;
+    }
+    
+    :host > fyn-common-graphics-icon {
+        width: 1em !important;
+    }
+    
+    :host > fyn-common-graphics-icon[main] {
+        grid-area: icon;
+    }
+    
+    :host > slot::slotted(*) {
+        width: 1em;
+    }
+    
+    :host > options {
+        --bg: #333;
+        --spacing: .5em;
+        display: grid;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: var(--spacing);
+        background-color: var(--bg);
+        box-shadow: 0 0 1em #0003;
+        border-radius: var(--radius);
+        opacity: 0;
+        transition: .3s opacity ease-in-out;
+    }
+    
+    :host([multi][open]) > options {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    :host > options::before {
+        --size: .75em;
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 100%;
+        left: 2em;
+        transform: translateX(-50%);
+        border-left: var(--size) solid transparent;
+        border-right: var(--size) solid transparent;
+        border-bottom: var(--size) solid var(--bg);
+    }
+
+    :host > options > slot::slotted(*) {
+        border-radius: var(--radius);
+        padding: calc(var(--spacing) / 2) var(--spacing);
+    }
+
+    :host > options > slot::slotted(*:hover) {
+        background-color: #fff1;
+    }
+    
+    :host > ripple {
+        --size: 10em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+    }
+    
+    :host > ripple > inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        opacity: 0;
+        pointer-events: none;
+        background-color: #0003;
+        transform-origin: center center;
+    }
+    
+    :host([click]) > ripple > inner {
+        animation: ripple 1s ease-out forwards;
+    }
+    
+    :host(:focus) {
+        outline: none;
+    }
+    
+    :host(:disabled) {
+        opacity: .25;
+    }
+    
+    @keyframes ripple {
+        0% {
+            opacity: 1;
+            transform: scale(0.1);
+        }
+        80% {
+            opacity: 0;
+        }
+        100% {
+            transform: scale(5);
+        }
+    }
+</style>
+
+<ripple><inner></inner></ripple>
+
+<fyn-common-graphics-icon main icons="{{ icons }}" if="{{ icons.length > 0 }}"></fyn-common-graphics-icon>
+
+<slot></slot>
+
+<fyn-common-graphics-icon icons="caret-down" if="{{ multi }}"></fyn-common-graphics-icon>
+
+<options if="{{ multi }}">
+    <slot name="options"></slot>
+</options>

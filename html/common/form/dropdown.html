@@ -1,0 +1,93 @@
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid: auto 2.5em / 1fr;
+        position: relative;
+        color: inherit;
+        font-size: 1rem;
+        transition: box-shadow .15s;
+    }
+
+    :host([invalid]) {
+        border: 1px solid var(--failure);
+    }
+
+    :host > label {
+        font-size: .75em;
+        padding-bottom: .5em;
+    }
+
+    :host > fyn-common-form-button {
+        justify-content: space-between;
+    }
+
+    :host > fyn-common-form-button > :last-child {
+        justify-self: end;
+    }
+
+    :host > options {
+        display: none;
+        position: absolute;
+        width: auto;
+        min-width: 100%;
+        top: 100%;
+        background-color: #fff3;
+        padding: .5em 0;
+        z-index: 2;
+        border-radius: 0 0 var(--radius) var(--radius);
+        backdrop-filter: blur(5px);
+    }
+
+    :host > options > * {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: start;
+        margin: 0 -1px;
+        padding: 0 1em;
+        line-height: 2.5em;
+        min-height: 2.5em;
+        cursor: pointer;
+        background-color: transparent;
+    }
+
+    :host > options > *:hover,
+    :host > options > [selected] {
+        background-color: rgba(var(--info), .25);
+    }
+
+    :host > options > *[disabled] {
+        opacity: .6;
+        pointer-events: none;
+        color: inherit;
+    }
+
+    :host([open]) {
+        border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    :host([open]) > options {
+        display: grid;
+    }
+</style>
+
+<label if="{{ label.length > 0 }}">{{ label }}</label>
+
+<fyn-software:common-form-button tabindex="0">
+    <slot if="{{ index === -1 }}">t_select</slot>
+
+    <fyn-common-graphics-flag iso="{{ options[index].flag }}" if="{{ options[index].flag.length > 0 }}"></fyn-common-graphics-flag>
+
+    <fyn-common-graphics-icon icons="{{ options[index].icons }}" if="{{ options[index].icons.length > 0 }}"></fyn-common-graphics-icon>
+
+    <span>{{ options[index].text }}</span>
+
+    <fyn-common-graphics-icon icons="caret-down"></fyn-common-graphics-icon>
+</fyn-software:common-form-button>
+
+<options for="{{ option in options }}">
+    <fyn-common-graphics-flag iso="{{ option.flag }}" if="{{ option.flag.length > 0 }}"></fyn-common-graphics-flag>
+    <fyn-common-graphics-icon icons="{{ option.icons }}" if="{{ option.icons.length > 0 }}"></fyn-common-graphics-icon>
+    <span>{{ option.value }}</span>
+</options>

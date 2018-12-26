@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+<style>
+    :host {
+        display: block;
+        overflow: hidden;
+    }
+    
+    :host > hidden {
+        display: none;
+    }
+    
+    :host > content {
+        display: grid;
+        grid-auto-flow: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    :host > content > * {
+        position: relative;
+    }
+    
+    :host > content[mode="__vertical__"] {
+        grid-auto-flow: column;
+    }
+
+    :host > content[mode="__vertical__"] > *:last-child {
+        justify-self: stretch;
+    }
+    
+    :host > content[mode="__horizontal__"] {
+        grid-auto-flow: row;
+    }
+
+    :host > content[mode="__horizontal__"] > *:last-child {
+        align-self: stretch;
+    }
+</style>
+
+<hidden>
+    <slot></slot>
+</hidden>
+
+<content mode="{{ mode }}">
+</content>

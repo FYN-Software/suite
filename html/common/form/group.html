@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: .5em;
+    }
+    
+    :host([combined]) {
+        grid-gap: 0;
+    }
+    
+    :host([combined]) > slot::slotted(*) {
+        border-radius: 0;
+    }
+    
+    :host([combined]) > slot::slotted(*:first-child) {
+        border-radius: var(--radius) 0 0 var(--radius);
+    }
+    
+    :host([combined]) > slot::slotted(*:last-child) {
+        border-radius: 0 var(--radius) var(--radius) 0;
+    }
+</style>
+
+<slot></slot>
