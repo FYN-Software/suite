@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Fyn from '/js/fyn.js';
+import * as Fyn from '/component/fyn.js';
 
 export default class Button extends Fyn.Component
 {
