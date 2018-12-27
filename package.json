@@ -1,7 +1,7 @@
 {
     "name": "@fyn-software/suite",
     "description": "FYN Component Suite",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "grammer.js",
     "scripts": {},
     "repository": {
