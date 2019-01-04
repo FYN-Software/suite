@@ -1,18 +1,18 @@
 <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
 
 <style>
     @import url('https://unpkg.com/ag-grid/dist/styles/ag-grid.css');
     @import url('https://unpkg.com/ag-grid/dist/styles/ag-theme-material.css');
-    
+
     :host {
         display: grid;
         grid-template-rows: auto 1fr;
         grid-gap: 1em;
         border-radius: var(--radius);
     }
-    
+
     :host > bar {
         display: grid;
         grid-gap: 1em;
@@ -21,67 +21,67 @@
         border-radius: inherit;
         margin-top: 1em;
     }
-    
+
     :host > bar > fyn-common-form-input {
         margin-top: 0;
     }
-    
+
     :host > ag-grid {
         width: 100%;
         height: 100%;
         border-radius: inherit;
     }
-    
+
     :host > .ag-theme-material {
         background-color: #fff1;
         color: inherit;
         font: inherit;
     }
-    
+
     :host > .ag-theme-material .ag-header {
         color: inherit;
         font: inherit;
         font-weight: bold;
     }
-    
+
     :host > .ag-theme-material .ag-row-hover {
         background-color: #fff1;
     }
-    
+
     :host > .ag-theme-material .ag-row-selected {
         background-color: #fff3;
     }
-    
+
     :host > .ag-theme-material .ag-row-focus {
         z-index: 10;
     }
-    
+
     :host > .ag-theme-material .ag-ltr .ag-cell {
         display: grid;
         justify-content: stretch;
         align-content: center;
     }
-    
+
     :host > .ag-theme-material .ag-ltr .ag-cell-focus {
         border-color: #5bc0de;
     }
-    
+
     :host > .ag-theme-material .ag-icon {
         filter: invert(100%);
     }
-    
+
     :host > .ag-theme-material .ag-cell-inline-editing {
         padding: .75em 23px;
         height: 100%;
         background-color: #fff3;
     }
-    
+
     :host > .ag-theme-material .ag-cell-inline-editing input {
         border: none !important;
         color: inherit !important;
         padding: 0 !important;
     }
-    
+
     :host > .ag-theme-material .ag-overlay-loading-wrapper {
         background-color: transparent;
     }
@@ -89,9 +89,9 @@
 
 <bar>
     <fyn-common-form-input id="filter" name="grid-filter" label="t_search"></fyn-common-form-input>
-    
+
     <fyn-common-form-button if="{{ editable === true }}" icons="plus" role="add" tooltip="t_new"></fyn-common-form-button>
-    
+
     <fyn-common-form-button if="{{ editable === true }}" icons="trash" role="delete" tooltip="t_delete"></fyn-common-form-button>
 </bar>
 
@@ -101,13 +101,13 @@
     <fyn-common-overlay-dialog id="deleteRowsDialog">
         <fyn-common-form-form name="deleteRowsForm">
             are you sure you want to permanently delete the following keys?
-            
+
             <ul for="{{ i in selection }}">
                 <li no-translate>{{ i }}</li>
             </ul>
-            
+
             <fyn-common-form-button role="cancel" slot="buttons">t_cancel</fyn-common-form-button>
-            
+
             <fyn-common-form-button role="submit" slot="buttons">t_submit</fyn-common-form-button>
         </fyn-common-form-form>
     </fyn-common-overlay-dialog>

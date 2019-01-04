@@ -1,0 +1,84 @@
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
+
+<style>
+    :host {
+        --bg: #fff1;
+        --vc: var(--info);
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-gap: 1em .5em;
+        justify-content: space-between;
+        contain: content;
+        padding: .5em;
+    }
+
+    :host > label {
+        grid-column: span 2;
+        font-size: .75em;
+    }
+
+    :host > box {
+        --w: 0%;
+        grid-column: span 2;
+        display: block;
+        position: relative;
+        width: 100%;
+        height: .5em;
+        align-self: center;
+        background: var(--bg);
+        border-radius: var(--radius);
+    }
+
+    :host > box > value {
+        display: block;
+        position: absolute;
+        width: var(--w);
+        height: 100%;
+        background: var(--vc);
+        border-radius: inherit;
+    }
+
+    :host > box > handle {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: var(--w);
+        width: 1em;
+        height: 1em;
+        background-color: #eee;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+    }
+
+    :host > span:last-of-type {
+        text-align: right;
+    }
+
+    :host([vertical]) > box {
+        width: .5em;
+        height: 100%;
+    }
+
+    :host([vertical]) > box > value {
+        width: 100%;
+        height: var(--w);
+    }
+
+    :host([vertical]) > box > handle {
+        top: var(--w);
+        left: 50%;
+    }
+</style>
+
+<label if="{{ label.length > 0 }}">{{ label }}</label>
+
+<box>
+    <value></value>
+
+    <handle></handle>
+</box>
+
+<span if="{{ showPercentage }}">{{ (_percentVal * 100).toFixed(1) }}%</span>
+
+<span if="{{ showValue }}">{{ (value).toFixed(1) }}</span>

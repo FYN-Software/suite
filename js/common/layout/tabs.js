@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Fyn from '/js/fyn.js';
+import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 
 export default class Tabs extends Fyn.Component
 {
@@ -38,6 +38,12 @@ export default class Tabs extends Fyn.Component
             },
         });
 
+        this.on('#bar', {
+            wheel: (e, t) => {
+                t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25;
+            },
+        });
+
         this.on('#bar > tab', {
             click: (e, t) => {
                 this.index = t.index();
@@ -70,7 +76,6 @@ export default class Tabs extends Fyn.Component
             },
         });
 
-        let preview;
         const content = this.shadow.querySelector('content');
         const overlay = this.shadow.querySelector('overlay');
         const placeholder = this.shadow.querySelector('placeholder');
@@ -80,14 +85,16 @@ export default class Tabs extends Fyn.Component
                 window.dragTarget = this.shadow.querySelector('content > slot').assignedElements()[e.path[0].index()];
                 window.dragSource = this;
 
-                preview = document.createElement('drag-preview');
-                preview.appendChild(
+                console.log(e);
+
+                window.dragPreview = document.createElement('drag-preview');
+                window.dragPreview.appendChild(
                     window.dragTarget
                         .cloneNode(true)
                         .cloneStyle(window.dragTarget, [ 'color', 'background-color' ])
                 );
 
-                document.body.appendChild(preview);
+                document.body.appendChild(window.dragPreview);
 
                 e.dataTransfer.setDragImage(new Image(), 0, 0);
                 e.dataTransfer.effectAllowed = 'move';
@@ -112,13 +119,13 @@ export default class Tabs extends Fyn.Component
         // overlay & placeholder
         document.body.on({
             dragover: e => {
-                if(preview === undefined)
+                if(window.dragPreview === undefined)
                 {
                     return;
                 }
 
-                preview.style.setProperty('--x', `${e.pageX}px`);
-                preview.style.setProperty('--y', `${e.pageY}px`);
+                window.dragPreview.style.setProperty('--x', `${e.pageX}px`);
+                window.dragPreview.style.setProperty('--y', `${e.pageY}px`);
 
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'move';
@@ -135,22 +142,22 @@ export default class Tabs extends Fyn.Component
                 placeholder.style.setProperty('--w', `0`);
                 placeholder.style.setProperty('--h', `0`);
 
-                if(preview === undefined)
+                if(window.dragPreview === undefined)
                 {
                     return;
                 }
 
-                preview.remove();
-                preview = undefined;
+                window.dragPreview.remove();
+                window.dragPreview = undefined;
             },
             dragleave: (e, t) => {
-                if(preview === undefined)
+                if(window.dragPreview === undefined)
                 {
                     return;
                 }
 
-                preview.style.setProperty('--x', `0px`);
-                preview.style.setProperty('--y', `0px`);
+                window.dragPreview.style.setProperty('--x', `0px`);
+                window.dragPreview.style.setProperty('--y', `0px`);
 
                 e.dataTransfer.setDragImage(preview, 0, 0);
 
@@ -243,6 +250,14 @@ export default class Tabs extends Fyn.Component
 
                 window.dragTarget = undefined;
                 window.dragSource = undefined;
+
+                if(window.dragPreview === undefined)
+                {
+                    return;
+                }
+
+                window.dragPreview.remove();
+                window.dragPreview = undefined;
             }),
         });
     }

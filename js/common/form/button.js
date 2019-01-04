@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Fyn from '/component/fyn.js';
+import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 
 export default class Button extends Fyn.Component
 {
@@ -9,6 +9,7 @@ export default class Button extends Fyn.Component
         return {
             icons: [],
             role: '',
+            action: '',
             tooltip: '',
             multi: false,
         };
@@ -44,11 +45,20 @@ export default class Button extends Fyn.Component
                     this.setAttribute('click', '');
                 }, 1);
 
-                this.emit('click', e);
-
                 if(this.multi === true)
                 {
+                    const c = Array.from(this.children).find(c => e.path.includes(c));
+
                     this.attributes.toggle('open');
+
+                    if(c !== undefined)
+                    {
+                        this.emit('click', { previous: e, action: c.getAttribute('action') || this.action });
+                    }
+                }
+                else
+                {
+                    this.emit('click', { previous: e, action: this.action });
                 }
             },
         });

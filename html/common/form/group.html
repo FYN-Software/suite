@@ -1,27 +1,51 @@
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
 
 <style>
     :host {
         display: grid;
+        grid-gap: .25em .5em;
+    }
+
+    :host > label {
+        font-size: .75em;
+    }
+
+    :host > inner {
+        display: grid;
         grid-auto-flow: column;
-        grid-gap: .5em;
     }
-    
+
     :host([combined]) {
-        grid-gap: 0;
+        grid-column-gap: 0;
     }
-    
-    :host([combined]) > slot::slotted(*) {
+
+    :host([combined][separators]) {
+        grid-column-gap: 1px;
+    }
+
+    :host([start]) {
+        justify-content: start;
+    }
+
+    :host([end]) {
+        justify-content: end;
+    }
+
+    :host([combined]) slot::slotted(*) {
         border-radius: 0;
     }
-    
-    :host([combined]) > slot::slotted(*:first-child) {
+
+    :host([combined]) slot::slotted(*:first-child) {
         border-radius: var(--radius) 0 0 var(--radius);
     }
-    
-    :host([combined]) > slot::slotted(*:last-child) {
+
+    :host([combined]) slot::slotted(*:last-child) {
         border-radius: 0 var(--radius) var(--radius) 0;
     }
 </style>
 
-<slot></slot>
+<label if="{{ label.length > 0 }}">{{ label }}</label>
+
+<inner>
+    <slot></slot>
+</inner>

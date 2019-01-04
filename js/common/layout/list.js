@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Fyn from '/js/fyn.js';
+import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 import Image from "../graphics/image.js";
 
 export default class List extends Fyn.Component
@@ -47,10 +47,12 @@ export default class List extends Fyn.Component
 
         this.on({
             dragstart: Fyn.Event.debounce(1, e => {
+                console.log('kaas');
+
                 target = e.path[0];
 
-                start = e.pageX;
-                position = e.pageX;
+                start = e.x;
+                position = e.x;
             }),
         });
 
@@ -61,7 +63,7 @@ export default class List extends Fyn.Component
                     return;
                 }
 
-                position = e.pageX;
+                position = e.x;
 
                 const d = position - start;
                 const p = Math.abs(d) / (d);
@@ -93,7 +95,7 @@ export default class List extends Fyn.Component
 
                     Promise.all([a1.finished, a2.finished]).then(() => {
                         target.parentNode.insertBefore(target, p === 1 ? sibling.nextSibling : sibling);
-                        start = e.pageX;
+                        start = e.x;
                         animating = false;
                     });
                 }

@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid: auto / 1fr 2em;
+        grid-auto-rows: 1fr;
+        grid-gap: 1em;
+        padding: 0 1em 1em;
+        border-top: 1px solid #fff7;
+    }
+
+    :host > [title],
+    :host > fyn-common-graphics-icon {
+        align-self: center;
+        transition: transform .3s ease-in-out;
+        cursor: pointer;
+    }
+
+    :host > content {
+        grid-column: span 2;
+        display: grid;
+        grid-gap: 1em;
+    }
+
+    :host > content ::slotted(*) {
+        min-height: 0;
+        min-width: 0;
+    }
+
+    :host([closed]) > content {
+        display: none;
+    }
+
+    :host([closed]) > fyn-common-graphics-icon {
+        transform: rotate(180deg);
+    }
+</style>
+
+<span title>{{ title }}</span>
+
+<fyn-common-graphics-icon icons="angle-down"></fyn-common-graphics-icon>
+
+<content>
+    <slot></slot>
+</content>

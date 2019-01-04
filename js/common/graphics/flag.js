@@ -1,8 +1,8 @@
 'use strict';
 
-import Component from '/js/component.js';
+import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 
-export default class Flag extends Component
+export default class Flag extends Fyn.Component
 {
     static get properties()
     {
@@ -16,7 +16,7 @@ export default class Flag extends Component
         this.classList.add('flag-icon');
 
         const style = document.createElement('style');
-        style.innerText = `@import url('/css/vendor/flag-icon/css/flag-icon.min.css');`;
+        style.innerText = `@import url('http://fyn-software.cpb/suite/css/vendor/flag-icon/css/flag-icon.min.css');`;
 
         const flag = document.createElement('i');
         flag.classList.add('flag-icon');

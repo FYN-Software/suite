@@ -1,7 +1,7 @@
 'use strict';
 
-import Component from '/js/component.js';
+import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 
-export default class Grid extends Component
+export default class Grid extends Fyn.Component
 {
 }

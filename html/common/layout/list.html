@@ -1,27 +1,26 @@
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
 
 <style>
     :host {
         position: relative;
         display: grid;
+        overflow: hidden;
     }
-    
+
     :host([horizontal]) {
         grid-auto-flow: column;
-        align-content: end;
         justify-content: start;
     }
-    
+
     :host([vertical]) {
-        grid-auto-flow: column;
+        grid-auto-flow: row;
         align-content: start;
-        justify-content: end;
     }
-    
+
     inner {
         display: contents;
     }
-    
+
     :host > [preview] {
         position: absolute;
         height: 100%;

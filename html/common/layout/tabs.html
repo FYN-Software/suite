@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
 
 <style>
     :host {
@@ -32,14 +32,14 @@
     #bar > tab:not(:only-child)[active] {
         background-color: #fff2;
     }
-    
+
     content {
         position: relative;
         display: grid;
         grid-auto-rows: 100%;
         grid-auto-columns: 100%;
     }
-    
+
     content > slot::slotted(*) {
         position: absolute;
         width: 100%;
@@ -47,7 +47,7 @@
         opacity: 0;
         pointer-events: none;
     }
-    
+
     content > slot::slotted(*[active]) {
         opacity: 1;
         pointer-events: all;
@@ -83,7 +83,7 @@
     }
 
     :host > overlay > block[hovering] {
-        background-color: var(--info);
+        background-color: rgba(var(--info-rgb), .5);
     }
 
     :host > overlay > [top] { grid-area: top; }
@@ -129,8 +129,7 @@
         left: var(--x);
         width: var(--w);
         height: var(--h);
-        background-color: var(--info);
-        opacity: .2;
+        background-color: rgba(var(--info-rgb), .25);
         box-shadow: 0 0 1em #0003;
         z-index: 9;
         transition: .3s ease-out .1s;
@@ -150,7 +149,7 @@
     <block center></block>
     <block right></block>
     <block bottom></block>
-    
+
     <block static top></block>
     <block static left></block>
     <block static right></block>

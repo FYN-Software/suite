@@ -1,8 +1,9 @@
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
 
 <style>
     :host {
         position: relative;
+        /* contain: content; */
         display: grid;
         grid-template-areas: 'icon';
         grid-auto-flow: column;
@@ -26,23 +27,23 @@
     :host([flat]) {
         background-color: transparent;
     }
-    
+
     :host > * {
         pointer-events: none;
     }
-    
+
     :host > fyn-common-graphics-icon {
         width: 1em !important;
     }
-    
+
     :host > fyn-common-graphics-icon[main] {
         grid-area: icon;
     }
-    
+
     :host > slot::slotted(*) {
         width: 1em;
     }
-    
+
     :host > options {
         --bg: #333;
         --spacing: .5em;
@@ -57,12 +58,12 @@
         opacity: 0;
         transition: .3s opacity ease-in-out;
     }
-    
+
     :host([multi][open]) > options {
         opacity: 1;
         pointer-events: all;
     }
-    
+
     :host > options::before {
         --size: .75em;
         content: '';
@@ -84,7 +85,7 @@
     :host > options > slot::slotted(*:hover) {
         background-color: #fff1;
     }
-    
+
     :host > ripple {
         --size: 10em;
         display: block;
@@ -98,7 +99,7 @@
         z-index: 0;
         overflow: hidden;
     }
-    
+
     :host > ripple > inner {
         position: absolute;
         top: 50%;
@@ -111,19 +112,19 @@
         background-color: #0003;
         transform-origin: center center;
     }
-    
+
     :host([click]) > ripple > inner {
         animation: ripple 1s ease-out forwards;
     }
-    
+
     :host(:focus) {
         outline: none;
     }
-    
+
     :host(:disabled) {
         opacity: .25;
     }
-    
+
     @keyframes ripple {
         0% {
             opacity: 1;

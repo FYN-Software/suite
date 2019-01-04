@@ -1,8 +1,22 @@
 'use strict';
 
-import * as Fyn from '/js/fyn.js';
+import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 
-export default class Input extends Fyn.Component {
+const parser = Fyn.Cannoneer.instanciate();
+
+export default class Input extends Fyn.Component
+{
+    static get properties()
+    {
+        return {
+            type: '',
+            label: '',
+            name: '',
+            value: '',
+            placeholder: '',
+        };
+    }
+
     initialize()
     {
         const keys = [ 'Enter' ];
@@ -16,6 +30,8 @@ export default class Input extends Fyn.Component {
                 {
                     e.preventDefault();
                 }
+
+
             },
             keyup: e => {
                 if(this.shadow.querySelector('value').textContent.length > 0)
@@ -57,13 +73,8 @@ export default class Input extends Fyn.Component {
         });
     }
 
-    static get properties()
+    focus()
     {
-        return {
-            type: '',
-            label: '',
-            name: '',
-            value: '',
-        };
+        this.shadow.querySelector('value').focus();
     }
 }

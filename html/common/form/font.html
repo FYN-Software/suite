@@ -1,0 +1,16 @@
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
+
+<style>
+    :host {
+    }
+</style>
+
+<fyn-common-form-group combined label="{{ label }}">
+    <fyn-common-form-dropdown options="{{ fonts }}" filterable>
+        <div style="font-family: {{ option.family }}">{{ option.family }}</div>
+    </fyn-common-form-dropdown>
+
+    <fyn-common-form-button icons="bold"></fyn-common-form-button>
+
+    <fyn-common-form-button icons="italic"></fyn-common-form-button>
+</fyn-common-form-group>

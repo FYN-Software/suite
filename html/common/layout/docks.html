@@ -1,15 +1,15 @@
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
 
 <style>
     :host {
         display: block;
         overflow: hidden;
     }
-    
+
     :host > hidden {
         display: none;
     }
-    
+
     :host > content {
         display: grid;
         grid-auto-flow: column;
@@ -20,7 +20,7 @@
     :host > content > * {
         position: relative;
     }
-    
+
     :host > content[mode="__vertical__"] {
         grid-auto-flow: column;
     }
@@ -28,7 +28,7 @@
     :host > content[mode="__vertical__"] > *:last-child {
         justify-self: stretch;
     }
-    
+
     :host > content[mode="__horizontal__"] {
         grid-auto-flow: row;
     }

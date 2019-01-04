@@ -1,40 +1,42 @@
+<link rel="stylesheet" type="text/css" href="http://fyn-software.cpb/suite/css/style.css">
+
 <style>
-    
+
     :host {
         width: 100%;
         display: grid;
         grid-gap: 1em;
     }
-    
+
     :host > fields {
         display: grid;
         grid-gap: 1em;
     }
-    
+
     :host > footer {
         display: grid;
         grid-auto-flow: column;
         grid-gap: 1em;
         justify-content: end;
     }
-    
+
     :host > footer > [role="submit"] {
         background-color: #5cb85c;
     }
-    
+
     :host > footer > [role="cancel"] {
         background-color: #d9534f;
     }
-    
+
     :host > messages {
         display: grid;
         grid-gap: 1em;
     }
-    
+
     :host > messages message {
         display: block;
     }
-    
+
     :host > messages message[type="error"] {
         color: var(--failure);
     }
