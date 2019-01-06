@@ -62,8 +62,6 @@ export default class Input extends Fyn.Component
         this.observe({
             value: {
                 changed: Fyn.Event.debounce(250, (o, n) => {
-                    console.log(o, n);
-                    
                     this.emit('change', {
                         new: n,
                         old: o,
