@@ -1,5 +1,3 @@
-'use strict';
-
 import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 import Image from "../graphics/image.js";
 

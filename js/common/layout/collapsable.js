@@ -1,5 +1,3 @@
-'use strict';
-
 import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 
 export default class Collapsable extends Fyn.Component
