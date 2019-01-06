@@ -41,7 +41,8 @@
         user-select: none;
     }
 
-    :host > placeholder {
+    :host > slot[name="placeholder"] {
+        display: grid;
         position: absolute;
         left: var(--padding);
         top: 0;
@@ -51,6 +52,7 @@
         pointer-events: none;
         color: #999;
         line-height: 2.5em;
+        height: 2.5em;
         user-select: none;
     }
 
@@ -66,4 +68,4 @@
 
 <value contenteditable>{{ value }}</value>
 
-<placeholder  if="{{ placeholder.length > 0 && value.length === 0 }}">{{ placeholder }}</placeholder>
+<slot name="placeholder" if="{{ value.length === 0 }}">{{ placeholder }}</slot>

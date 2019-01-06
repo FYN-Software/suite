@@ -3,7 +3,6 @@
 <style>
     :host {
         position: relative;
-        /* contain: content; */
         display: grid;
         grid-template-areas: 'icon';
         grid-auto-flow: column;
@@ -38,10 +37,6 @@
 
     :host > fyn-common-graphics-icon[main] {
         grid-area: icon;
-    }
-
-    :host > slot::slotted(*) {
-        width: 1em;
     }
 
     :host > options {

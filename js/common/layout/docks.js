@@ -262,7 +262,7 @@ export default class Docks extends Fyn.Component
         {
             return;
         }
-
+        
         this.mode = this.layout.mode || Docks.vertical;
 
         this.shadow.querySelectorAll('content > *').clear();

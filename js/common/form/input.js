@@ -30,8 +30,6 @@ export default class Input extends Fyn.Component
                 {
                     e.preventDefault();
                 }
-
-
             },
             keyup: e => {
                 if(this.shadow.querySelector('value').textContent.length > 0)
@@ -64,6 +62,8 @@ export default class Input extends Fyn.Component
         this.observe({
             value: {
                 changed: Fyn.Event.debounce(250, (o, n) => {
+                    console.log(o, n);
+                    
                     this.emit('change', {
                         new: n,
                         old: o,

@@ -8,6 +8,7 @@ export default class Dropdown extends Fyn.Component
     {
         return {
             _options: [],
+            _item: null,
             options: [],
             index: -1,
             name: '',
@@ -15,6 +16,7 @@ export default class Dropdown extends Fyn.Component
             value: null,
             label: '',
             filter: '',
+            placeholder: 't_select',
             filterable: false,
         };
     }
@@ -22,11 +24,9 @@ export default class Dropdown extends Fyn.Component
     initialize()
     {
         const update = () => {
-            this._options = this.options.filter(o => {
-                return this.filter.length === 0
-                    || o.value.includes(this.filter)
-                    || (o.hasOwnProperty('text') === true && o.text.includes(this.filter))
-            });
+            this._options = this.options.filter(
+                o => this.filter.length === 0 || Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(this.filter))
+            );
         };
 
         this.observe({
@@ -58,22 +58,28 @@ export default class Dropdown extends Fyn.Component
                         return i;
                     });
                 },
-                changed: update,
+                changed: (o, n) => {
+                    this.index = this.options.findIndex(o => o.value === this.value);
+                    
+                    update();
+                },
             },
             index: {
                 set: v => Number.parseInt(v) || 0,
                 changed: (o, n) => {
-                    const l = this.shadow.querySelector('options').__loop__;
-                    
-                    console.log(l);
+                    if(this._item === null)
+                    {
+                        this.__item = this.shadow.querySelector('options').loop;
+                    }
+    
+                    this._item.option = this.options[this.index];
                     
                     this.emit('change', { old: this.options[o], new: this.options[n] });
                 }
             },
             value: {
-                get: () => this.options[this.index].value || null,
                 changed: (o, n) => {
-                    this.index = this.options.findIndex(o => o.value === n) || -1;
+                    this.index = this.options.findIndex(o => o.value === n);
                 }
             },
             filter: {
@@ -84,6 +90,10 @@ export default class Dropdown extends Fyn.Component
 
     ready()
     {
+        this.shadow.querySelector('options').on({
+            templatechange: e => this.__item = e.detail.loop,
+        });
+        
         this.on('fyn-common-form-button', {
             click: (e, t) => {
                 const rect = this.getBoundingClientRect();
@@ -110,7 +120,7 @@ export default class Dropdown extends Fyn.Component
 
         this.on('options > *', {
             click: (e, t) => {
-                this.index = t.index();
+                this.value = t.option.value;
 
                 this.removeAttribute('open');
             },
@@ -119,5 +129,16 @@ export default class Dropdown extends Fyn.Component
         document.body.on({
             click: () => this.removeAttribute('open'),
         });
+    }
+    
+    set __item(loop)
+    {
+        const c = this.shadow.querySelector('fyn-common-form-button > value');
+        c.childNodes.clear();
+    
+        this._item = loop.item;
+        this._item.option = this.options[this.index] || {value: null};
+    
+        c.appendChild(this._item);
     }
 }

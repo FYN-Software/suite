@@ -6,11 +6,11 @@
 </style>
 
 <fyn-common-form-group combined label="{{ label }}">
-    <fyn-common-form-dropdown options="{{ fonts }}" filterable>
+    <fyn-common-form-dropdown options="{{ fonts }}" filterable id="fonts">
         <div style="font-family: {{ option.family }}">{{ option.family }}</div>
     </fyn-common-form-dropdown>
 
-    <fyn-common-form-button icons="bold"></fyn-common-form-button>
+    <fyn-common-form-dropdown options="{{ variants }}"></fyn-common-form-dropdown>
 
     <fyn-common-form-button icons="italic"></fyn-common-form-button>
 </fyn-common-form-group>
