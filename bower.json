@@ -1,0 +1,8 @@
+{
+  "name": "fyn-software/suite",
+  "version": "0.0.1",
+  "dependencies": {
+    "fyn-software/suite": "^0.0.1"
+  },
+  "element-collection": true
+}
