@@ -16,29 +16,31 @@ export default class Font extends Fyn.Component
     ready()
     {
         this.on('#fonts', {
-            change: e => {
+            change: e =>
+{
                 if(e.detail.new !== undefined)
                 {
                     this.variants = e.detail.new.variants;
                 }
             },
         });
-        
+
         // Fyn.Utilities.Font
         //     .list(this.key)
-        
+
         fetch('http://fyn-software.cpb/suite/fonts.json')
             .then(r => r.json())
-            .then(f => {
+            .then(f =>
+{
                 this._items = f.items.slice(0, 99);
-                
+
                 for(const i of this._items)
                 {
-                    // console.log(i);
+                    // Console.log(i);
                     Fyn.Utilities.Font.preview(i);
                 }
-                
-                this.fonts = Object.entries(this._items).map(([k, i]) => ({ value: k, ...i }));
+
+                this.fonts = Object.entries(this._items).map(([ k, i ]) => ({ value: k, ...i }));
             });
     }
 }

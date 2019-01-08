@@ -5,6 +5,7 @@ import Tabs from './tabs.js';
 export default class Docks extends Fyn.Component
 {
     static get vertical() { return '__vertical__'; }
+
     static get horizontal() { return '__horizontal__'; }
 
     static get properties()
@@ -18,17 +19,15 @@ export default class Docks extends Fyn.Component
 
     static get dependencies()
     {
-        return [
-            'fyn-common-layout-resizable',
-            'fyn-common-layout-tabs',
-        ];
+        return [ 'fyn-common-layout-resizable', 'fyn-common-layout-tabs' ];
     }
 
     initialize()
     {
         this.observe({
             layout: {
-                set: v => {
+                set: v =>
+{
                     if(typeof v === 'object' && v.hasOwnProperty('children'))
                     {
                         const cb = c => c instanceof Object && c.hasOwnProperty('children')
@@ -43,7 +42,8 @@ export default class Docks extends Fyn.Component
 
                     return v;
                 },
-                changed: (o, n) => {
+                changed: (o, n) =>
+{
                     this.draw();
                 },
             },
@@ -61,10 +61,9 @@ export default class Docks extends Fyn.Component
             .join(' ');
 
         this.on('content > fyn-common-layout-resizable', {
-            options: {
-                passive: false,
-            },
-            resize: (e, t) => {
+            options: { passive: false },
+            resize: (e, t) =>
+{
                 e.preventDefault();
 
                 let sizes = Array.from(t.children, c => window.getComputedStyle(c))
@@ -78,7 +77,7 @@ export default class Docks extends Fyn.Component
                     );
 
                 let mode = this.mode === Docks.vertical ? 1 : 0;
-                let template = [`gridTemplate${['Rows', 'Columns'][mode]}`];
+                let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
 
                 let s = e.detail.size[mode ? 'x' : 'y'];
                 let cols = content.style[template].split(' ');
@@ -90,10 +89,9 @@ export default class Docks extends Fyn.Component
         });
 
         this.on({
-            options: {
-                capture: true,
-            },
-            dropped: Fyn.Event.debounce(1, (e, t) => {
+            options: { capture: true },
+            dropped: Fyn.Event.debounce(1, (e, t) =>
+{
                 e.detail.path.push(this);
 
                 if(this.parent !== null)
@@ -101,10 +99,11 @@ export default class Docks extends Fyn.Component
                     return;
                 }
 
-                const findPath = (id, tree) => {
+                const findPath = (id, tree) =>
+{
                     let path = [];
 
-                    for(let [i, c] of tree.entries())
+                    for(let [ i, c ] of tree.entries())
                     {
                         if(Array.isArray(c) && c.includes(id))
                         {
@@ -125,7 +124,8 @@ export default class Docks extends Fyn.Component
 
                     return path;
                 };
-                const findPathToRoot = el => {
+                const findPathToRoot = el =>
+{
                     let path = [];
 
                     if(el instanceof Tabs)
@@ -138,7 +138,7 @@ export default class Docks extends Fyn.Component
 
                         if(o !== this)
                         {
-                            path.push(...findPathToRoot(o.parentElement), o.parentElement.index())
+                            path.push(...findPathToRoot(o.parentElement), o.parentElement.index());
                         }
                     }
 
@@ -159,16 +159,19 @@ export default class Docks extends Fyn.Component
                     case 'top':
                         placement = 'before';
                         generate = path.first.mode === Docks.vertical;
+
                         break;
 
                     case 'left':
                         placement = 'before';
                         generate = path.first.mode === Docks.horizontal;
+
                         break;
 
                     case 'right':
                         placement = 'after';
                         generate = path.first.mode === Docks.horizontal;
+
                         break;
 
                     case 'bottom':
@@ -178,8 +181,9 @@ export default class Docks extends Fyn.Component
 
                 // TODO(Chris Kruining)
                 // Implement `edge` behavior
-                const mutateTree = (tree, path = []) => {
-                    for(let [i, c] of tree.children.entries())
+                const mutateTree = (tree, path = []) =>
+{
+                    for(let [ i, c ] of tree.children.entries())
                     {
                         let p = [ ...path, i ];
 
@@ -216,7 +220,7 @@ export default class Docks extends Fyn.Component
                                         ? 1
                                         : 0;
 
-                                    t.children.splice(i + o, 0, [id]);
+                                    t.children.splice(i + o, 0, [ id ]);
                                 }
                             }
 
@@ -236,7 +240,7 @@ export default class Docks extends Fyn.Component
                                 c = tree.children.first;
                             }
 
-                            tree.children[i] = c
+                            tree.children[i] = c;
                         }
                     }
 
@@ -245,22 +249,22 @@ export default class Docks extends Fyn.Component
 
                 this.layout = mutateTree(layout);
             }),
-        })
+        });
 
         this.draw();
     }
 
     // TODO(Chris Kruining)
     // Figure out how to reuse
-    // elements instead of simply
-    // redrawing everything
+    // Elements instead of simply
+    // Redrawing everything
     draw()
     {
         if((this.layout instanceof Object) !== true || Array.isArray(this.layout))
         {
             return;
         }
-        
+
         this.mode = this.layout.mode || Docks.vertical;
 
         this.shadow.querySelectorAll('content > *').clear();
@@ -271,7 +275,8 @@ export default class Docks extends Fyn.Component
         {
             const item = new Resizable();
             item.on({
-                ready: () => {
+                ready: () =>
+{
                     item.mode = this.mode;
                     item.handle = i !== this.layout.children.last;
                 },
@@ -284,7 +289,8 @@ export default class Docks extends Fyn.Component
             {
                 const docks = new Docks();
                 docks.on({
-                    ready: e => {
+                    ready: e =>
+{
                         docks.layout = i;
                         docks.parent = this;
 
@@ -309,7 +315,8 @@ export default class Docks extends Fyn.Component
             {
                 const tabs = new Tabs();
                 tabs.on({
-                    ready: e => {
+                    ready: e =>
+{
                         for(let t of i)
                         {
                             const slot = document.createElement('slot');
@@ -326,7 +333,7 @@ export default class Docks extends Fyn.Component
 
         if(this.layout.hasOwnProperty('sizes'))
         {
-            for(let [i, s] of this.layout.sizes.entries())
+            for(let [ i, s ] of this.layout.sizes.entries())
             {
                 const t = content.children[i];
 
@@ -341,7 +348,7 @@ export default class Docks extends Fyn.Component
                     );
 
                 let mode = this.mode === Docks.vertical ? 1 : 0;
-                let template = [`gridTemplate${['Rows', 'Columns'][mode]}`];
+                let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
 
                 let cols = content.style[template].split(' ');
 

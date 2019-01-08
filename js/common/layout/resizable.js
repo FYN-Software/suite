@@ -3,6 +3,7 @@ import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
 export default class Resizable extends Fyn.Component
 {
     static get vertical() { return '__vertical__'; }
+
     static get horizontal() { return '__horizontal__'; }
 
     static get properties()
@@ -17,13 +18,12 @@ export default class Resizable extends Fyn.Component
     {
         let start = null;
         let size = null;
-        let id = null
+        let id = null;
 
         this.on('handle', {
-            options: {
-                passive: false,
-            },
-            pointerdown: e => {
+            options: { passive: false },
+            pointerdown: e =>
+{
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -36,10 +36,9 @@ export default class Resizable extends Fyn.Component
         });
 
         document.body.on({
-            options: {
-                passive: false,
-            },
-            pointermove: e => {
+            options: { passive: false },
+            pointermove: e =>
+{
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -50,11 +49,12 @@ export default class Resizable extends Fyn.Component
                     this.emit('resize', {
                         start,
                         delta,
-                        size: { x: size.width + delta.x, y: size.height + delta.y }
+                        size: { x: size.width + delta.x, y: size.height + delta.y },
                     });
                 }
             },
-            pointerup: e => {
+            pointerup: e =>
+{
                 e.preventDefault();
                 e.stopPropagation();
 

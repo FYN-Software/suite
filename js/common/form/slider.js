@@ -17,11 +17,13 @@ export default class Slider extends Fyn.Component
         };
     }
 
-    initialize() {
+    initialize()
+{
         this.observe({
             _percentVal: {
                 set: v => Math.clamp(0, 1, Number.parseFloat(v) || (this.value - this.min) / (this.max - this.min)),
-                changed: (o, n) => {
+                changed: (o, n) =>
+{
                     this.shadow.querySelector('box').style.setProperty('--w', `${(this._percentVal * 100).toFixed(1)}%`);
 
                     this.value = (this.max - this.min) * this._percentVal;
@@ -29,7 +31,8 @@ export default class Slider extends Fyn.Component
             },
             value: {
                 set: v => Math.clamp(this.min, this.max, Number.parseFloat(v) || 0),
-                changed: (o, n) => {
+                changed: (o, n) =>
+{
                     this._percentVal = (this.value - this.min) / (this.max - this.min);
 
                     this.emit('change', { old: o, new: n });
@@ -43,9 +46,7 @@ export default class Slider extends Fyn.Component
                 set: v => Math.max(Number.parseFloat(v) || this.max, this.min),
                 changed: () => this.value = this.value,
             },
-            step: {
-                set: v => Number.parseFloat(v) || .1,
-            },
+            step: { set: v => Number.parseFloat(v) || .1 },
             showPercentage: { set: v => v === true },
             showValue: { set: v => v === true },
         });
@@ -56,12 +57,11 @@ export default class Slider extends Fyn.Component
         let dragging = false;
         const box = this.shadow.querySelector('box');
 
-        this.on('box > handle', {
-            mousedown: (e) => dragging = true,
-        })
+        this.on('box > handle', { mousedown: e => dragging = true });
 
         document.body.on({
-            mousemove: e => {
+            mousemove: e =>
+{
                 if(dragging === true)
                 {
                     const rect = this.getBoundingClientRect();

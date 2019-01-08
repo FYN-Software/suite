@@ -20,16 +20,16 @@ export default class Input extends Fyn.Component
         const keys = [ 'Enter' ];
 
         this.on({
-            options: {
-                passive: false,
-            },
-            keydown: e => {
+            options: { passive: false },
+            keydown: e =>
+{
                 if(keys.includes(e.key))
                 {
                     e.preventDefault();
                 }
             },
-            keyup: e => {
+            keyup: e =>
+{
                 if(this.shadow.querySelector('value').textContent.length > 0)
                 {
                     this.setAttribute('has-value', '');
@@ -42,15 +42,15 @@ export default class Input extends Fyn.Component
         });
 
         this.on('value', {
-            options: {
-                capture: true,
-            },
-            focus: e => {
+            options: { capture: true },
+            focus: e =>
+{
                 e.target.focused = true;
 
                 this.setAttribute('focused', '');
             },
-            blur: e => {
+            blur: e =>
+{
                 e.target.focused = false;
 
                 this.removeAttribute('focused');
@@ -59,11 +59,12 @@ export default class Input extends Fyn.Component
 
         this.observe({
             value: {
-                changed: Fyn.Event.debounce(250, (o, n) => {
+                changed: Fyn.Event.debounce(250, (o, n) =>
+{
                     this.emit('change', {
                         new: n,
                         old: o,
-                    })
+                    });
                 }),
             },
         });

@@ -22,10 +22,7 @@ export default class dialog extends Fyn.Component
     {
         return {
             open: [
-                [
-                    { opacity: 0, transform: 'translate(-50%, -50%) scale(.4, .4)' },
-                    { opacity: 1, transform: 'translate(-50%, -50%) scale(1, 1)' },
-                ],
+                [ { opacity: 0, transform: 'translate(-50%, -50%) scale(.4, .4)' }, { opacity: 1, transform: 'translate(-50%, -50%) scale(1, 1)' } ],
                 {
                     duration: 300,
                     easing: 'ease-in-out',
@@ -35,7 +32,7 @@ export default class dialog extends Fyn.Component
                 [],
                 {
                     extend: 'open',
-                    direction: 'reverse'
+                    direction: 'reverse',
                 },
             ],
         };
@@ -46,6 +43,7 @@ export default class dialog extends Fyn.Component
         if(!Number.isInteger(this.width))
         {
             this.style.width = this.width;
+
             return;
         }
         else
@@ -65,23 +63,25 @@ export default class dialog extends Fyn.Component
         this.left = document.body.offsetWidth / 2 - this.offsetWidth / 2;
 
         this.on('handlers > handler', {
-            mousedown(e, target){
+            mousedown(e, target)
+{
                 if(!moving)
                 {
                     moving = true;
                     moveHandle = target;
                 }
-            }
+            },
         });
 
         document.body.on({
-            mousemove: (e) => {
+            mousemove: e =>
+{
                 if(moving)
                 {
                     let delta = {
                         x: 0,
                         y: 0,
-                        reposition: moveHandle.index() < 5
+                        reposition: moveHandle.index() < 5,
                     };
 
                     let directions = (moveHandle.getAttribute('side') || moveHandle.getAttribute('corner')).split('-');
@@ -92,15 +92,19 @@ export default class dialog extends Fyn.Component
                         {
                             case 'top':
                                 delta.y = this.$.top - e.clientY;
+
                                 break;
                             case 'right':
                                 delta.x = -1 * (this.$.left + this.$.width - e.clientX);
+
                                 break;
                             case 'bottom':
                                 delta.y = -1 * (this.$.top + this.$.height - e.clientY);
+
                                 break;
                             case 'left':
                                 delta.x = this.$.left - e.clientX;
+
                                 break;
                         }
                     }
@@ -119,13 +123,14 @@ export default class dialog extends Fyn.Component
                     this.correctSize();
                 }
             },
-            mouseup: (e, target) => {
+            mouseup: (e, target) =>
+{
                 if(moving)
                 {
                     moving = false;
                     moveHandle = null;
                 }
-            }
+            },
         });
 
         this.correctSize();
@@ -148,7 +153,8 @@ export default class dialog extends Fyn.Component
     show()
     {
         return this.open()
-            .then(() => new Promise(res => {
+            .then(() => new Promise(res =>
+{
                 this.on({
                     options: {
                         capture: true,
@@ -156,7 +162,7 @@ export default class dialog extends Fyn.Component
                     },
                     cancel: () => res([ false, null ]),
                     success: e => res([ true, e.detail ]),
-                })
+                });
             }))
             .stage(this.close.bind(this));
     }

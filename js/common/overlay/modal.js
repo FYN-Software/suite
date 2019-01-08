@@ -6,10 +6,7 @@ export default class Modal extends Fyn.Component
     {
         return {
             open: [
-                [
-                    { opacity: 0 },
-                    { opacity: 1 },
-                ],
+                [ { opacity: 0 }, { opacity: 1 } ],
                 {
                     duration: 300,
                     fill: 'forwards',
@@ -20,7 +17,7 @@ export default class Modal extends Fyn.Component
                 [],
                 {
                     extend: 'open',
-                    direction: 'reverse'
+                    direction: 'reverse',
                 },
             ],
         };

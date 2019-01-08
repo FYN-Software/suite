@@ -4,16 +4,15 @@ export default class Tabs extends Fyn.Component
 {
     static get properties()
     {
-        return {
-            index: -1,
-        };
+        return { index: -1 };
     }
 
     ready()
     {
         this.observe({
             index: {
-                changed: (o, n) => {
+                changed: (o, n) =>
+{
                     if(this.index < 0 || this.index >= this.tabs.length)
                     {
                         return;
@@ -37,19 +36,22 @@ export default class Tabs extends Fyn.Component
         });
 
         this.on('#bar', {
-            wheel: (e, t) => {
+            wheel: (e, t) =>
+{
                 t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25;
             },
         });
 
         this.on('#bar > tab', {
-            click: (e, t) => {
+            click: (e, t) =>
+{
                 this.index = t.index();
             },
         });
 
         this.on('content > slot', {
-            slotchange: e => {
+            slotchange: e =>
+{
                 this.index = -1;
 
                 const bar  = this.shadow.querySelector('#bar');
@@ -79,7 +81,8 @@ export default class Tabs extends Fyn.Component
         const placeholder = this.shadow.querySelector('placeholder');
 
         this.on({
-            dragstart: Fyn.Event.throttle(1, e => {
+            dragstart: Fyn.Event.throttle(1, e =>
+{
                 window.dragTarget = this.shadow.querySelector('content > slot').assignedElements()[e.path[0].index()];
                 window.dragSource = this;
 
@@ -103,20 +106,21 @@ export default class Tabs extends Fyn.Component
 
         // TODO(Chris Kruining)
         // Migrate all drag and
-        // drop behavior that's
-        // is more than sorting
-        // the tabs to the
+        // Drop behavior that's
+        // Is more than sorting
+        // The tabs to the
         // `Docks` component
         //
         // Idea for migration ::
         // Have a single overlay
         // & placeholder in the
-        // root `Docks` and utilize
-        // the `clientRect` of child
+        // Root `Docks` and utilize
+        // The `clientRect` of child
         // `Tabs` to place the
-        // overlay & placeholder
+        // Overlay & placeholder
         document.body.on({
-            dragover: e => {
+            dragover: e =>
+{
                 if(window.dragPreview === undefined)
                 {
                     return;
@@ -130,7 +134,8 @@ export default class Tabs extends Fyn.Component
 
                 lastPos = { x: e.x, y: e.y };
             },
-            dragend: e => {
+            dragend: e =>
+{
                 overlay.setAttribute('hidden', '');
                 Array.from(overlay.children).forEach(c => c.removeAttribute('hovering'));
 
@@ -148,7 +153,8 @@ export default class Tabs extends Fyn.Component
                 window.dragPreview.remove();
                 window.dragPreview = undefined;
             },
-            dragleave: (e, t) => {
+            dragleave: (e, t) =>
+{
                 if(window.dragPreview === undefined)
                 {
                     return;
@@ -159,46 +165,49 @@ export default class Tabs extends Fyn.Component
 
                 e.dataTransfer.setDragImage(preview, 0, 0);
 
-                // const s = document.createElement('style');
-                // s.innerHTML = `* { background-color: #333; }`;
+                // Const s = document.createElement('style');
+                // S.innerHTML = `* { background-color: #333; }`;
                 //
-                // const w = window.open('https://toolkit.fyn.nl/docks.html', '', `left=${lastPos.x},top=${lastPos.y},width=800,height=800`);
-                // w.addEventListener('DOMContentLoaded', e => {
-                //     const docks = new Docks();
+                // Const w = window.open('https://toolkit.fyn.nl/docks.html', '', `left=${lastPos.x},top=${lastPos.y},width=800,height=800`);
+                // W.addEventListener('DOMContentLoaded', e => {
+                //     Const docks = new Docks();
                 //
-                //     docks.on({
-                //         ready: e => {
-                //             docks.appendChild(window.dragTarget);
+                //     Docks.on({
+                //         Ready: e => {
+                //             Docks.appendChild(window.dragTarget);
                 //
-                //             docks.layout = {
-                //                 mode: Docks.vertical,
-                //                 children: [
+                //             Docks.layout = {
+                //                 Mode: Docks.vertical,
+                //                 Children: [
                 //                     [ 1 ],
                 //                 ],
                 //             };
                 //         },
                 //     });
                 //
-                //     w.document.body.appendChild(docks);
+                //     W.document.body.appendChild(docks);
                 // });
             },
         });
 
         this.on('content', {
-            dragover: (e, t) => {
+            dragover: (e, t) =>
+{
                 placeholder.removeAttribute('hidden');
                 overlay.attributes.setOnAssert(content.getBoundingClientRect().contains(e.x, e.y) === false, 'hidden');
             },
         });
 
         this.on('overlay', {
-            dragleave: (e, t) => {
+            dragleave: (e, t) =>
+{
                 overlay.attributes.setOnAssert(overlay.getBoundingClientRect().contains(e.x, e.y) === false, 'hidden');
             },
         });
 
         this.on('overlay > block', {
-            dragover: (e, t) => {
+            dragover: (e, t) =>
+{
                 t.attributes.setOnAssert(t.getBoundingClientRect().contains(e.pageX, e.pageY), 'hovering');
 
                 const s = t.hasAttribute('static');
@@ -221,7 +230,8 @@ export default class Tabs extends Fyn.Component
                 placeholder.style.setProperty('--w', `${w}%`);
                 placeholder.style.setProperty('--h', `${h}%`);
             },
-            dragleave: (e, t) => {
+            dragleave: (e, t) =>
+{
                 t.removeAttribute('hovering');
 
                 placeholder.style.setProperty('--x', `0`);
@@ -229,7 +239,8 @@ export default class Tabs extends Fyn.Component
                 placeholder.style.setProperty('--w', `0`);
                 placeholder.style.setProperty('--h', `0`);
             },
-            drop: Fyn.Event.throttle(1, (e, t) => {
+            drop: Fyn.Event.throttle(1, (e, t) =>
+{
                 if(window.dragTarget === undefined)
                 {
                     return;

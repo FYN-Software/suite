@@ -4,9 +4,7 @@ export default class Flag extends Fyn.Component
 {
     static get properties()
     {
-        return {
-            iso: '',
-        };
+        return { iso: '' };
     }
 
     initialize()
@@ -25,7 +23,8 @@ export default class Flag extends Fyn.Component
         this.observe({
             iso: {
                 set: v => String(v || '').replace(/ /g, ''),
-                changed: (o, n) => {
+                changed: (o, n) =>
+{
                     try
                     {
                         flag.classList.remove(`flag-icon-${ o }`);
@@ -33,7 +32,7 @@ export default class Flag extends Fyn.Component
                     }
                     catch(e){}
                 },
-            }
+            },
         });
     }
 }

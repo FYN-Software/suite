@@ -15,11 +15,13 @@ export default class Color extends Fyn.Component
         };
     }
 
-    initialize() {
+    initialize()
+{
         this.observe({
             value: {
-                changed: (o, n) => {
-                    const { hue, saturation, lightness, alpha} = this.value;
+                changed: (o, n) =>
+{
+                    const { hue, saturation, lightness, alpha } = this.value;
 
                     this.style.setProperty('--value', `hsla(${hue}, ${saturation * 100}%, ${lightness * 100}%, ${alpha})`);
 
@@ -34,9 +36,10 @@ export default class Color extends Fyn.Component
         let editedValue = Fyn.Extends.clone(this.value);
 
         this.on('value', {
-            click: Fyn.Event.debounce(10, (e, t) => {
+            click: Fyn.Event.debounce(10, (e, t) =>
+{
                 editedValue = Fyn.Extends.clone(this.value);
-                const { hue, saturation, lightness, alpha} = editedValue;
+                const { hue, saturation, lightness, alpha } = editedValue;
 
                 const rect = t.getBoundingClientRect();
 
@@ -55,11 +58,13 @@ export default class Color extends Fyn.Component
         });
 
         this.on('box [action]', {
-            click: Fyn.Event.debounce(10, (e, t) => {
-                switch (t.action)
+            click: Fyn.Event.debounce(10, (e, t) =>
+{
+                switch(t.action)
                 {
                     case 'submit':
                         this.value = Fyn.Extends.clone(editedValue);
+
                         break;
                 }
 
@@ -68,7 +73,8 @@ export default class Color extends Fyn.Component
         });
 
         this.on('fyn-common-form-slider[vertical]', {
-            change: (e, t) => {
+            change: (e, t) =>
+{
                 editedValue.hue = t.value;
 
                 this.style.setProperty('--hue', t.value);
@@ -76,7 +82,8 @@ export default class Color extends Fyn.Component
         });
 
         this.on('fyn-common-form-slider[horizontal]', {
-            change: (e, t) => {
+            change: (e, t) =>
+{
                 editedValue.alpha = 1 - t.value;
 
                 this.style.setProperty('--alpha', 1 - t.value);
@@ -86,12 +93,11 @@ export default class Color extends Fyn.Component
 
         const box = this.shadow.querySelector('box > gradient');
 
-        this.on('box > gradient > handle', {
-            mousedown: (e) => dragging = true,
-        })
+        this.on('box > gradient > handle', { mousedown: e => dragging = true });
 
         document.body.on({
-            mousemove: e => {
+            mousemove: e =>
+{
                 if(dragging === true)
                 {
                     const rect = box.getBoundingClientRect();
