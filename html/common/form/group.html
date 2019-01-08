@@ -3,7 +3,6 @@
 <style>
     :host {
         display: grid;
-        grid-gap: .25em .5em;
     }
 
     :host > label {
@@ -13,13 +12,14 @@
     :host > inner {
         display: grid;
         grid-auto-flow: column;
+        grid-gap: .25em .5em;
     }
 
-    :host([combined]) {
+    :host([combined]) > inner {
         grid-column-gap: 0;
     }
 
-    :host([combined][separators]) {
+    :host([combined][separators]) > inner {
         grid-column-gap: 1px;
     }
 
