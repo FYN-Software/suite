@@ -1,20 +1,19 @@
 import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
-import Image from "../graphics/image.js";
+import Image from '../graphics/image.js';
 
 export default class List extends Fyn.Component
 {
     static get properties()
     {
-        return {
-            sortable: false,
-        };
+        return { sortable: false };
     }
 
     ready()
     {
         this.observe({
             sortable: {
-                set: v => {
+                set: v =>
+                {
                     if(typeof v === 'boolean')
                     {
                         return v;
@@ -26,14 +25,16 @@ export default class List extends Fyn.Component
 
                     return false;
                 },
-                changed: (o, n) => {
+                changed: (o, n) =>
+                {
                     this.items.forEach(i => i.draggable = this.sortable);
                 },
             },
         });
 
         this.on('slot', {
-            slotchange: e => {
+            slotchange: e =>
+            {
                 this.items.forEach(i => i.draggable = this.sortable);
             },
         });
@@ -44,7 +45,8 @@ export default class List extends Fyn.Component
         let animating = false;
 
         this.on({
-            dragstart: Fyn.Event.debounce(1, e => {
+            dragstart: Fyn.Event.debounce(1, e =>
+            {
                 console.log('kaas');
 
                 target = e.path[0];
@@ -55,7 +57,8 @@ export default class List extends Fyn.Component
         });
 
         document.body.on({
-            dragover: e => {
+            dragover: e =>
+            {
                 if(target === null || target === undefined || animating === true)
                 {
                     return;
@@ -91,14 +94,16 @@ export default class List extends Fyn.Component
                         { duration: 200, easing: 'ease-in-out' }
                     );
 
-                    Promise.all([a1.finished, a2.finished]).then(() => {
+                    Promise.all([ a1.finished, a2.finished ]).then(() =>
+                    {
                         target.parentNode.insertBefore(target, p === 1 ? sibling.nextSibling : sibling);
                         start = e.x;
                         animating = false;
                     });
                 }
             },
-            dragend: e => {
+            dragend: e =>
+            {
                 if(target === null || target === undefined)
                 {
                     return;

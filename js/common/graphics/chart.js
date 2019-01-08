@@ -9,11 +9,10 @@ export default class Chart extends Fyn.Component
             interpolation: 'spline',
         };
     }
-    
+
     ready()
     {
         const c = this.shadow.getElementById('c');
         const ctx = c.getContext('2d');
-        
     }
 }

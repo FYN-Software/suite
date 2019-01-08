@@ -24,7 +24,8 @@ export default class Button extends Fyn.Component
         });
 
         this.on({
-            click: (e, target) => {
+            click: (e, target) =>
+            {
                 if(e instanceof CustomEvent)
                 {
                     return;
@@ -34,7 +35,8 @@ export default class Button extends Fyn.Component
 
                 this.removeAttribute('click');
 
-                setTimeout(() => {
+                setTimeout(() =>
+                {
                     let { x, y } = target.getBoundingClientRect();
 
                     this.shadow.querySelector('ripple > inner').style.left = `calc(${e.pageX - x}px - var(--size) / 2)`;
@@ -62,7 +64,8 @@ export default class Button extends Fyn.Component
         });
 
         document.body.on({
-            click: () => {
+            click: () =>
+            {
                 if(this.multi === true)
                 {
                     this.removeAttribute('open');

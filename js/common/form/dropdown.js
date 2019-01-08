@@ -21,7 +21,8 @@ export default class Dropdown extends Fyn.Component
 
     initialize()
     {
-        const update = () => {
+        const update = () =>
+        {
             this._options = this.options.filter(
                 o => this.filter.length === 0 || Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(this.filter))
             );
@@ -29,7 +30,8 @@ export default class Dropdown extends Fyn.Component
 
         this.observe({
             options: {
-                set: v => {
+                set: v =>
+                {
                     if(typeof v === 'string')
                     {
                         v = JSON.tryParse(v.replace(/'/g, '"'));
@@ -40,12 +42,11 @@ export default class Dropdown extends Fyn.Component
                         v = [ v ];
                     }
 
-                    return v.map(i => {
+                    return v.map(i =>
+                    {
                         if(typeof i !== 'object')
                         {
-                            i = {
-                                value: i,
-                            };
+                            i = { value: i };
                         }
 
                         if(i.hasOwnProperty('value') !== true)
@@ -56,44 +57,44 @@ export default class Dropdown extends Fyn.Component
                         return i;
                     });
                 },
-                changed: (o, n) => {
+                changed: (o, n) =>
+                {
                     this.index = this.options.findIndex(o => o.value === this.value);
-                    
+
                     update();
                 },
             },
             index: {
                 set: v => Number.parseInt(v) || 0,
-                changed: (o, n) => {
+                changed: (o, n) =>
+                {
                     if(this._item === null)
                     {
                         this.__item = this.shadow.querySelector('options').loop;
                     }
-    
+
                     this._item.option = this.options[this.index];
-                    
+
                     this.emit('change', { old: this.options[o], new: this.options[n] });
-                }
+                },
             },
             value: {
-                changed: (o, n) => {
+                changed: (o, n) =>
+                {
                     this.index = this.options.findIndex(o => o.value === n);
-                }
+                },
             },
-            filter: {
-                changed: update,
-            },
+            filter: { changed: update },
         });
     }
 
     ready()
     {
-        this.shadow.querySelector('options').on({
-            templatechange: e => this.__item = e.detail.loop,
-        });
-        
+        this.shadow.querySelector('options').on({ templatechange: e => this.__item = e.detail.loop });
+
         this.on('fyn-common-form-button', {
-            click: (e, t) => {
+            click: (e, t) =>
+            {
                 const rect = this.getBoundingClientRect();
 
                 this.style.setProperty('--x', `${rect.x}px`);
@@ -111,32 +112,32 @@ export default class Dropdown extends Fyn.Component
         });
 
         this.on('fyn-common-form-button > fyn-common-form-input', {
-            change: (e, t) => {
+            change: (e, t) =>
+            {
                 this.filter = e.detail.new;
             },
         });
 
         this.on('options > *', {
-            click: (e, t) => {
+            click: (e, t) =>
+            {
                 this.value = t.option.value;
 
                 this.removeAttribute('open');
             },
         });
 
-        document.body.on({
-            click: () => this.removeAttribute('open'),
-        });
+        document.body.on({ click: () => this.removeAttribute('open') });
     }
-    
+
     set __item(loop)
     {
         const c = this.shadow.querySelector('fyn-common-form-button > value');
         c.childNodes.clear();
-    
+
         this._item = loop.item;
-        this._item.option = this.options[this.index] || {value: null};
-    
+        this._item.option = this.options[this.index] || { value: null };
+
         c.appendChild(this._item);
     }
 }

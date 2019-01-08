@@ -6,7 +6,8 @@ export default class Grid extends Fyn.Component
     {
         this.observe({
             rows: {
-                changed: () => {
+                changed: () =>
+                {
                     if(this.api === undefined || Array.isArray(this.rows) !== true)
                     {
                         return;
@@ -18,7 +19,8 @@ export default class Grid extends Fyn.Component
                 },
             },
             headers: {
-                changed: () => {
+                changed: () =>
+                {
                     if(Array.isArray(this.headers) !== true)
                     {
                         return;
@@ -30,14 +32,15 @@ export default class Grid extends Fyn.Component
         });
 
         this.on('bar > fyn-common-form-button', {
-            click: (e, t) => {
+            click: (e, t) =>
+            {
                 switch(t.role)
                 {
                     case 'add':
                         this.filter.value = '';
 
                         this.api.onFilterChanged();
-                        this.api.updateRowData({ add: [{ key: '' }] });
+                        this.api.updateRowData({ add: [ { key: '' } ] });
                         let id = this.api.rowModel.nodeManager.nextId - 1;
 
                         this.api.ensureIndexVisible(id);
@@ -51,7 +54,8 @@ export default class Grid extends Fyn.Component
 
                         return this.shadow.querySelector('#dataGridModal').open()
                             .then(() => this.shadow.querySelector('#deleteRowsDialog').show())
-                            .then(([r]) => {
+                            .then(([ r ]) =>
+                            {
                                 if(r === true)
                                 {
                                     this.api.updateRowData({ remove: this.api.getSelectedRows() });
@@ -67,7 +71,8 @@ export default class Grid extends Fyn.Component
         });
 
         this.on('bar > fyn-common-form-input', {
-            change: e => {
+            change: e =>
+            {
                 if(this.api === undefined)
                 {
                     return;
@@ -102,14 +107,17 @@ export default class Grid extends Fyn.Component
                 .some(v => v.toLowerCase().includes(
                     this.filter.value.toLowerCase()
                 )),
-            onCellClicked: e => {
+            onCellClicked: e =>
+            {
                 this.emit('click', e);
             },
-            onRowEditingStarted: e => {
+            onRowEditingStarted: e =>
+            {
                 row = Fyn.Extends.clone(e.data);
             },
-            onRowValueChanged: e => {
-                if(row !== null && Object.entries(e.data).some(([k, v]) => (row[k] || null) !== v))
+            onRowValueChanged: e =>
+            {
+                if(row !== null && Object.entries(e.data).some(([ k, v ]) => (row[k] || null) !== v))
                 {
                     this.emit('change', e.data);
                 }
@@ -121,7 +129,7 @@ export default class Grid extends Fyn.Component
 
     autoSize()
     {
-        this.columnApi.autoSizeColumns(this.columnApi.getAllColumns().map(c => c.colId))
+        this.columnApi.autoSizeColumns(this.columnApi.getAllColumns().map(c => c.colId));
     }
 
     get filter()
@@ -133,7 +141,7 @@ export default class Grid extends Fyn.Component
     {
         let g = this.shadow.querySelector('#agGrid');
 
-        // console.dir(g);
+        // Console.dir(g);
 
         return g;
     }

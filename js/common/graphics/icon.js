@@ -4,16 +4,15 @@ export default class Icon extends Fyn.Component
 {
     static get properties()
     {
-        return {
-            icons: [],
-        };
+        return { icons: [] };
     }
 
     initialize()
     {
         this.observe({
             icons: {
-                set: v => {
+                set: v =>
+                {
                     if(v === undefined || typeof v === 'boolean')
                     {
                         v = [];
@@ -31,9 +30,10 @@ export default class Icon extends Fyn.Component
 
                     return v;
                 },
-                changed: (o, n) => {
+                changed: (o, n) =>
+                {
                 },
-            }
+            },
         });
     }
 }

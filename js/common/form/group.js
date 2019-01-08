@@ -4,8 +4,6 @@ export default class Group extends Fyn.Component
 {
     static get properties()
     {
-        return {
-            label: '',
-        };
+        return { label: '' };
     }
 }

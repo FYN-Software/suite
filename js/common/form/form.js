@@ -13,7 +13,8 @@ export default class Form extends Fyn.Component
     ready()
     {
         this.on('fields > *', {
-            keydown: function(e, target) {
+            keydown: function(e, target)
+            {
                 if(e.keyCode === 9)
                 {
                     e.preventDefault();
@@ -33,11 +34,12 @@ export default class Form extends Fyn.Component
 
                     this.submit();
                 }
-            }
+            },
         });
 
         this.on('[slot="buttons"][role]', {
-            click: (e, target) => {
+            click: (e, target) =>
+            {
                 switch(target.getAttribute('role'))
                 {
                     case 'submit':
@@ -46,8 +48,7 @@ export default class Form extends Fyn.Component
                     case 'cancel':
                         return this.emit('cancel');
                 }
-
-            }
+            },
         });
     }
 

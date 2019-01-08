@@ -6,7 +6,7 @@ export default class Image extends Fyn.Component
     {
         super();
 
-        // this.observe('src', () => this.load());
+        // This.observe('src', () => this.load());
 
         this.load();
     }
@@ -22,11 +22,13 @@ export default class Image extends Fyn.Component
         this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));
 
         const img = document.createElement('img');
-        img.onload = () => {
+        img.onload = () =>
+        {
             this.shadow.appendChild(img);
             this.removeAttribute('loading');
         };
-        img.onerror = () => {
+        img.onerror = () =>
+        {
             this.removeAttribute('loading');
         };
         img.src = this.getAttribute('src');
