@@ -552,32 +552,6 @@
 		},
 		{
 			"kind": "webfonts#webfont",
-			"family": "Open Sans Condensed",
-			"category": "sans-serif",
-			"variants": [
-				"300",
-				"300italic",
-				"700"
-			],
-			"subsets": [
-				"cyrillic",
-				"latin",
-				"cyrillic-ext",
-				"greek-ext",
-				"latin-ext",
-				"greek",
-				"vietnamese"
-			],
-			"version": "v12",
-			"lastModified": "2017-10-11",
-			"files": {
-				"300": "http://fonts.gstatic.com/s/opensanscondensed/v12/z7NFdQDnbTkabZAIOl9il_O6KJj73e7Ff1GhPuI.ttf",
-				"300italic": "http://fonts.gstatic.com/s/opensanscondensed/v12/z7NHdQDnbTkabZAIOl9il_O6KJj73e7Fd_-7suDMQg.ttf",
-				"700": "http://fonts.gstatic.com/s/opensanscondensed/v12/z7NFdQDnbTkabZAIOl9il_O6KJj73e7Ff0GmPuI.ttf"
-			}
-		},
-		{
-			"kind": "webfonts#webfont",
 			"family": "Playfair Display",
 			"category": "serif",
 			"variants": [
