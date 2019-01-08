@@ -87,7 +87,19 @@
 
     :host > box > fyn-common-form-slider[vertical] {
         grid-area: hue;
-        --bg: linear-gradient(to bottom, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+        --bg:
+            linear-gradient(
+                to bottom,
+                #ff0000 0%,
+                #ffff00 17%,
+                #00ff00 33%,
+                #00ffff 50%,
+                #0000ff 67%,
+                #ff00ff 83%,
+                #ff0000 100%
+            ),
+            var(--checkers) repeat
+        ;
     }
 
     :host > box > fyn-common-form-slider[horizontal] {
@@ -161,8 +173,8 @@
     <block area="2"></block>
 
     <fyn-common-form-group end>
-        <fyn-common-form-button action="submit">t_apply</fyn-common-form-button>
+        <fyn-common-form-button action="submit" primary>t_apply</fyn-common-form-button>
 
-        <fyn-common-form-button action="cancel">t_cancel</fyn-common-form-button>
+        <fyn-common-form-button action="cancel" flat>t_cancel</fyn-common-form-button>
     </fyn-common-form-group>
 </box>
