@@ -106,7 +106,5 @@
 </fyn-common-form-button>
 
 <options for="{{ option in _options }}">
-    <slot>
-        <span>{{ option.text || option.value }}</span>
-    </slot>
+    <slot>{{ option.text || option.value }}</slot>
 </options>

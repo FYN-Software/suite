@@ -66,25 +66,7 @@ export default class Docks extends Fyn.Component
             {
                 e.preventDefault();
 
-                let sizes = Array.from(t.children, c => window.getComputedStyle(c))
-                    .map(c => ({
-                        min: Number.parseInt(c.getPropertyValue('min-width')) || -Infinity,
-                        max: Number.parseInt(c.getPropertyValue('max-width')) || Infinity,
-                    }))
-                    .reduce(
-                        (t, c) => ({ min: Math.max(t.min, c.min), max: Math.min(t.max, c.max) }),
-                        { min: -Infinity, max: Infinity }
-                    );
-
-                let mode = this.mode === Docks.vertical ? 1 : 0;
-                let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
-
-                let s = e.detail.size[mode ? 'x' : 'y'];
-                let cols = content.style[template].split(' ');
-
-                cols[t.index()] = `${Math.clamp(sizes.min, sizes.max, s)}px`;
-
-                content.style[template] = cols.join(' ');
+                this.updateSize(t, e.detail.size[this.mode === Docks.vertical ? 'x' : 'y']);
             },
         });
 
@@ -289,7 +271,7 @@ export default class Docks extends Fyn.Component
             {
                 const docks = new Docks();
                 docks.on({
-                    ready: e =>
+                    ready: () =>
                     {
                         docks.layout = i;
                         docks.parent = this;
@@ -315,7 +297,7 @@ export default class Docks extends Fyn.Component
             {
                 const tabs = new Tabs();
                 tabs.on({
-                    ready: e =>
+                    ready: () =>
                     {
                         for(let t of i)
                         {
@@ -333,31 +315,44 @@ export default class Docks extends Fyn.Component
 
         if(this.layout.hasOwnProperty('sizes'))
         {
+            let mode = this.mode === Docks.vertical ? 1 : 0;
+            let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
+
+            content.style[template] = Array(content.children.length)
+                .fill('auto')
+                .join(' ');
+
             for(let [ i, s ] of this.layout.sizes.entries())
             {
-                const t = content.children[i];
-
-                let sizes = Array.from(t.children, c => window.getComputedStyle(c))
-                    .map(c => ({
-                        min: Number.parseInt(c.getPropertyValue('min-width')) || -Infinity,
-                        max: Number.parseInt(c.getPropertyValue('max-width')) || Infinity,
-                    }))
-                    .reduce(
-                        (t, c) => ({ min: Math.max(t.min, c.min), max: Math.min(t.max, c.max) }),
-                        { min: -Infinity, max: Infinity }
-                    );
-
-                let mode = this.mode === Docks.vertical ? 1 : 0;
-                let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
-
-                let cols = content.style[template].split(' ');
-
-                cols[t.index()] = s !== null
-                    ? `${Math.clamp(sizes.min, sizes.max, s)}px`
-                    : 'auto';
-
-                content.style[template] = cols.join(' ');
+                this.updateSize(content.children[i], s);
             }
         }
+    }
+
+    updateSize(t, s)
+    {
+        const content = this.shadow.querySelector('content');
+
+        let sizes = Array.from(t.children, c => window.getComputedStyle(c))
+            .map(c => ({
+                min: Number.parseInt(c.getPropertyValue('min-width')) || -Infinity,
+                max: Number.parseInt(c.getPropertyValue('max-width')) || Infinity,
+            }))
+            .reduce(
+                (t, c) => ({ min: Math.max(t.min, c.min), max: Math.min(t.max, c.max) }),
+                { min: -Infinity, max: Infinity }
+            );
+
+        let mode = this.mode === Docks.vertical ? 1 : 0;
+        let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
+
+        let cols = content.style[template].split(' ');
+        let i = t.index();
+
+        cols[i] = s !== null
+            ? `${Math.clamp(sizes.min, sizes.max, s)}px`
+            : 'auto';
+
+        content.style[template] = cols.join(' ');
     }
 }
