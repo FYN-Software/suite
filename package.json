@@ -17,5 +17,8 @@
     "homepage": "https://github.com/FYN-Software/suite",
     "publishConfig": {
         "access": "public"
+    },
+    "dependencies": {
+        "@fyn-software/component": "^0.0.1"
     }
 }
