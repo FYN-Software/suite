@@ -13,7 +13,7 @@ export default class Icon extends Fyn.Component
             icons: {
                 set: v =>
                 {
-                    if(v === undefined || typeof v === 'boolean')
+                    if(v === undefined || v === null || typeof v === 'boolean')
                     {
                         v = [];
                     }
