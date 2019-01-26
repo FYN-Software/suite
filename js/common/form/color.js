@@ -1,4 +1,4 @@
-import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
+import * as Fyn from '../../../../component/fyn.js';
 
 export default class Color extends Fyn.Component
 {
