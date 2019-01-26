@@ -1,4 +1,4 @@
-import * as Fyn from 'http://fyn-software.cpb/component/fyn.js';
+import * as Fyn from '../../../../component/fyn.js';
 
 const parser = Fyn.Cannoneer.instanciate();
 
