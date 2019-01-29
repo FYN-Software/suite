@@ -47,9 +47,14 @@ export default class Button extends Fyn.Component
 
                 if(this.multi === true)
                 {
-                    const c = Array.from(this.children).find(c => e.path.includes(c));
+                    const rect = this.getBoundingClientRect();
+
+                    this.style.setProperty('--x', `${rect.x + rect.width / 2}px`);
+                    this.style.setProperty('--y', `${rect.bottom}px`);
 
                     this.attributes.toggle('open');
+
+                    const c = Array.from(this.children).find(c => e.path.includes(c));
 
                     if(c !== undefined)
                     {

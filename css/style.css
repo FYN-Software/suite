@@ -11,6 +11,8 @@
     --warning: rgb(var(--warning-rgb));
     --failure: rgb(var(--failure-rgb));
     --success: rgb(var(--success-rgb));
+    --primary-bg: var(--info);
+    --primary-fg: #eee;
     --radius: .5em;
     --checkers: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIklEQVQoU2P8//+/PAMaYGRkfIghNhQUojsaxMfq7iGgEABCMCOXNMUjBwAAAABJRU5ErkJggg==);
 }
@@ -38,6 +40,53 @@ body {
     user-select: none;
 }
 
+a {
+    color: var(--info);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+[tooltip]::before,
+[tooltip]::after {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -.75em;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    pointer-events: none;
+    z-index: 1000;
+    font-size: 1em;
+}
+
+[tooltip]::before {
+    content: '';
+    border-top: .75em solid #333;
+    border-left: 1em solid transparent;
+    border-right: 1em solid transparent;
+    transform: translate(-50%, 0);
+}
+
+[tooltip]::after {
+    content: attr(tooltip);
+    padding: .5em 1em;
+    line-height: 1em;
+    background-color: #333;
+    color: #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: var(--radius);
+    transform: translate(-50%, -100%);
+}
+
+[tooltip]:hover::before,
+[tooltip]:hover::after {
+    opacity: 1;
+}
+
 drag-preview {
     --x: 0px;
     --y: 0px;
@@ -61,6 +110,76 @@ drag-preview > * {
     height: calc(100% * (1 / var(--scale)));
     transform: scale(var(--scale));
     transform-origin: 0 0;
+}
+
+table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    display: table-header-group;
+}
+
+table thead tr:last-child {
+    background-color: transparent;
+    border-bottom: 1px solid #fff1;
+}
+
+table thead tr:last-child th,
+table thead tr:last-child td {
+    background-color: inherit;
+    color: inherit;
+}
+
+table tbody {
+    display: table-row-group;
+}
+
+table tfoot {
+    display: table-footer-group;
+}
+
+table tfoot tr:first-child th,
+table tfoot tr:first-child td {
+    border-top: 1px solid #fff1;
+}
+
+table tr {
+    display: table-row;
+}
+
+table td,
+table th {
+    display: table-cell;
+    vertical-align: middle;
+    padding: .5em 1em;
+    text-align: left;
+}
+
+table td.text-right,
+table th.text-right {
+    text-align: right;
+}
+
+table[striped] tbody > :nth-child(odd) tr {
+    background-color: #fff1;
+}
+
+table[sortable] th {
+    cursor: pointer;
+}
+
+table[focusable] tbody tr:hover td {
+    background-color: var(--info-rgb, .1);
+    transition: background .3s;
+    cursor: pointer;
+}
+
+table[selectable] tbody tr:hover td,
+table[selectable] tbody tr:hover th {
+    background-color: #0001;
 }
 
 [hidden] {

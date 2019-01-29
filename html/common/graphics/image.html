@@ -2,6 +2,7 @@
 
 <style>
     :host {
+        --img-radius: 0;
         display: block;
         position: relative;
         transition: opacity .3s ease-in-out;
@@ -25,6 +26,7 @@
         height: 100%;
         object-fit: contain;
         transition: opacity .3s linear;
+        border-radius: var(--img-radius);
     }
 
     :host[loading] > img {
@@ -35,3 +37,5 @@
         opacity: 0;
     }
 </style>
+
+<slot></slot>

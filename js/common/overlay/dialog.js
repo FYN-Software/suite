@@ -153,8 +153,7 @@ export default class dialog extends Fyn.Component
     show()
     {
         return this.open()
-            .then(() => new Promise(res =>
-            {
+            .then(() => new Promise(res => {
                 this.on({
                     options: {
                         capture: true,

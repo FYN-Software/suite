@@ -2,35 +2,41 @@ import * as Fyn from '../../../../component/fyn.js';
 
 export default class Image extends Fyn.Component
 {
+    static get properties()
+    {
+        return {
+            src: '',
+            loading: true,
+        };
+    }
+
     constructor()
     {
         super();
 
-        // This.observe('src', () => this.load());
-
-        this.load();
+        this.observe({
+            src: {
+                set: v => v || this.src,
+                changed: () => this.load(),
+            },
+        });
     }
 
     load()
     {
-        if(this.hasAttribute('loading'))
-        {
-            return;
-        }
-
-        this.setAttribute('loading', '');
+        this.loading = true;
         this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));
 
         const img = document.createElement('img');
         img.onload = () =>
         {
             this.shadow.appendChild(img);
-            this.removeAttribute('loading');
+            this.loading = false;
         };
         img.onerror = () =>
         {
-            this.removeAttribute('loading');
+            this.loading = false;
         };
-        img.src = this.getAttribute('src');
+        img.src = this.src;
     }
 }

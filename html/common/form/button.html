@@ -24,7 +24,8 @@
     }
 
     :host([primary]) {
-        background-color: var(--info);
+        background-color: var(--primary-bg);
+        color: var(--primary-fg);
     }
 
     :host([flat]) {
@@ -47,15 +48,17 @@
         --bg: #333;
         --spacing: .5em;
         display: grid;
-        position: absolute;
-        top: 100%;
-        left: 0;
+        position: fixed;
+        top: var(--y, 0);
+        left: var(--x, 0);
         padding: var(--spacing);
         background-color: var(--bg);
         box-shadow: 0 0 1em #0003;
         border-radius: var(--radius);
         opacity: 0;
+        transform: translateX(-50%);
         transition: .3s opacity ease-in-out;
+        z-index: 100;
     }
 
     :host([multi][open]) > options {
@@ -69,7 +72,7 @@
         display: block;
         position: absolute;
         bottom: 100%;
-        left: 2em;
+        left: 50%;
         transform: translateX(-50%);
         border-left: var(--size) solid transparent;
         border-right: var(--size) solid transparent;
