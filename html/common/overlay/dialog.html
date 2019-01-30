@@ -82,7 +82,9 @@
 
     :host > header fyn-common-graphics-image {
         --img-radius: var(--radius) var(--radius) 0 0 ;
+        --mode: cover;
         margin: -1em;
+        height: 200px;
     }
 
     :host > header fyn-common-graphics-image::before { 
@@ -95,7 +97,7 @@
         height: 100%;
         background-color: #0007;
         mix-blend-mode: multiply;
-        border-radius: inherit;
+        border-radius: var(--img-radius);
     }
 
     :host > footer {

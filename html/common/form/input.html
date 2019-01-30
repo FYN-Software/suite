@@ -62,6 +62,10 @@
         font-size: .75em;
         color: #eee
     }
+
+    :host([area]) {
+        min-height: 10em;
+    }
 </style>
 
 <label if="{{ label.length > 0 }}">{{ label }}</label>

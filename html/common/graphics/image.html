@@ -24,8 +24,7 @@
     :host > img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        /* object-fit: contain; */
+        object-fit: var(--mode, contain);
         transition: opacity .3s linear;
         border-radius: var(--img-radius);
     }

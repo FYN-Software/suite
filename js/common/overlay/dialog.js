@@ -73,7 +73,18 @@ export default class dialog extends Fyn.Component
             },
         });
 
-        document.body.on({
+        this.on('[slot="footer"][action]', {
+            click: (e, t) => {
+                switch(t.action)
+                {
+                    case 'close':
+                        this.close();
+                        break;
+                }
+            },
+        })
+
+        document.on({
             mousemove: e =>
             {
                 if(moving)
