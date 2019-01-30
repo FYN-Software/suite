@@ -7,7 +7,7 @@ export default class Tabs extends Fyn.Component
         return { index: -1 };
     }
 
-    ready()
+    initialize()
     {
         this.observe({
             index: {
@@ -35,20 +35,6 @@ export default class Tabs extends Fyn.Component
             },
         });
 
-        this.on('#bar', {
-            wheel: (e, t) =>
-            {
-                t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25;
-            },
-        });
-
-        this.on('#bar > tab', {
-            click: (e, t) =>
-            {
-                this.index = t.index();
-            },
-        });
-
         this.on('content > slot', {
             slotchange: e =>
             {
@@ -73,6 +59,23 @@ export default class Tabs extends Fyn.Component
                 }
 
                 this.index = Math.max(tabs.findIndex(t => t.hasAttribute('active')), 0);
+            },
+        });
+    }
+
+    ready()
+    {
+        this.on('#bar', {
+            wheel: (e, t) =>
+            {
+                t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25;
+            },
+        });
+
+        this.on('#bar > tab', {
+            click: (e, t) =>
+            {
+                this.index = t.index();
             },
         });
 

@@ -5,19 +5,15 @@
         display: grid;
         grid-gap: 1em;
         align-content: start;
-        grid-template-rows: auto 1fr auto;
         position: fixed;
-        padding: 1em;
-        margin: 0;
-        border: none;
         box-shadow: 0 0 1em #0007;
         background-color: #222;
+        padding: 1em;
         color: #eee;
         opacity: 0;
         pointer-events: none;
         width: 60vw;
         height: auto;
-        max-height: 90vh;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -52,50 +48,54 @@
     :host > handlers > handler:nth-child(8)    { bottom: 0; left: 5px; width: calc(100% - 10px);   height: 5px;                cursor: ns-resize; }
     :host > handlers > handler:nth-child(2)    { top: 5px;  left: 0;   width: 5px;                 height: calc(100% - 10px);  cursor: ew-resize; }
 
-    :host > *:not(style) {
+    :host > header,
+    :host > article,
+    :host > footer {
         display: grid;
     }
 
     :host > header {
         width: 100%;
+        position: relative;
     }
 
     :host > header h1 {
-        margin: -.4em;
-        margin-bottom: 0;
-        padding: 0 .5em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
 
         background-color: inherit;
         color: inherit;
 
-        height: 2em;
-        min-height: 2em;
-
-        line-height: 2em;
         font-size: 2.5em;
-        text-transform: uppercase;
         font-weight: 900;
-    }
-
-    :host > header h1 span {
-        display: block;
-
-        width: 100%;
-        height: 100%;
-
-        margin: 0;
-        padding: 0;
-
-        font-size: 1em;
-        color: inherit;
+        text-transform: uppercase;
+        text-shadow: 0 0 1em #000;
 
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+
+        transform: translate(-50%, -50%);
+        z-index: 1;
     }
 
-    :host > article {
-        overflow-y: auto;
+    :host > header fyn-common-graphics-image {
+        --img-radius: var(--radius) var(--radius) 0 0 ;
+        margin: -1em;
+    }
+
+    :host > header fyn-common-graphics-image::before { 
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0007;
+        mix-blend-mode: multiply;
+        border-radius: inherit;
     }
 
     :host > footer {
@@ -115,7 +115,7 @@
 </handlers>
 
 <header>
-    <h1 if="{{ title.length > 0 }}"><span>{{ title }}</span></h1>
+    <h1 if="{{ title.length > 0 }}">{{ title }}</h1>
 
     <fyn-common-graphics-image src="{{ img }}" if="{{ img.length > 0 }}"></fyn-common-graphics-image>
 
