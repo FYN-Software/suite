@@ -5,7 +5,6 @@ import Tabs from './tabs.js';
 export default class Docks extends Fyn.Component
 {
     static get vertical() { return '__vertical__'; }
-
     static get horizontal() { return '__horizontal__'; }
 
     static get properties()
@@ -19,22 +18,24 @@ export default class Docks extends Fyn.Component
 
     static get dependencies()
     {
-        return [ 'fyn-common-layout-resizable', 'fyn-common-layout-tabs' ];
+        return [
+            'fyn-common-layout-resizable',
+            'fyn-common-layout-tabs',
+        ];
     }
 
     initialize()
     {
         this.observe({
             layout: {
-                set: v =>
-                {
+                set: v => {
                     if(typeof v === 'object' && v.hasOwnProperty('children'))
                     {
                         const cb = c => c instanceof Object && c.hasOwnProperty('children')
                             ? c.children.filter(cb)
                             : (Array.isArray(c)
-                                ? c.filter(cb)
-                                : c !== undefined
+                                    ? c.filter(cb)
+                                    : c !== undefined
                             );
 
                         v.children = v.children.filter(cb);
@@ -42,8 +43,7 @@ export default class Docks extends Fyn.Component
 
                     return v;
                 },
-                changed: (o, n) =>
-                {
+                changed: (o, n) => {
                     this.draw();
                 },
             },
@@ -61,19 +61,39 @@ export default class Docks extends Fyn.Component
             .join(' ');
 
         this.on('content > fyn-common-layout-resizable', {
-            options: { passive: false },
-            resize: (e, t) =>
-            {
+            options: {
+                passive: false,
+            },
+            resize: (e, t) => {
                 e.preventDefault();
 
-                this.updateSize(t, e.detail.size[this.mode === Docks.vertical ? 'x' : 'y']);
+                let sizes = Array.from(t.children, c => window.getComputedStyle(c))
+                    .map(c => ({
+                        min: Number.parseInt(c.getPropertyValue('min-width')) || -Infinity,
+                        max: Number.parseInt(c.getPropertyValue('max-width')) || Infinity,
+                    }))
+                    .reduce(
+                        (t, c) => ({ min: Math.max(t.min, c.min), max: Math.min(t.max, c.max) }),
+                        { min: -Infinity, max: Infinity }
+                    );
+
+                let mode = this.mode === Docks.vertical ? 1 : 0;
+                let template = [`gridTemplate${['Rows', 'Columns'][mode]}`];
+
+                let s = e.detail.size[mode ? 'x' : 'y'];
+                let cols = content.style[template].split(' ');
+
+                cols[t.index()] = `${Math.clamp(sizes.min, sizes.max, s)}px`;
+
+                content.style[template] = cols.join(' ');
             },
         });
 
         this.on({
-            options: { capture: true },
-            dropped: Fyn.Event.debounce(1, (e, t) =>
-            {
+            options: {
+                capture: true,
+            },
+            dropped: Fyn.Event.debounce(1, (e, t) => {
                 e.detail.path.push(this);
 
                 if(this.parent !== null)
@@ -81,11 +101,10 @@ export default class Docks extends Fyn.Component
                     return;
                 }
 
-                const findPath = (id, tree) =>
-                {
+                const findPath = (id, tree) => {
                     let path = [];
 
-                    for(let [ i, c ] of tree.entries())
+                    for(let [i, c] of tree.entries())
                     {
                         if(Array.isArray(c) && c.includes(id))
                         {
@@ -106,8 +125,7 @@ export default class Docks extends Fyn.Component
 
                     return path;
                 };
-                const findPathToRoot = el =>
-                {
+                const findPathToRoot = el => {
                     let path = [];
 
                     if(el instanceof Tabs)
@@ -120,7 +138,7 @@ export default class Docks extends Fyn.Component
 
                         if(o !== this)
                         {
-                            path.push(...findPathToRoot(o.parentElement), o.parentElement.index());
+                            path.push(...findPathToRoot(o.parentElement), o.parentElement.index())
                         }
                     }
 
@@ -141,19 +159,16 @@ export default class Docks extends Fyn.Component
                     case 'top':
                         placement = 'before';
                         generate = path.first.mode === Docks.vertical;
-
                         break;
 
                     case 'left':
                         placement = 'before';
                         generate = path.first.mode === Docks.horizontal;
-
                         break;
 
                     case 'right':
                         placement = 'after';
                         generate = path.first.mode === Docks.horizontal;
-
                         break;
 
                     case 'bottom':
@@ -163,9 +178,8 @@ export default class Docks extends Fyn.Component
 
                 // TODO(Chris Kruining)
                 // Implement `edge` behavior
-                const mutateTree = (tree, path = []) =>
-                {
-                    for(let [ i, c ] of tree.children.entries())
+                const mutateTree = (tree, path = []) => {
+                    for(let [i, c] of tree.children.entries())
                     {
                         let p = [ ...path, i ];
 
@@ -202,7 +216,7 @@ export default class Docks extends Fyn.Component
                                         ? 1
                                         : 0;
 
-                                    t.children.splice(i + o, 0, [ id ]);
+                                    t.children.splice(i + o, 0, [id]);
                                 }
                             }
 
@@ -222,7 +236,7 @@ export default class Docks extends Fyn.Component
                                 c = tree.children.first;
                             }
 
-                            tree.children[i] = c;
+                            tree.children[i] = c
                         }
                     }
 
@@ -231,15 +245,24 @@ export default class Docks extends Fyn.Component
 
                 this.layout = mutateTree(layout);
             }),
-        });
+        })
 
         this.draw();
     }
 
-    // TODO(Chris Kruining)
-    // Figure out how to reuse
-    // Elements instead of simply
-    // Redrawing everything
+    add(element, path = '')
+    {
+        this.appendChild(element);
+        element.setAttribute('slot', this.children.length);
+
+        // TODO(Chris Kruining)
+        //  Fix this hack and implement
+        //  a proper way to place a new
+        //  item using the path argument
+        this.layout.children.last.push(this.children.length);
+        this.draw();
+    }
+
     draw()
     {
         if((this.layout instanceof Object) !== true || Array.isArray(this.layout))
@@ -249,110 +272,121 @@ export default class Docks extends Fyn.Component
 
         this.mode = this.layout.mode || Docks.vertical;
 
-        this.shadow.querySelectorAll('content > *').clear();
-
         const content = this.shadow.querySelector('content');
+        const count = this.shadow.querySelectorAll('content > *').length;
 
-        for(let i of this.layout.children)
+        for(let [ c, i ] of Object.entries(this.layout.children))
         {
-            const item = new Resizable();
-            item.on({
-                ready: () =>
-                {
-                    item.mode = this.mode;
-                    item.handle = i !== this.layout.children.last;
-                },
-            });
-            content.appendChild(item);
+            c = Number.parseInt(c);
+
+            const add = c >= count;
+            const item = add === true
+                ? new Resizable()
+                : content.children[c];
+            item.mode = this.mode;
+            item.handle = i !== this.layout.children.last;
+
+            if(add === true)
+            {
+                content.appendChild(item);
+            }
 
             Object.defineProperty(item, 'ownerComponent', { value: this, writable: false });
 
             if(i instanceof Object && i.hasOwnProperty('children'))
             {
-                const docks = new Docks();
-                docks.on({
-                    ready: () =>
+                const docks = add === true
+                    ? new Docks()
+                    : item.children[0];
+
+                if(add === true)
+                {
+                    item.appendChild(docks);
+                }
+
+                docks.layout = i;
+                docks.parent = this;
+
+                const count = docks.children.length;
+
+                const cb = c => c instanceof Object && c.hasOwnProperty('children')
+                    ? c.children.flatMap(cb)
+                    : c;
+
+                for(let [ c, t ] of Object.entries(i.children.flatMap(cb)))
+                {
+                    c = Number.parseInt(c);
+                    const add = c >= count;
+
+                    const slot = add === true
+                        ? document.createElement('slot')
+                        : docks.children[c];
+                    slot.name = t;
+                    slot.slot = t;
+
+                    if(add === true)
                     {
-                        docks.layout = i;
-                        docks.parent = this;
-
-                        const cb = c => c instanceof Object && c.hasOwnProperty('children')
-                            ? c.children.flatMap(cb)
-                            : c;
-
-                        for(let t of i.children.flatMap(cb))
-                        {
-                            const slot = document.createElement('slot');
-                            slot.name = t;
-                            slot.slot = t;
-
-                            docks.appendChild(slot);
-                        }
-                    },
-                });
-
-                item.appendChild(docks);
+                        docks.appendChild(slot);
+                    }
+                }
             }
             else if(Array.isArray(i))
             {
-                const tabs = new Tabs();
-                tabs.on({
-                    ready: () =>
+                const tabs = add === true ? new Tabs() : item.children[0];
+
+                if(add === true)
+                {
+                    item.appendChild(tabs);
+                }
+
+                const count = tabs.children.length;
+
+                for(let [ c, t ] of Object.entries(i))
+                {
+                    c = Number.parseInt(c);
+                    const add = c >= count;
+
+                    const slot = add === true
+                        ? document.createElement('slot')
+                        : tabs.children[c];
+                    slot.name = t;
+
+
+                    if(add === true)
                     {
-                        for(let t of i)
-                        {
-                            const slot = document.createElement('slot');
-                            slot.name = t;
-
-                            tabs.appendChild(slot);
-                        }
-                    },
-                });
-
-                item.appendChild(tabs);
+                        tabs.appendChild(slot);
+                    }
+                }
             }
         }
 
         if(this.layout.hasOwnProperty('sizes'))
         {
-            let mode = this.mode === Docks.vertical ? 1 : 0;
-            let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
-
-            content.style[template] = Array(content.children.length)
-                .fill('auto')
-                .join(' ');
-
-            for(let [ i, s ] of this.layout.sizes.entries())
+            for(let [i, s] of this.layout.sizes.entries())
             {
-                this.updateSize(content.children[i], s);
+                const t = content.children[i];
+
+                let sizes = Array.from(t.children, c => window.getComputedStyle(c))
+                    .map(c => ({
+                        min: Number.parseInt(c.getPropertyValue('min-width')) || -Infinity,
+                        max: Number.parseInt(c.getPropertyValue('max-width')) || Infinity,
+                    }))
+                    .reduce(
+                        (t, c) => ({ min: Math.max(t.min, c.min), max: Math.min(t.max, c.max) }),
+                        { min: -Infinity, max: Infinity }
+                    );
+
+                let mode = this.mode === Docks.vertical ? 1 : 0;
+                let template = [`gridTemplate${['Rows', 'Columns'][mode]}`];
+
+                let cols = content.style[template].split(' ');
+
+                cols[t.index()] = s !== null
+                    ? `${Math.clamp(sizes.min, sizes.max, s)}px`
+                    : 'auto';
+
+                content.style[template] = cols.join(' ');
             }
         }
-    }
-
-    updateSize(t, s)
-    {
-        const content = this.shadow.querySelector('content');
-
-        let sizes = Array.from(t.children, c => window.getComputedStyle(c))
-            .map(c => ({
-                min: Number.parseInt(c.getPropertyValue('min-width')) || -Infinity,
-                max: Number.parseInt(c.getPropertyValue('max-width')) || Infinity,
-            }))
-            .reduce(
-                (t, c) => ({ min: Math.max(t.min, c.min), max: Math.min(t.max, c.max) }),
-                { min: -Infinity, max: Infinity }
-            );
-
-        let mode = this.mode === Docks.vertical ? 1 : 0;
-        let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
-
-        let cols = content.style[template].split(' ');
-        let i = t.index();
-
-        cols[i] = s !== null
-            ? `${Math.clamp(sizes.min, sizes.max, s)}px`
-            : 'auto';
-
-        content.style[template] = cols.join(' ');
     }
 }

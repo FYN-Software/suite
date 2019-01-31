@@ -5,7 +5,9 @@ export default class List extends Fyn.Component
 {
     static get properties()
     {
-        return { sortable: false };
+        return {
+            sortable: false,
+        };
     }
 
     ready()
@@ -32,7 +34,7 @@ export default class List extends Fyn.Component
             },
         });
 
-        this.on('slot', {
+        this.on('inner > slot', {
             slotchange: e =>
             {
                 this.items.forEach(i => i.draggable = this.sortable);

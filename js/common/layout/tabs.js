@@ -4,7 +4,9 @@ export default class Tabs extends Fyn.Component
 {
     static get properties()
     {
-        return { index: -1 };
+        return {
+            index: -1,
+        };
     }
 
     initialize()
@@ -36,8 +38,13 @@ export default class Tabs extends Fyn.Component
         });
 
         this.on('content > slot', {
-            slotchange: e =>
+            slotchange: (e, t) =>
             {
+                if(e.target !== t)
+                {
+                    return;
+                }
+
                 this.index = -1;
 
                 const bar  = this.shadow.querySelector('#bar');
