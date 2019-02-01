@@ -79,13 +79,17 @@
         border-bottom: var(--size) solid var(--bg);
     }
 
-    :host > options > slot::slotted(*) {
+    :host > options ::slotted(*) {
         border-radius: var(--radius);
         padding: calc(var(--spacing) / 2) var(--spacing);
     }
 
-    :host > options > slot::slotted(*:hover) {
+    :host > options ::slotted(*:hover) {
         background-color: #fff1;
+    }
+
+    :host > options ::slotted(fyn-common-graphics-icon) {
+        justify-content: start;
     }
 
     :host > ripple {

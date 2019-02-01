@@ -4,15 +4,23 @@
 <style>
     :host {
         display: grid;
+        grid-auto-flow: column;
+        grid-gap: 1em;
         justify-content: center;
         align-content: center;
+        line-height: 1.75em;
     }
 
     :host > .fa-stack {
-        width: auto;
+        width: 1em;
+        height: 1.75em;
+        line-height: 1.75em;
+        font-size: var(--size, 1em);
     }
 </style>
 
 <inner class="fa-stack" for="{{ i in icons }}">
-    <i class="fas fa-{{ i }}"></i>
+    <i class="{{ this.type }} fa-{{ i }}"></i>
 </inner>
+
+<slot></slot>
