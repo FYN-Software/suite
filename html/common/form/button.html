@@ -8,7 +8,7 @@
         grid-auto-flow: column;
         grid-gap: .5em;
         padding: .25em 1em;
-        background-color: #fff1;
+        background-color: var(--bg, #fff1);
         color: inherit;
         border: none;
         border-radius: var(--radius);
@@ -30,6 +30,15 @@
 
     :host([flat]) {
         background-color: transparent;
+    }
+
+    :host([fab]) {
+        --radius: 50%;
+        justify-content: center;
+        width: 3em;
+        height: 3em;
+        background-color: var(--primary-bg);
+        color: var(--primary-fg);
     }
 
     :host > * {
@@ -79,17 +88,13 @@
         border-bottom: var(--size) solid var(--bg);
     }
 
-    :host > options ::slotted(*) {
+    :host > options > slot::slotted(*) {
         border-radius: var(--radius);
         padding: calc(var(--spacing) / 2) var(--spacing);
     }
 
-    :host > options ::slotted(*:hover) {
+    :host > options > slot::slotted(*:hover) {
         background-color: #fff1;
-    }
-
-    :host > options ::slotted(fyn-common-graphics-icon) {
-        justify-content: start;
     }
 
     :host > ripple {
@@ -147,7 +152,7 @@
 
 <ripple><inner></inner></ripple>
 
-<fyn-common-graphics-icon main icons="{{ icons }}" if="{{ icons.length > 0 }}"></fyn-common-graphics-icon>
+<fyn-common-graphics-icon main icons="{{ icons }}" if="{{ icons.length > 0 }}" type="{{ iconType || 'fab' }}"></fyn-common-graphics-icon>
 
 <slot></slot>
 

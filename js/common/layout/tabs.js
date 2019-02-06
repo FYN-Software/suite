@@ -4,9 +4,7 @@ export default class Tabs extends Fyn.Component
 {
     static get properties()
     {
-        return {
-            index: -1,
-        };
+        return { index: -1 };
     }
 
     initialize()
@@ -38,7 +36,7 @@ export default class Tabs extends Fyn.Component
         });
 
         this.on('content > slot', {
-            slotchange: (e, t) =>
+            slotchange: e =>
             {
                 this.index = -1;
 

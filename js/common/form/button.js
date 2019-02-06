@@ -6,6 +6,7 @@ export default class Button extends Fyn.Component
     {
         return {
             icons: [],
+            iconType: 'fas',
             role: '',
             action: '',
             tooltip: '',

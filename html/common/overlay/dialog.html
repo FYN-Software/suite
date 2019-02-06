@@ -2,7 +2,9 @@
 
 <style>
     :host {
+        --translation: -50%;
         display: grid;
+        grid-template-rows: auto 1fr auto;
         grid-gap: 1em;
         align-content: start;
         position: fixed;
@@ -16,7 +18,8 @@
         height: auto;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(var(--translation));
+        transform-origin: center;
         font-size: 1rem;
         z-index: 1000;
         border-radius: var(--radius);

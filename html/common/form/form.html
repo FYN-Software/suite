@@ -1,16 +1,17 @@
 <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
 
 <style>
-
     :host {
-        width: 100%;
         display: grid;
+        grid-template-rows: auto 1fr auto;
         grid-gap: 1em;
+        width: 100%;
     }
 
     :host > fields {
         display: grid;
         grid-gap: 1em;
+        align-content: start;
     }
 
     :host > footer {

@@ -16,8 +16,7 @@ export default class Checkbox extends Fyn.Component
         this.observe({
             checked: {
                 set: v => v === true,
-                changed: (o, n) =>
-                {
+                changed: (o, n) => {
                     this.shadow.querySelector('box').attributes.setOnAssert(n, 'checked');
 
                     this.emit('change', { old: o, new: n });

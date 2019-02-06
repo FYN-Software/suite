@@ -5,8 +5,8 @@ export default class Icon extends Fyn.Component
     static get properties()
     {
         return {
-            icons: [],
             type: 'fas',
+            icons: [],
         };
     }
 

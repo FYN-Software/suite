@@ -22,7 +22,7 @@ export default class dialog extends Fyn.Component
     {
         return {
             open: [
-                [ { opacity: 0, transform: 'translate(-50%, -50%) scale(.4, .4)' }, { opacity: 1, transform: 'translate(-50%, -50%) scale(1, 1)' } ],
+                [ { opacity: 0, transform: 'translate(var(--translation)) scale(.4)' }, { opacity: 1, transform: 'translate(var(--translation)) scale(1)' } ],
                 {
                     duration: 300,
                     easing: 'ease-in-out',
