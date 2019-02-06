@@ -3,4 +3,47 @@
 <style>
     :host {
     }
+
+    :host > box {
+        --bg: #333;
+        --spacing: .5em;
+        display: grid;
+        position: fixed;
+        top: var(--y, 0);
+        left: var(--x, 0);
+        padding: var(--spacing);
+        background-color: var(--bg);
+        box-shadow: 0 0 1em #0003;
+        border-radius: var(--radius);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, .5em);
+        transition: .3s opacity ease-in-out;
+        z-index: 100;
+    }
+
+    :host([open]) > box {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    :host > box::before {
+        --size: .75em;
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: var(--size) solid transparent;
+        border-right: var(--size) solid transparent;
+        border-bottom: var(--size) solid var(--bg);
+    }
 </style>
+
+<!--<fyn-common-form-input label="{{ label }}" placeholder="dd-mm-yyyy"></fyn-common-form-input>-->
+<fyn-common-form-input label="{{ label }}"></fyn-common-form-input>
+
+<box>
+    <fyn-common-misc-calander></fyn-common-misc-calander>
+</box>

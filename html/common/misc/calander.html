@@ -1,0 +1,43 @@
+<link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid-gap: 1em;
+    }
+
+    :host > inner {
+        display: grid;
+        grid-auto-rows: 2.5em;
+        grid-template-columns: repeat(7, 2.5em);
+        grid-gap: .5em;
+    }
+
+    :host > inner span {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        border-radius: 50%;
+    }
+
+    :host > inner::before {
+        content: '';
+        display: block;
+        grid-column: 1 / {{ firstDayOfMonth }};
+    }
+
+    :host > inner span:hover,
+    :host > inner span[today="true"] {
+        background-color: #fff1;
+    }
+
+    :host > inner span[selected] {
+        background-color: var(--primary-bg);
+    }
+</style>
+
+<h1>{{ month }} - {{ year }}</h1>
+
+<inner for="{{ i in days }}">
+    <span today="{{ i === this.day }}">{{ i }}</span>
+</inner>
