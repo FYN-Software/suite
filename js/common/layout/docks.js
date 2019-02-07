@@ -236,10 +236,16 @@ export default class Docks extends Fyn.Component
         this.draw();
     }
 
-    // TODO(Chris Kruining)
-    // Figure out how to reuse
-    // Elements instead of simply
-    // Redrawing everything
+    add(element, position)
+    {
+        // TODO(Chris Kruining)
+        //  Implement positioned addition
+
+        this.appendChild(element);
+
+        this.layout.children.last.push(this.children.length);
+    }
+
     draw()
     {
         if((this.layout instanceof Object) !== true || Array.isArray(this.layout))
@@ -252,64 +258,84 @@ export default class Docks extends Fyn.Component
         this.shadow.querySelectorAll('content > *').clear();
 
         const content = this.shadow.querySelector('content');
+        const count = content.children.length;
 
-        for(let i of this.layout.children)
+        for(let [ c, i ] of Object.entries(this.layout.children).map(([ k, v ]) => [ Number.parseInt(k), v ]))
         {
-            const item = new Resizable();
-            item.on({
-                ready: () =>
-                {
-                    item.mode = this.mode;
-                    item.handle = i !== this.layout.children.last;
-                },
-            });
-            content.appendChild(item);
+            const create = c >= count;
 
-            Object.defineProperty(item, 'ownerComponent', { value: this, writable: false });
+            const item = create
+                ? new Resizable()
+                : content.children[i];
+            item.mode = this.mode;
+            item.handle = i !== this.layout.children.last;
+
+            if(create)
+            {
+                content.appendChild(item);
+
+                Object.defineProperty(item, 'ownerComponent', { value: this, writable: false });
+            }
 
             if(i instanceof Object && i.hasOwnProperty('children'))
             {
-                const docks = new Docks();
-                docks.on({
-                    ready: () =>
+                const docks = create
+                    ? new Docks()
+                    : item.children[i];
+                docks.layout = i;
+                docks.parent = this;
+
+                if(create)
+                {
+                    item.appendChild(docks);
+                }
+
+                const count = docks.childrne.length;
+                const cb = c => c instanceof Object && c.hasOwnProperty('children')
+                    ? c.children.flatMap(cb)
+                    : c;
+
+                for(let [ c, t ] of Object.entries(i.children.flatMap(cb)).map(([ k, v ]) => [ Number.parseInt(k), v ]))
+                {
+                    const create = c >= count;
+                    const slot = create
+                        ? document.createElement('slot')
+                        : docks.children[i];
+                    slot.name = t;
+                    slot.slot = t;
+
+                    if(create)
                     {
-                        docks.layout = i;
-                        docks.parent = this;
-
-                        const cb = c => c instanceof Object && c.hasOwnProperty('children')
-                            ? c.children.flatMap(cb)
-                            : c;
-
-                        for(let t of i.children.flatMap(cb))
-                        {
-                            const slot = document.createElement('slot');
-                            slot.name = t;
-                            slot.slot = t;
-
-                            docks.appendChild(slot);
-                        }
-                    },
-                });
-
-                item.appendChild(docks);
+                        tabs.appendChild(slot);
+                    }
+                }
             }
             else if(Array.isArray(i))
             {
-                const tabs = new Tabs();
-                tabs.on({
-                    ready: () =>
+                const tabs = create
+                    ? new Tabs()
+                    : item.children[i];
+
+                if(create)
+                {
+                    item.appendChild(tabs);
+                }
+
+                const count = tabs.children.length;
+
+                for(let [ c, t ] of Object.entries(i).map(([ k, v ]) => [ Number.parseInt(k), v ]))
+                {
+                    const create = c >= count;
+                    const slot = create
+                        ? document.createElement('slot')
+                        : tabs.children[i];
+                    slot.name = t;
+
+                    if(create)
                     {
-                        for(let t of i)
-                        {
-                            const slot = document.createElement('slot');
-                            slot.name = t;
-
-                            tabs.appendChild(slot);
-                        }
-                    },
-                });
-
-                item.appendChild(tabs);
+                        tabs.appendChild(slot);
+                    }
+                }
             }
         }
 
