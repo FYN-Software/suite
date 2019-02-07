@@ -1,7 +1,5 @@
 import * as Fyn from '../../../../component/fyn.js';
 
-const parser = Fyn.Cannoneer.instanciate();
-
 export default class Input extends Fyn.Component
 {
     static get properties()

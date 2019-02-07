@@ -25,9 +25,6 @@ export default class Font extends Fyn.Component
             },
         });
 
-        // Fyn.Utilities.Font
-        //     .list(this.key)
-
         fetch('http://fyn-software.cpb/suite/fonts.json')
             .then(r => r.json())
             .then(f =>
@@ -36,7 +33,6 @@ export default class Font extends Fyn.Component
 
                 for(const i of this._items)
                 {
-                    // Console.log(i);
                     Fyn.Utilities.Font.preview(i);
                 }
 
