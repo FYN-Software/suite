@@ -4,9 +4,15 @@ import Tabs from './tabs.js';
 
 export default class Docks extends Fyn.Component
 {
-    static get vertical() { return '__vertical__'; }
+    static get vertical()
+    {
+        return '__vertical__';
+    }
 
-    static get horizontal() { return '__horizontal__'; }
+    static get horizontal()
+    {
+        return '__horizontal__';
+    }
 
     static get properties()
     {
@@ -243,7 +249,12 @@ export default class Docks extends Fyn.Component
 
         this.appendChild(element);
 
-        this.layout.children.last.push(this.children.length);
+        const i = this.children.length;
+
+        element.setAttribute('slot', i);
+        this.layout.children.last.push(i);
+
+        this.draw();
     }
 
     draw()
@@ -255,8 +266,6 @@ export default class Docks extends Fyn.Component
 
         this.mode = this.layout.mode || Docks.vertical;
 
-        this.shadow.querySelectorAll('content > *').clear();
-
         const content = this.shadow.querySelector('content');
         const count = content.children.length;
 
@@ -266,7 +275,7 @@ export default class Docks extends Fyn.Component
 
             const item = create
                 ? new Resizable()
-                : content.children[i];
+                : content.children[c];
             item.mode = this.mode;
             item.handle = i !== this.layout.children.last;
 
@@ -281,7 +290,7 @@ export default class Docks extends Fyn.Component
             {
                 const docks = create
                     ? new Docks()
-                    : item.children[i];
+                    : item.children[0];
                 docks.layout = i;
                 docks.parent = this;
 
@@ -300,7 +309,7 @@ export default class Docks extends Fyn.Component
                     const create = c >= count;
                     const slot = create
                         ? document.createElement('slot')
-                        : docks.children[i];
+                        : docks.children[c];
                     slot.name = t;
                     slot.slot = t;
 
@@ -314,7 +323,7 @@ export default class Docks extends Fyn.Component
             {
                 const tabs = create
                     ? new Tabs()
-                    : item.children[i];
+                    : item.children[0];
 
                 if(create)
                 {
@@ -328,7 +337,7 @@ export default class Docks extends Fyn.Component
                     const create = c >= count;
                     const slot = create
                         ? document.createElement('slot')
-                        : tabs.children[i];
+                        : tabs.children[c];
                     slot.name = t;
 
                     if(create)
