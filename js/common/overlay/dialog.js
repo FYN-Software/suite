@@ -22,7 +22,7 @@ export default class dialog extends Fyn.Component
     {
         return {
             open: [
-                [ { opacity: 0, transform: 'translate(var(--translation)) scale(.4)' }, { opacity: 1, transform: 'translate(var(--translation)) scale(1)' } ],
+                [ { opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(1)' } ],
                 {
                     duration: 300,
                     easing: 'ease-in-out',
@@ -149,6 +149,13 @@ export default class dialog extends Fyn.Component
 
     open()
     {
+        const rect = this.getBoundingClientRect();
+
+        console.log(rect, window.innerWidth, window.innerHeight);
+
+        this.style.setProperty('--x', `${window.innerWidth / 2 - rect.width / 2}px`);
+        this.style.setProperty('--y', `${window.innerHeight / 2 - rect.height / 2}px`);
+
         return this.hasAttribute('open')
             ? Promise.resolve()
             : this.animate('open', .25).stage(() => this.setAttribute('open', ''));
