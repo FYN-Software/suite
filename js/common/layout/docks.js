@@ -267,6 +267,12 @@ export default class Docks extends Fyn.Component
         this.mode = this.layout.mode || Docks.vertical;
 
         const content = this.shadow.querySelector('content');
+
+        if(content === null)
+        {
+            return;
+        }
+
         const count = content.children.length;
 
         for(let [ c, i ] of Object.entries(this.layout.children).map(([ k, v ]) => [ Number.parseInt(k), v ]))
