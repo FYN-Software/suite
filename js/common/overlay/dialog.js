@@ -151,8 +151,6 @@ export default class dialog extends Fyn.Component
     {
         const rect = this.getBoundingClientRect();
 
-        console.log(rect, window.innerWidth, window.innerHeight);
-
         this.style.setProperty('--x', `${window.innerWidth / 2 - rect.width / 2}px`);
         this.style.setProperty('--y', `${window.innerHeight / 2 - rect.height / 2}px`);
 
