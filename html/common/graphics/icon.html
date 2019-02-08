@@ -4,12 +4,19 @@
 <style>
     :host {
         display: grid;
+        grid-auto-flow: column;
+        grid-gap: .5em;
         justify-content: center;
         align-content: center;
+        height: 2em;
+        line-height: 2em;
     }
 
     :host > .fa-stack {
-        width: auto;
+        width: 1em;
+        height: inherit;
+        line-height: inherit;
+        font-size: var(--size, 1em);
     }
 </style>
 
