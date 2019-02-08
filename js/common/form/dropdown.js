@@ -59,7 +59,7 @@ export default class Dropdown extends Fyn.Component
                 },
                 changed: (o, n) =>
                 {
-                    this.index = this.options.findIndex(o => o.value === this.value);
+                    this.index = this.options.findIndex(o => Fyn.Extends.equals(o, this.value));
 
                     update();
                 },
@@ -79,9 +79,10 @@ export default class Dropdown extends Fyn.Component
                 },
             },
             value: {
-                changed: (o, n) =>
-                {
-                    this.index = this.options.findIndex(o => o.value === n);
+                changed: (o, n) => {
+                    console.log(n, this.options);
+
+                    this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n));
                 },
             },
             filter: { changed: update },
@@ -119,12 +120,11 @@ export default class Dropdown extends Fyn.Component
         });
 
         this.on('options > *', {
-            click: (e, t) =>
-            {
-                this.value = t.option.value;
+            click: Fyn.Event.debounce(1, (e, t) => {
+                this.value = t.option;
 
                 this.removeAttribute('open');
-            },
+            }),
         });
 
         document.body.on({ click: () => this.removeAttribute('open') });
@@ -136,6 +136,7 @@ export default class Dropdown extends Fyn.Component
         c.childNodes.clear();
 
         this._item = loop.item;
+        this._item.__this__ = loop.parent;
         this._item.option = this.options[this.index] || { value: null };
 
         c.appendChild(this._item);

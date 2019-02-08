@@ -25,6 +25,7 @@
 
     :host > fyn-common-form-button > value {
         display: grid;
+        justify-content: start;
         min-width: 1em;
     }
 
@@ -42,7 +43,7 @@
     }
 
     :host > options {
-        display: none;
+        display: grid;
         contain: content;
         position: fixed;
         top: var(--y);
@@ -56,13 +57,15 @@
         border-radius: 0 0 var(--radius) var(--radius);
         overflow-x: hidden;
         overflow-y: auto;
+        opacity: 0;
+        pointer-events: none;
     }
 
     :host > options > * {
         display: grid;
         grid-auto-flow: column;
         justify-content: start;
-        margin: 0 -1px;
+        align-content: center;
         padding: 0 1em;
         line-height: 2.5em;
         min-height: 2.5em;
@@ -89,7 +92,8 @@
     }
 
     :host([open]) > options {
-        display: grid;
+        opacity: 1;
+        pointer-events: all;
     }
 </style>
 
