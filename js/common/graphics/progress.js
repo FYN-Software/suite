@@ -9,7 +9,7 @@ export default class Progress extends Fyn.Component
         };
     }
 
-    initialize()
+    ready()
     {
         this.observe({
             value: {

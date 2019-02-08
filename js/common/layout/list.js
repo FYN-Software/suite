@@ -5,7 +5,9 @@ export default class List extends Fyn.Component
 {
     static get properties()
     {
-        return { sortable: false };
+        return {
+            sortable: false,
+        };
     }
 
     ready()
@@ -33,8 +35,7 @@ export default class List extends Fyn.Component
         });
 
         this.on('slot', {
-            slotchange: e =>
-            {
+            slotchange: e => {
                 this.items.forEach(i => i.draggable = this.sortable);
             },
         });
@@ -116,6 +117,10 @@ export default class List extends Fyn.Component
 
     get items()
     {
-        return this.shadow.querySelector('slot').assignedElements({ flatten: true });
+        const slot = this.shadow.querySelector('slot');
+
+        return slot !== null
+            ? slot.assignedElements({ flatten: true })
+            : [];
     }
 }
