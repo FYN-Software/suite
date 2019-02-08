@@ -80,8 +80,6 @@ export default class Dropdown extends Fyn.Component
             },
             value: {
                 changed: (o, n) => {
-                    console.log(n, this.options);
-
                     this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n));
                 },
             },
