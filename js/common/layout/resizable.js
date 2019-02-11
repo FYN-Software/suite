@@ -1,21 +1,41 @@
 import * as Fyn from '../../../../component/fyn.js';
 
+const vertical = Symbol('vertical');
+const horizontal = Symbol('horizontal');
+
 export default class Resizable extends Fyn.Component
 {
-    static get vertical() { return '__vertical__'; }
-
-    static get horizontal() { return '__horizontal__'; }
+    static get direction()
+    {
+        return {
+            vertical,
+            horizontal,
+        };
+    }
 
     static get properties()
     {
         return {
-            mode: Resizable.vertical,
+            mode: vertical,
             handle: true,
         };
     }
 
     initialize()
     {
+        this.observe({
+            mode: {
+                set: v => {
+                    if(Object.values(Resizable.direction).includes(v) === false)
+                    {
+                        throw new Error(`Expected mode to be a value of Resizable.direction, got ${v}`);
+                    }
+
+                    return v;
+                },
+            },
+        });
+
         let start = null;
         let size = null;
         let id = null;
