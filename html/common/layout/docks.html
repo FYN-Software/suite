@@ -21,19 +21,19 @@
         position: relative;
     }
 
-    :host > content[mode="__vertical__"] {
+    :host > content[mode="Symbol(vertical)"] {
         grid-auto-flow: column;
     }
 
-    :host > content[mode="__vertical__"] > *:last-child {
+    :host > content[mode="Symbol(vertical)"] > *:last-child {
         justify-self: stretch;
     }
 
-    :host > content[mode="__horizontal__"] {
+    :host > content[mode="Symbol(horizontal)"] {
         grid-auto-flow: row;
     }
 
-    :host > content[mode="__horizontal__"] > *:last-child {
+    :host > content[mode="Symbol(horizontal)"] > *:last-child {
         align-self: stretch;
     }
 </style>

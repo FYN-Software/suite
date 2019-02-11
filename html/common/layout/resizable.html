@@ -36,7 +36,7 @@
         box-shadow: 0 0 .25em #0007;
     }
 
-    :host > handle[mode="__vertical__"] {
+    :host > handle[mode="Symbol(vertical)"] {
         right: 0;
         top: 0;
         width: 2px;
@@ -45,15 +45,15 @@
         cursor: ew-resize;
     }
 
-    :host > handle[mode="__vertical__"]:hover {
+    :host > handle[mode="Symbol(vertical)"]:hover {
         width: .5em;
     }
 
-    :host([resizing]) > handle[mode="__vertical__"] {
+    :host([resizing]) > handle[mode="Symbol(vertical)"] {
         width: .5em;
     }
 
-    :host > handle[mode="__horizontal__"] {
+    :host > handle[mode="Symbol(horizontal)"] {
         left: 0;
         bottom: 0;
         width: 100%;
@@ -62,11 +62,11 @@
         cursor: ns-resize;
     }
 
-    :host > handle[mode="__horizontal__"]:hover {
+    :host > handle[mode="Symbol(horizontal)"]:hover {
         height: .5em;
     }
 
-    :host([resizing]) > handle[mode="__horizontal__"] {
+    :host([resizing]) > handle[mode="Symbol(horizontal)"] {
         height: .5em;
     }
 </style>
