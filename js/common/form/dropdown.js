@@ -80,7 +80,7 @@ export default class Dropdown extends Fyn.Component
             },
             value: {
                 changed: (o, n) => {
-                    this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n));
+                    this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n) || (o.hasOwnProperty('value') && o.value === n));
                 },
             },
             filter: { changed: update },
@@ -89,11 +89,12 @@ export default class Dropdown extends Fyn.Component
 
     ready()
     {
-        this.shadow.querySelector('options').on({ templatechange: e => this.__item = e.detail.loop });
+        this.shadow.querySelector('options').on({
+            templatechange: e => this.__item = e.detail.loop,
+        });
 
         this.on('fyn-common-form-button', {
-            click: (e, t) =>
-            {
+            click: (e, t) => {
                 const rect = this.getBoundingClientRect();
 
                 this.style.setProperty('--x', `${rect.x}px`);
@@ -131,11 +132,11 @@ export default class Dropdown extends Fyn.Component
     set __item(loop)
     {
         const c = this.shadow.querySelector('fyn-common-form-button > value');
+
         c.childNodes.clear();
 
         this._item = loop.item;
-        this._item.__this__ = loop.parent;
-        this._item.option = this.options[this.index] || { value: null };
+        this._item.option = this.options[this.index] || {};
 
         c.appendChild(this._item);
     }
