@@ -4,7 +4,9 @@ export default class Flag extends Fyn.Component
 {
     static get properties()
     {
-        return { iso: '' };
+        return {
+            iso: Fyn.Data.String(''),
+        };
     }
 
     initialize()
