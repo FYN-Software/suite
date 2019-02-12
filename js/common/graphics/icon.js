@@ -14,8 +14,7 @@ export default class Icon extends Fyn.Component
     {
         this.observe({
             icons: {
-                set: v =>
-                {
+                set: v => {
                     if(v === undefined || v === null || typeof v === 'boolean')
                     {
                         v = [];
@@ -32,9 +31,6 @@ export default class Icon extends Fyn.Component
                     }
 
                     return v;
-                },
-                changed: (o, n) =>
-                {
                 },
             },
         });
