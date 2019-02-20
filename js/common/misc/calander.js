@@ -23,6 +23,7 @@ export default class Calander extends Fyn.Component
             const date = new Date();
             this.year = date.getFullYear();
             this.month = date.getMonth();
+            this.day = date.getDate();
         }
 
         const date = new Date(this.year, this.month, 1);
