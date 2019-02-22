@@ -5,8 +5,8 @@ export default class Image extends Fyn.Component
     static get properties()
     {
         return {
-            src: Fyn.Data.String(''),
-            loading: Fyn.Data.Boolean(true),
+            src: Fyn.Data.String.default(''),
+            loading: Fyn.Data.Boolean.default(true),
         };
     }
 

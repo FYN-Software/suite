@@ -5,7 +5,7 @@ export default class Flag extends Fyn.Component
     static get properties()
     {
         return {
-            iso: Fyn.Data.String(''),
+            iso: Fyn.Data.String.default(''),
         };
     }
 

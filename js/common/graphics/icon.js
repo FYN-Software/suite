@@ -5,7 +5,7 @@ export default class Icon extends Fyn.Component
     static get properties()
     {
         return {
-            type: Fyn.Data.String('fas'),
+            type: Fyn.Data.String.default('fas'),
             icons: [],
         };
     }
