@@ -1,4 +1,10 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
+
+class Mode extends Types.Enum.define({
+    static: 0,
+    grow: 1,
+}){}
 
 export default class dialog extends Fyn.Component
 {
@@ -17,6 +23,21 @@ export default class dialog extends Fyn.Component
             resizable: false,
         };
     }
+    // static get properties()
+    // {
+    //     return {
+    //         title: new Types.String,
+    //         img: new Types.String,
+    //         width:  Types.Number.default(800),
+    //         height:  Types.Number.default(500),
+    //         min_width: Types.Number.default(300),
+    //         min_height: Types.Number.default(200),
+    //         top: new Types.Number,
+    //         left: new Types.Number,
+    //         mode: Mode.default(Mode.grow),
+    //         resizable: new Types.Boolean,
+    //     };
+    // }
 
     static get animations()
     {
@@ -54,7 +75,7 @@ export default class dialog extends Fyn.Component
         let moving = false;
         let moveHandle = null;
 
-        if(this.mode === 'grow')
+        if(this.mode === Mode.grow)
         {
             this.height = this.offsetHeight;
         }
@@ -82,7 +103,7 @@ export default class dialog extends Fyn.Component
                         break;
                 }
             },
-        })
+        });
 
         document.on({
             mousemove: e =>
@@ -192,7 +213,7 @@ export default class dialog extends Fyn.Component
             }
 
             const style = window.getComputedStyle(this, null);
-            const min_height = this.mode === 'grow'
+            const min_height = this.mode === Mode.grow
                 ? Math.max(
                     this.querySelector(':scope > header').offsetHeight
                         + this.querySelector(':scope > article').offsetHeight
