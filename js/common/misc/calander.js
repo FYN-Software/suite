@@ -1,15 +1,18 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Calander extends Fyn.Component
 {
     static get properties()
     {
         return {
-            year: 2019,
-            month: 2,
-            day: 6,
-            days: [],
-            firstDayOfMonth: [],
+            value: new Types.Datetime,
+            today: Types.Datetime.default(Date.now()),
+            year: new Types.Number,
+            month: new Types.Number,
+            day: new Types.Number,
+            days: Types.List.type(Types.Number),
+            firstDayOfMonth: new Types.Number,
         };
     }
 
@@ -19,24 +22,13 @@ export default class Calander extends Fyn.Component
 
     ready()
     {
-        {
-            const date = new Date();
-            this.year = date.getFullYear();
-            this.month = date.getMonth();
-            this.day = date.getDate();
-        }
+        const date = new Date();
+        this.year = date.getFullYear();
+        this.month = date.getMonth();
+        this.day = date.getDate();
 
-        const date = new Date(this.year, this.month, 1);
-        this.firstDayOfMonth = date.getDay();
-        this.days = [];
-
-        while(date.getMonth() === this.month)
-        {
-            const day = new Date(date).getDate();
-
-            this.days.push(day);
-            date.setDate(date.getDate() + 1);
-        }
+        this.days = Array.from(Array(new Date(this.year, this.month + 1, 0).getDate()).keys(), i => Types.Number.default(++i));
+        this.firstDayOfMonth = new Date(this.year, this.month, 1).getDay();
 
         this.on('inner span', {
             click: (e, t) => {
