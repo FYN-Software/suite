@@ -11,33 +11,16 @@ export default class dialog extends Fyn.Component
     static get properties()
     {
         return {
-            title: '',
-            img: '',
-            width: 800,
-            height: 500,
-            min_width: 300,
-            min_height: 200,
-            top: 0,
-            left: 0,
-            mode: 'grow',
-            resizable: false,
+            title: new Types.String,
+            img: new Types.String,
+            width:  Types.Number.default(800).min(300),
+            height:  Types.Number.default(500).min(200),
+            top: new Types.Number,
+            left: new Types.Number,
+            mode: Mode.default(Mode.grow),
+            resizable: new Types.Boolean,
         };
     }
-    // static get properties()
-    // {
-    //     return {
-    //         title: new Types.String,
-    //         img: new Types.String,
-    //         width:  Types.Number.default(800),
-    //         height:  Types.Number.default(500),
-    //         min_width: Types.Number.default(300),
-    //         min_height: Types.Number.default(200),
-    //         top: new Types.Number,
-    //         left: new Types.Number,
-    //         mode: Mode.default(Mode.grow),
-    //         resizable: new Types.Boolean,
-    //     };
-    // }
 
     static get animations()
     {
@@ -61,22 +44,12 @@ export default class dialog extends Fyn.Component
 
     ready()
     {
-        if(!Number.isInteger(this.width))
-        {
-            this.style.width = this.width;
-
-            return;
-        }
-        else
-        {
-            this.width = Math.max(this.width, this.offsetWidth);
-        }
-
         let moving = false;
         let moveHandle = null;
 
         if(this.mode === Mode.grow)
         {
+            this.width = this.offsetWidth;
             this.height = this.offsetHeight;
         }
 
@@ -104,76 +77,14 @@ export default class dialog extends Fyn.Component
                 }
             },
         });
-
-        document.on({
-            mousemove: e =>
-            {
-                if(moving)
-                {
-                    let delta = {
-                        x: 0,
-                        y: 0,
-                        reposition: moveHandle.index() < 5,
-                    };
-
-                    let directions = (moveHandle.getAttribute('side') || moveHandle.getAttribute('corner')).split('-');
-
-                    for(let direction of directions)
-                    {
-                        switch(direction)
-                        {
-                            case 'top':
-                                delta.y = this.$.top - e.clientY;
-
-                                break;
-                            case 'right':
-                                delta.x = -1 * (this.$.left + this.$.width - e.clientX);
-
-                                break;
-                            case 'bottom':
-                                delta.y = -1 * (this.$.top + this.$.height - e.clientY);
-
-                                break;
-                            case 'left':
-                                delta.x = this.$.left - e.clientX;
-
-                                break;
-                        }
-                    }
-
-                    console.log(delta.reposition);
-
-                    if(delta.reposition)
-                    {
-                        this.$.left += (moveHandle.index() === 4 ? 1 : -1) * delta.x;
-                        this.$.top += (moveHandle.index() === 0 ? 1 : -1) * delta.y;
-                    }
-
-                    this.$.width += delta.x;
-                    this.$.height += delta.y;
-
-                    this.correctSize();
-                }
-            },
-            mouseup: (e, target) =>
-            {
-                if(moving)
-                {
-                    moving = false;
-                    moveHandle = null;
-                }
-            },
-        });
-
-        this.correctSize();
     }
 
     open()
     {
-        const rect = this.getBoundingClientRect();
-
-        this.style.setProperty('--x', `${window.innerWidth / 2 - rect.width / 2}px`);
-        this.style.setProperty('--y', `${window.innerHeight / 2 - rect.height / 2}px`);
+        this.style.setProperty('--x', `${window.innerWidth / 2 - this.width / 2}px`);
+        this.style.setProperty('--y', `${window.innerHeight / 2 - this.height / 2}px`);
+        this.style.setProperty('--w', `${this.width}px`);
+        this.style.setProperty('--h', `${this.height}px`);
 
         return this.hasAttribute('open')
             ? Promise.resolve()
@@ -201,44 +112,5 @@ export default class dialog extends Fyn.Component
                 });
             }))
             .stage(this.close.bind(this));
-    }
-
-    correctSize()
-    {
-        if(this.resizable)
-        {
-            if(this.width < this.min_width)
-            {
-                this.width = this.min_width;
-            }
-
-            const style = window.getComputedStyle(this, null);
-            const min_height = this.mode === Mode.grow
-                ? Math.max(
-                    this.querySelector(':scope > header').offsetHeight
-                        + this.querySelector(':scope > article').offsetHeight
-                        + Number.parseInt(style.getPropertyValue('padding-top'))
-                        + Number.parseInt(style.getPropertyValue('padding-bottom')),
-                    this.min_height
-                )
-                : this.min_height;
-
-            if(this.height < min_height)
-            {
-                this.height = min_height;
-            }
-
-            this.setStyle();
-        }
-    }
-
-    setStyle()
-    {
-        this.style.transform = 'none';
-
-        this.style.top      = `${this.top}px`;
-        this.style.left     = `${this.left}px`;
-        this.style.width    = `${this.width}px`;
-        this.style.height   = `${this.height}px`;
     }
 }
