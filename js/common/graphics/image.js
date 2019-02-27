@@ -12,25 +12,27 @@ export default class Image extends Fyn.Component
 
     initialize()
     {
-        this.src.on({
-            changed: (o, n) => {
-                this.loading = true;
-                this.setAttribute('loading', '');
-                this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));
+        this.observe({
+            src: {
+                changed: e => {
+                    this.loading = true;
+                    this.setAttribute('loading', '');
+                    this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));
 
-                const img = document.createElement('img');
-                img.onload = () =>
-                {
-                    this.shadow.appendChild(img);
-                    this.loading = false;
-                    this.removeAttribute('loading');
-                };
-                img.onerror = () =>
-                {
-                    this.loading = false;
-                    this.removeAttribute('loading');
-                };
-                img.src = this.src;
+                    const img = document.createElement('img');
+                    img.onload = () =>
+                    {
+                        this.shadow.appendChild(img);
+                        this.loading = false;
+                        this.removeAttribute('loading');
+                    };
+                    img.onerror = () =>
+                    {
+                        this.loading = false;
+                        this.removeAttribute('loading');
+                    };
+                    img.src = String(this.src);
+                },
             },
         });
     }
