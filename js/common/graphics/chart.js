@@ -1,12 +1,13 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Chart extends Fyn.Component
 {
     static get properties()
     {
         return {
-            type: 'line',
-            interpolation: 'spline',
+            type: Types.String.default('line'),
+            interpolation: Types.String.default('spline'),
         };
     }
 

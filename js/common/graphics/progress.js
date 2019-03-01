@@ -1,22 +1,20 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Progress extends Fyn.Component
 {
     static get properties()
     {
         return {
-            value: 0.0,
+            value: Types.Number.min(0.0).max(1.0),
         };
     }
 
     ready()
     {
         this.observe({
-            value: {
-                set: v => Math.clamp(0, 1, Number.parseFloat(v)),
-                changed: (o, n) => {
-                    this.shadow.querySelector('value').style.width = `${n * 100 }%`;
-                },
+            value: (o, n) => {
+                this.shadow.querySelector('value').style.width = `${n * 100 }%`;
             },
         });
     }

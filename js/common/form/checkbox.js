@@ -1,26 +1,24 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Checkbox extends Fyn.Component
 {
     static get properties()
     {
         return {
-            toggle: false,
-            checked: false,
-            label: '',
+            toggle: new Types.Boolean,
+            checked: new Types.Boolean,
+            label: new Types.String,
         };
     }
 
     initialize()
     {
         this.observe({
-            checked: {
-                set: v => v === true,
-                changed: (o, n) => {
-                    this.shadow.querySelector('box').attributes.setOnAssert(n, 'checked');
+            checked: (o, n) => {
+                this.shadow.querySelector('box').attributes.setOnAssert(n, 'checked');
 
-                    this.emit('change', { old: o, new: n });
-                },
+                this.emit('change', { old: o, new: n });
             },
         });
     }
@@ -28,10 +26,7 @@ export default class Checkbox extends Fyn.Component
     ready()
     {
         this.on('box, label', {
-            click: Fyn.Event.debounce(10, e =>
-            {
-                this.checked = !this.checked;
-            }),
+            click: Fyn.Event.debounce(10, () => this.checked = !this.checked),
         });
     }
 }

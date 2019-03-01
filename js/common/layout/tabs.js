@@ -1,37 +1,37 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Tabs extends Fyn.Component
 {
     static get properties()
     {
-        return { index: -1 };
+        return {
+            index: Types.Number.default(-1),
+        };
     }
 
     initialize()
     {
         this.observe({
-            index: {
-                changed: (o, n) =>
+            index: (o, n) => {
+                if(this.index < 0 || this.index >= this.tabs.length)
                 {
-                    if(this.index < 0 || this.index >= this.tabs.length)
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    const content = this.tabs;
-                    content.forEach(t => t.removeAttribute('active'));
-                    content[this.index].setAttribute('active', '');
+                const content = this.tabs;
+                content.forEach(t => t.removeAttribute('active'));
+                content[this.index].setAttribute('active', '');
 
-                    const tabs = this.shadow.querySelectorAll('#bar > tab');
+                const tabs = this.shadow.querySelectorAll('#bar > tab');
 
-                    if(tabs.length === 0)
-                    {
-                        return;
-                    }
+                if(tabs.length === 0)
+                {
+                    return;
+                }
 
-                    tabs.forEach(t => t.removeAttribute('active'));
-                    tabs[this.index].setAttribute('active', '');
-                },
+                tabs.forEach(t => t.removeAttribute('active'));
+                tabs[this.index].setAttribute('active', '');
             },
         });
 

@@ -1,29 +1,39 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Button extends Fyn.Component
 {
     static get properties()
     {
         return {
-            icons: [],
-            iconType: 'fas',
-            role: '',
-            action: '',
-            tooltip: '',
-            multi: false,
+            icons: Types.List.type(Types.String).set(v => {
+                if(v === undefined || v === null || typeof v === 'boolean')
+                {
+                    v = [];
+                }
+
+                if(Array.isArray(v) !== true)
+                {
+                    v = JSON.tryParse(v.replace(/'/g, '"'));
+                }
+
+                if(Array.isArray(v) !== true)
+                {
+                    v = [ v ];
+                }
+
+                return v;
+            }),
+            iconType: Types.String.default('fas'),
+            role: new Types.String,
+            action: new Types.String,
+            tooltip: new Types.String,
+            multi: new Types.Boolean,
         };
     }
 
     initialize()
     {
-        this.observe({
-            multi: {
-                set: v => typeof v === 'boolean'
-                    ? v
-                    : this.multi,
-            },
-        });
-
         this.on({
             click: (e, target) =>
             {

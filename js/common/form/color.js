@@ -1,32 +1,30 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Color extends Fyn.Component
 {
     static get properties()
     {
         return {
-            label: '',
-            value: {
-                hue: 180,
-                saturation: 0,
-                lightness: .2,
-                alpha: 1,
-            },
+            label: new Types.String,
+            value: Types.Object.define({
+                hue: Types.Number.min(0).max(360).default(180),
+                saturation: Types.Number.min(0).max(1).default(0),
+                lightness: Types.Number.min(0).max(1).default(.2),
+                alpha: Types.Number.min(0).max(1).default(1),
+            }),
         };
     }
 
     initialize()
     {
         this.observe({
-            value: {
-                changed: (o, n) =>
-                {
-                    const { hue, saturation, lightness, alpha } = this.value;
+            value: (o, n) => {
+                const { hue, saturation, lightness, alpha } = this.value;
 
-                    this.style.setProperty('--value', `hsla(${hue}, ${saturation * 100}%, ${lightness * 100}%, ${alpha})`);
+                this.style.setProperty('--value', `hsla(${hue}, ${saturation * 100}%, ${lightness * 100}%, ${alpha})`);
 
-                    this.emit('change', { old: o, new: n });
-                },
+                this.emit('change', { old: o, new: n });
             },
         });
     }

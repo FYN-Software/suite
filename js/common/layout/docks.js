@@ -1,25 +1,15 @@
 import * as Fyn from '../../../../component/fyn.js';
-import Resizable from './resizable.js';
+import * as Types from '../../../../data/types.js';
+import { default as Resizable, Direction } from './resizable.js';
 import Tabs from './tabs.js';
-
-const vertical = Symbol('vertical');
-const horizontal = Symbol('horizontal');
 
 export default class Docks extends Fyn.Component
 {
-    static get direction()
-    {
-        return {
-            vertical,
-            horizontal,
-        };
-    }
-
     static get properties()
     {
         return {
-            mode: vertical,
-            layout: [],
+            mode: Direction.default(Direction.vertical),
+            layout: Types.List.type(Object),
             parent: null,
         };
     }
@@ -32,38 +22,7 @@ export default class Docks extends Fyn.Component
     initialize()
     {
         this.observe({
-            mode: {
-                set: v => {
-                    if(Object.values(Docks.direction).includes(v) === false)
-                    {
-                        throw new Error(`Expected mode to be a value of Docks.direction, got ${v}`);
-                    }
-
-                    return v;
-                },
-            },
-            layout: {
-                set: v =>
-                {
-                    if(typeof v === 'object' && v.hasOwnProperty('children'))
-                    {
-                        const cb = c => c instanceof Object && c.hasOwnProperty('children')
-                            ? c.children.filter(cb)
-                            : (Array.isArray(c)
-                                ? c.filter(cb)
-                                : c !== undefined
-                            );
-
-                        v.children = v.children.filter(cb);
-                    }
-
-                    return v;
-                },
-                changed: (o, n) =>
-                {
-                    this.draw();
-                },
-            },
+            layout: (o, n) => this.draw(),
         });
     }
 
@@ -157,25 +116,27 @@ export default class Docks extends Fyn.Component
                 {
                     case 'top':
                         placement = 'before';
-                        generate = path.first.mode === Docks.direction.vertical;
+                        generate = path.first.mode === Direction.vertical;
 
                         break;
 
                     case 'left':
                         placement = 'before';
-                        generate = path.first.mode === Docks.direction.horizontal;
+                        generate = path.first.mode === Direction.horizontal;
 
                         break;
 
                     case 'right':
                         placement = 'after';
-                        generate = path.first.mode === Docks.direction.horizontal;
+                        generate = path.first.mode === Direction.horizontal;
 
                         break;
 
                     case 'bottom':
                         placement = 'after';
-                        generate = path.first.mode === Docks.direction.vertical;
+                        generate = path.first.mode === Direction.vertical;
+
+                        break;
                 }
 
                 // TODO(Chris Kruining)
@@ -206,9 +167,7 @@ export default class Docks extends Fyn.Component
                                     if(generate === true)
                                     {
                                         c = {
-                                            mode: tree.mode === Docks.direction.horizontal
-                                                ? Docks.direction.vertical
-                                                : Docks.direction.horizontal,
+                                            mode: tree.mode,
                                             children: [ c ],
                                         };
 
@@ -275,7 +234,7 @@ export default class Docks extends Fyn.Component
             return;
         }
 
-        this.mode = this.layout.mode || Docks.direction.vertical;
+        this.mode = this.layout.mode || Direction.vertical;
 
         const content = this.shadow.querySelector('content');
 
@@ -289,13 +248,11 @@ export default class Docks extends Fyn.Component
         for(let [ c, i ] of Object.entries(this.layout.children).map(([ k, v ]) => [ Number.parseInt(k), v ]))
         {
             const create = c >= count;
-
             const item = create
                 ? new Resizable()
                 : content.children[c];
-            item.mode = this.mode === Docks.direction.horizontal
-                ? Resizable.direction.horizontal
-                : Resizable.direction.vertical;
+
+            item.mode = this.mode;
             item.handle = i !== this.layout.children.last;
 
             if(create)
@@ -369,7 +326,7 @@ export default class Docks extends Fyn.Component
 
         if(this.layout.hasOwnProperty('sizes'))
         {
-            let mode = this.mode === Docks.direction.vertical ? 1 : 0;
+            let mode = this.mode === Direction.vertical ? 1 : 0;
             let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
 
             content.style[template] = Array(content.children.length)
@@ -397,7 +354,7 @@ export default class Docks extends Fyn.Component
                 { min: -Infinity, max: Infinity }
             );
 
-        let mode = this.mode === Docks.direction.vertical ? 1 : 0;
+        let mode = this.mode === Direction.vertical ? 1 : 0;
         let template = [ `gridTemplate${[ 'Rows', 'Columns' ][mode]}` ];
 
         let cols = content.style[template].split(' ');

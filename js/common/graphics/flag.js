@@ -1,11 +1,12 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Flag extends Fyn.Component
 {
     static get properties()
     {
         return {
-            iso: Fyn.Data.String.default(''),
+            iso: Types.String.default('').set(v => String(v || '').replace(/ /g, '')),
         };
     }
 
@@ -23,17 +24,13 @@ export default class Flag extends Fyn.Component
         this.shadow.appendChild(flag);
 
         this.observe({
-            iso: {
-                set: v => String(v || '').replace(/ /g, ''),
-                changed: (o, n) =>
+            iso: (o, n) => {
+                try
                 {
-                    try
-                    {
-                        flag.classList.remove(`flag-icon-${ o }`);
-                        flag.classList.add(`flag-icon-${ n }`);
-                    }
-                    catch(e){}
-                },
+                    flag.classList.remove(`flag-icon-${ o }`);
+                    flag.classList.add(`flag-icon-${ n }`);
+                }
+                catch(e){}
             },
         });
     }

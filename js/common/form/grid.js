@@ -5,29 +5,23 @@ export default class Grid extends Fyn.Component
     initialize()
     {
         this.observe({
-            rows: {
-                changed: () =>
+            rows: () => {
+                if(this.api === undefined || Array.isArray(this.rows) !== true)
                 {
-                    if(this.api === undefined || Array.isArray(this.rows) !== true)
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    this.api.setRowData(this.rows);
+                this.api.setRowData(this.rows);
 
-                    this.autoSize();
-                },
+                this.autoSize();
             },
-            headers: {
-                changed: () =>
+            headers: () => {
+                if(Array.isArray(this.headers) !== true)
                 {
-                    if(Array.isArray(this.headers) !== true)
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    this.agGrid.columnDefs = this.headers;
-                },
+                this.agGrid.columnDefs = this.headers;
             },
         });
 

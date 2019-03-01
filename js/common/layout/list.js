@@ -1,37 +1,19 @@
 import * as Fyn from '../../../../component/fyn.js';
-import Image from '../graphics/image.js';
+import * as Types from '../../../../data/types.js';
 
 export default class List extends Fyn.Component
 {
     static get properties()
     {
         return {
-            sortable: false,
+            sortable: Types.Boolean.default(false),
         };
     }
 
     ready()
     {
         this.observe({
-            sortable: {
-                set: v =>
-                {
-                    if(typeof v === 'boolean')
-                    {
-                        return v;
-                    }
-                    else if(v === '')
-                    {
-                        return true;
-                    }
-
-                    return false;
-                },
-                changed: (o, n) =>
-                {
-                    this.items.forEach(i => i.draggable = this.sortable);
-                },
-            },
+            sortable: (o, n) => this.items.forEach(i => i.draggable = this.sortable),
         });
 
         this.on('slot', {

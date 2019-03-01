@@ -1,54 +1,38 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Slider extends Fyn.Component
 {
     static get properties()
     {
         return {
-            _percentVal: null,
-            step: .1,
-            value: 0,
-            min: 0,
-            max: 360,
-            label: '',
-            showPercentage: false,
-            showValue: false,
-            vertical: false,
+            _percentVal: Types.Number.min(0).max(1).set(v => Math.clamp(0, 1, Number.parseFloat(v) || (this.value - this.min) / (this.max - this.min))),
+            step: Types.Number.default(.1),
+            value: Types.Number.set(v => Math.clamp(this.min, this.max, Number.parseFloat(v) || 0)),
+            min: Types.Number.set(v => Math.min(Number.parseFloat(v) || this.min, this.max)),
+            max: Types.Number.set(v => Math.max(Number.parseFloat(v) || this.max, this.min)).default(360),
+            label: new Types.String,
+            showPercentage: new Types.Boolean,
+            showValue: new Types.Boolean,
+            vertical: new Types.Boolean,
         };
     }
 
     initialize()
     {
         this.observe({
-            _percentVal: {
-                set: v => Math.clamp(0, 1, Number.parseFloat(v) || (this.value - this.min) / (this.max - this.min)),
-                changed: (o, n) =>
-                {
-                    this.shadow.querySelector('box').style.setProperty('--w', `${(this._percentVal * 100).toFixed(1)}%`);
+            _percentVal: (o, n) => {
+                this.shadow.querySelector('box').style.setProperty('--w', `${(this._percentVal * 100).toFixed(1)}%`);
 
-                    this.value = (this.max - this.min) * this._percentVal;
-                },
+                this.value = (this.max - this.min) * this._percentVal;
             },
-            value: {
-                set: v => Math.clamp(this.min, this.max, Number.parseFloat(v) || 0),
-                changed: (o, n) =>
-                {
-                    this._percentVal = (this.value - this.min) / (this.max - this.min);
+            value: (o, n) => {
+                this._percentVal = (this.value - this.min) / (this.max - this.min);
 
-                    this.emit('change', { old: o, new: n });
-                },
+                this.emit('change', { old: o, new: n });
             },
-            min: {
-                set: v => Math.min(Number.parseFloat(v) || this.min, this.max),
-                changed: () => this.value = this.value,
-            },
-            max: {
-                set: v => Math.max(Number.parseFloat(v) || this.max, this.min),
-                changed: () => this.value = this.value,
-            },
-            step: { set: v => Number.parseFloat(v) || .1 },
-            showPercentage: { set: v => v === true },
-            showValue: { set: v => v === true },
+            min: () => this.value = this.value,
+            max: () => this.value = this.value,
         });
     }
 

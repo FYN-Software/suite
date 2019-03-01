@@ -1,12 +1,13 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Datetime extends Fyn.Component
 {
     static get properties()
     {
         return {
-            date: null,
-            label: '',
+            date: new Types.Datetime,
+            label: new Types.String,
         };
     }
 
