@@ -100,7 +100,7 @@ export default class List extends Fyn.Component
         const slot = this.shadow.querySelector('slot');
 
         return slot !== null
-            ? slot.assignedElements({ flatten: true })
+            ? slot.assignedNodes({ flatten: true })
             : [];
     }
 }

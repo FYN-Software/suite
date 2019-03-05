@@ -85,7 +85,9 @@ export default class Tabs extends Fyn.Component
         this.on({
             dragstart: Fyn.Event.throttle(1, e =>
             {
-                window.dragTarget = this.shadow.querySelector('content > slot').assignedElements()[e.path[0].index()];
+                window.dragTarget = this.shadow
+                    .querySelector('content > slot')
+                    .assignedNodes({ flatten: true })[e.composedPath()[0].index()];
                 window.dragSource = this;
 
                 window.dragPreview = document.createElement('drag-preview');
@@ -307,6 +309,6 @@ export default class Tabs extends Fyn.Component
 
     get tabs()
     {
-        return this.shadow.querySelector('content > slot').assignedElements({ flatten: true });
+        return this.shadow.querySelector('content > slot').assignedNodes({ flatten: true }).filter(n => n.nodeType === 1);
     }
 }
