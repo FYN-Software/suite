@@ -26,7 +26,7 @@ export default class Datetime extends Fyn.Component
             }),
         });
 
-        document.body.on({
+        document.on({
             click: (e) =>
             {
                 if(e.composedPath().includes(box) === false)
