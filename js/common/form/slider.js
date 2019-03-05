@@ -6,11 +6,14 @@ export default class Slider extends Fyn.Component
     static get properties()
     {
         return {
-            _percentVal: Types.Number.min(0).max(1).set(v => Math.clamp(0, 1, Number.parseFloat(v) || (this.value - this.min) / (this.max - this.min))),
+            _percentVal: Types.Number
+                .min(0)
+                .max(1)
+                .set(v => Number.isNaN(v) ? (this.value - (this.min || 0)) / ((this.max || 360) - (this.min || 0)) : v),
             step: Types.Number.default(.1),
-            value: Types.Number.set(v => Math.clamp(this.min, this.max, Number.parseFloat(v) || 0)),
-            min: Types.Number.set(v => Math.min(Number.parseFloat(v) || this.min, this.max)),
-            max: Types.Number.set(v => Math.max(Number.parseFloat(v) || this.max, this.min)).default(360),
+            value: Types.Number.set(v => Math.clamp(this.min || 0, this.max || 360, Number.isNaN(v) ? 0 : v)),
+            min: Types.Number.set(v => Math.min(Number.isNaN(v) ? this.min : v, this.max || Infinity)).default(0),
+            max: Types.Number.set(v => Math.max(Number.isNaN(v) ? this.max : v, this.min || -Infinity)).default(360),
             label: new Types.String,
             showPercentage: new Types.Boolean,
             showValue: new Types.Boolean,
@@ -43,7 +46,7 @@ export default class Slider extends Fyn.Component
 
         this.on('box > handle', { mousedown: e => dragging = true });
 
-        document.body.on({
+        document.on({
             mousemove: e =>
             {
                 if(dragging === true)

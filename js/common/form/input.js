@@ -1,15 +1,16 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Input extends Fyn.Component
 {
     static get properties()
     {
         return {
-            type: '',
-            label: '',
-            name: '',
-            value: '',
-            placeholder: '',
+            type: new Types.String,
+            label: new Types.String,
+            name: new Types.String,
+            value: new Types.String,
+            placeholder: new Types.String,
         };
     }
 
@@ -17,38 +18,33 @@ export default class Input extends Fyn.Component
     {
         const keys = [ 'Enter' ];
 
-        this.on({
-            options: { passive: false },
-            keydown: e =>
-            {
+        this.on('value', {
+            options: {
+                passive: false,
+            },
+            keydown: e => {
                 if(keys.includes(e.key))
                 {
                     e.preventDefault();
                 }
             },
-            keyup: e =>
-            {
-                if(this.shadow.querySelector('value').textContent.length > 0)
-                {
-                    this.setAttribute('has-value', '');
-                }
-                else
-                {
-                    this.removeAttribute('has-value');
-                }
+            keyup: e => {
+                this.value = this.shadow.querySelector('value').textContent;
+
+                this.attributes.setOnAssert(this.value.length > 0, 'has-value');
             },
         });
 
         this.on('value', {
-            options: { capture: true },
-            focus: e =>
-            {
+            options: {
+                capture: true,
+            },
+            focus: e => {
                 e.target.focused = true;
 
                 this.setAttribute('focused', '');
             },
-            blur: e =>
-            {
+            blur: e => {
                 e.target.focused = false;
 
                 this.removeAttribute('focused');
@@ -56,14 +52,13 @@ export default class Input extends Fyn.Component
         });
 
         this.observe({
-            value: Fyn.Event.debounce(250, (o, n) =>
-            {
-                this.emit('change', {
-                    new: n,
-                    old: o,
-                });
-            }),
+            value: Fyn.Event.debounce(250, (o, n) => this.emit('change', { old: o, new: n })),
         });
+    }
+
+    ready()
+    {
+        this.shadow.querySelector('value').textContent = this.value;
     }
 
     focus()

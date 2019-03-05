@@ -1,18 +1,20 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
+const color = Types.Object.define({
+    hue: Types.Number.min(0).max(360).default(180),
+    saturation: Types.Number.min(0).max(1).default(0),
+    lightness: Types.Number.min(0).max(1).default(.2),
+    alpha: Types.Number.min(0).max(1).default(1),
+});
+
 export default class Color extends Fyn.Component
 {
     static get properties()
     {
         return {
             label: new Types.String,
-            value: Types.Object.define({
-                hue: Types.Number.min(0).max(360).default(180),
-                saturation: Types.Number.min(0).max(1).default(0),
-                lightness: Types.Number.min(0).max(1).default(.2),
-                alpha: Types.Number.min(0).max(1).default(1),
-            }),
+            value: new color,
         };
     }
 
@@ -31,12 +33,12 @@ export default class Color extends Fyn.Component
 
     ready()
     {
-        let editedValue = Fyn.Extends.clone(this.value);
+        let editedValue = Object.assign({}, this.value);
 
         this.on('value', {
             click: Fyn.Event.debounce(10, (e, t) =>
             {
-                editedValue = Fyn.Extends.clone(this.value);
+                editedValue = Object.assign({}, this.value);
                 const { hue, saturation, lightness, alpha } = editedValue;
 
                 const rect = t.getBoundingClientRect();

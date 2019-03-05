@@ -9,7 +9,7 @@ export default class Docks extends Fyn.Component
     {
         return {
             mode: Direction.default(Direction.vertical),
-            layout: Types.List.type(Object),
+            layout: Types.Object,
             parent: null,
         };
     }
@@ -275,7 +275,7 @@ export default class Docks extends Fyn.Component
                     item.appendChild(docks);
                 }
 
-                const count = docks.childrne.length;
+                const count = docks.children.length;
                 const cb = c => c instanceof Object && c.hasOwnProperty('children')
                     ? c.children.flatMap(cb)
                     : c;
@@ -291,7 +291,7 @@ export default class Docks extends Fyn.Component
 
                     if(create)
                     {
-                        tabs.appendChild(slot);
+                        docks.appendChild(slot);
                     }
                 }
             }

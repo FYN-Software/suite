@@ -36,8 +36,7 @@ export default class Tabs extends Fyn.Component
         });
 
         this.on('content > slot', {
-            slotchange: e =>
-            {
+            slotchange: e => {
                 this.index = -1;
 
                 const bar  = this.shadow.querySelector('#bar');
@@ -88,8 +87,6 @@ export default class Tabs extends Fyn.Component
             {
                 window.dragTarget = this.shadow.querySelector('content > slot').assignedElements()[e.path[0].index()];
                 window.dragSource = this;
-
-                console.log(e);
 
                 window.dragPreview = document.createElement('drag-preview');
                 window.dragPreview.appendChild(

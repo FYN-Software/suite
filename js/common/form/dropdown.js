@@ -47,6 +47,10 @@ export default class Dropdown extends Fyn.Component
 
     initialize()
     {
+        this.on('options', {
+            templatechange: e => this.__item = e.detail.loop,
+        });
+
         const update = () => {
             this._options = this.options.filter(
                 o => this.filter.length === 0 || Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(this.filter))
@@ -70,7 +74,8 @@ export default class Dropdown extends Fyn.Component
                 this.emit('change', { old: this.options[o], new: this.options[n] });
             },
             value: (o, n) => {
-                this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n) || (o.hasOwnProperty('value') && o.value === n));
+                this.index = this.options
+                    .findIndex(o => Fyn.Extends.equals(o, n) || (o.hasOwnProperty('value') && o.value === n));
             },
             filter: update,
         });
@@ -78,10 +83,6 @@ export default class Dropdown extends Fyn.Component
 
     ready()
     {
-        this.shadow.querySelector('options').on({
-            templatechange: e => this.__item = e.detail.loop,
-        });
-
         this.on('fyn-common-form-button', {
             click: (e, t) => {
                 const rect = this.getBoundingClientRect();
@@ -121,12 +122,14 @@ export default class Dropdown extends Fyn.Component
     set __item(loop)
     {
         const c = this.shadow.querySelector('fyn-common-form-button > value');
+        const i = loop.item;
+
+        i.option = this.options[this.index] || {};
 
         c.childNodes.clear();
 
-        this._item = loop.item;
-        this._item.option = this.options[this.index] || {};
+        this._item = i;
 
-        c.appendChild(this._item);
+        c.appendChild(i);
     }
 }
