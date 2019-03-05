@@ -30,9 +30,7 @@ export default class List extends Fyn.Component
         this.on({
             dragstart: Fyn.Event.debounce(1, e =>
             {
-                console.log('kaas');
-
-                target = e.path[0];
+                target = e.composedPath()[0];
 
                 start = e.x;
                 position = e.x;

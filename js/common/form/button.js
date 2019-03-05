@@ -65,7 +65,7 @@ export default class Button extends Fyn.Component
 
                     this.attributes.toggle('open');
 
-                    const c = Array.from(this.children).find(c => e.path.includes(c));
+                    const c = Array.from(this.children).find(c => e.composedPath().includes(c));
 
                     if(c !== undefined)
                     {

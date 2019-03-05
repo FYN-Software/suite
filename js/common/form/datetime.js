@@ -29,7 +29,7 @@ export default class Datetime extends Fyn.Component
         document.body.on({
             click: (e) =>
             {
-                if(e.path.includes(box) === false)
+                if(e.composedPath().includes(box) === false)
                 {
                     this.removeAttribute('open');
                 }
