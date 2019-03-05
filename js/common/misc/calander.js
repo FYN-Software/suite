@@ -24,11 +24,11 @@ export default class Calander extends Fyn.Component
     {
         const date = new Date();
         this.year = date.getFullYear();
-        this.month = date.getMonth();
+        this.month = date.getMonth() + 1;
         this.day = date.getDate();
 
-        this.days = Array.from(Array(new Date(this.year, this.month + 1, 0).getDate()).keys(), i => Types.Number.default(++i));
-        this.firstDayOfMonth = new Date(this.year, this.month, 1).getDay();
+        this.days = Array.from(Array(new Date(this.year, this.month, 0).getDate()).keys(), i => Types.Number.default(++i));
+        this.firstDayOfMonth = new Date(this.year, this.month - 1, 1).getDay();
 
         this.on('inner span', {
             click: (e, t) => {
