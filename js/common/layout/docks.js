@@ -3,13 +3,19 @@ import * as Types from '../../../../data/types.js';
 import { default as Resizable, Direction } from './resizable.js';
 import Tabs from './tabs.js';
 
+export const Layout = Types.Object.define({
+    mode: Direction.default(Direction.vertical),
+    children: new Types.List,
+    sizes: new Types.List,
+});
+
 export default class Docks extends Fyn.Component
 {
     static get properties()
     {
         return {
             mode: Direction.default(Direction.vertical),
-            layout: Types.Object,
+            layout: new Layout,
             parent: null,
         };
     }
