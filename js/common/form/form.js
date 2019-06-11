@@ -36,9 +36,9 @@ export default class Form extends Fyn.Component
             },
         });
 
-        this.on('[slot="buttons"][role]', {
+        this.on('[slot="buttons"][action]', {
             click: (e, target) => {
-                switch(target.getAttribute('role'))
+                switch(target.getAttribute('action'))
                 {
                     case 'submit':
                         return this.submit();
