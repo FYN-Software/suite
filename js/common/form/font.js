@@ -25,7 +25,7 @@ export default class Font extends Fyn.Component
             },
         });
 
-        fetch('http://fyn-software.cpb/suite/fonts.json')
+        fetch('/suite/fonts.json')
             .then(r => r.json())
             .then(f =>
             {
