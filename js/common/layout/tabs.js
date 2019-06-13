@@ -281,6 +281,7 @@ export default class Tabs extends Fyn.Component
         }
 
         this.tabs.forEach(t => t.removeAttribute('active'));
+        this.appendChild(tab);
 
         if(tab instanceof HTMLSlotElement)
         {
@@ -303,12 +304,17 @@ export default class Tabs extends Fyn.Component
                 tab.setAttribute('tab-title', title);
             }
         }
-
-        this.appendChild(tab);
     }
 
     get tabs()
     {
-        return this.shadow.querySelector('content > slot').assignedNodes({ flatten: true }).filter(n => n.nodeType === 1);
+        const slot = this.shadow.querySelector('content > slot');
+
+        if(slot === null)
+        {
+            return [];
+        }
+
+        return slot.assignedNodes({ flatten: true }).filter(n => n.nodeType === 1);
     }
 }

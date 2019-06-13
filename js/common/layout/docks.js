@@ -324,7 +324,8 @@ export default class Docks extends Fyn.Component
 
                     if(create)
                     {
-                        tabs.appendChild(slot);
+                        tabs.add(slot);
+                        // tabs.appendChild(slot);
                     }
                 }
             }
