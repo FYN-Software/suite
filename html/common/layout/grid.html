@@ -1,9 +1,12 @@
 <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
 
 <style>
-
+    :host {
+        --gap: 1em;
+        display: grid;
+        grid-gap: var(--gap);
+        overflow-y: auto;
+    }
 </style>
 
-<inner>
-    <slot></slot>
-</inner>
+<slot></slot>

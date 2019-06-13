@@ -28,7 +28,7 @@ export default class Grid extends Fyn.Component
         this.on('bar > fyn-common-form-button', {
             click: (e, t) =>
             {
-                switch(t.role)
+                switch(t.action)
                 {
                     case 'add':
                         this.filter.value = '';

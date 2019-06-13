@@ -13,18 +13,21 @@ export default class Form extends Fyn.Component
     ready()
     {
         this.on('fields > *', {
+            options: {
+                passive: false,
+            },
             keydown: (e, target) => {
-                if(e.keyCode === 9)
-                {
-                    e.preventDefault();
-
-                    let newElement = Application.page.component(target[e.shiftKey ? 'previousSibling' : 'nextSibling']);
-
-                    if(newElement !== null && newElement.hasOwnProperty('focus'))
-                    {
-                        newElement.focus();
-                    }
-                }
+                // if(e.keyCode === 9)
+                // {
+                //     e.preventDefault();
+                //
+                //     let newElement = Application.page.component(target[e.shiftKey ? 'previousSibling' : 'nextSibling']);
+                //
+                //     if(newElement !== null && newElement.hasOwnProperty('focus'))
+                //     {
+                //         newElement.focus();
+                //     }
+                // }
 
                 if(e.keyCode === 13)
                 {
@@ -36,9 +39,9 @@ export default class Form extends Fyn.Component
             },
         });
 
-        this.on('[slot="buttons"][role]', {
+        this.on('[slot="buttons"][action]', {
             click: (e, target) => {
-                switch(target.getAttribute('role'))
+                switch(target.getAttribute('action'))
                 {
                     case 'submit':
                         return this.submit();
@@ -55,9 +58,11 @@ export default class Form extends Fyn.Component
         // TODO(Chris Kruining)
         // Implement form validation
 
-        const f = Array.from(this.querySelectorAll('fields > *'))
+        const f = this.shadow.querySelector('fields > slot').assignedElements()
             .filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined)
             .reduce((t, c) => Object.assign(t, { [c.name]: c.value }), {});
+
+        console.log(f, this.shadow.querySelector('fields > slot').assignedElements().filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined));
 
         this.emit('success', { success: true, ...f });
     }

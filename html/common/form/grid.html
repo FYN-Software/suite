@@ -90,9 +90,9 @@
 <bar>
     <fyn-common-form-input id="filter" name="grid-filter" label="t_search"></fyn-common-form-input>
 
-    <fyn-common-form-button if="{{ editable === true }}" icons="plus" role="add" tooltip="t_new"></fyn-common-form-button>
+    <fyn-common-form-button if="{{ editable === true }}" icons="plus" action="add" tooltip="t_new"></fyn-common-form-button>
 
-    <fyn-common-form-button if="{{ editable === true }}" icons="trash" role="delete" tooltip="t_delete"></fyn-common-form-button>
+    <fyn-common-form-button if="{{ editable === true }}" icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
 </bar>
 
 <ag-grid id="agGrid" class="ag-theme-material"></ag-grid>
@@ -106,9 +106,9 @@
                 <li no-translate>{{ i }}</li>
             </ul>
 
-            <fyn-common-form-button role="cancel" slot="buttons">t_cancel</fyn-common-form-button>
+            <fyn-common-form-button action="cancel" slot="buttons">t_cancel</fyn-common-form-button>
 
-            <fyn-common-form-button role="submit" slot="buttons">t_submit</fyn-common-form-button>
+            <fyn-common-form-button action="submit" slot="buttons">t_submit</fyn-common-form-button>
         </fyn-common-form-form>
     </fyn-common-overlay-dialog>
 </fyn-common-overlay-modal>
