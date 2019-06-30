@@ -26,7 +26,6 @@ export default class Button extends Fyn.Component
             }),
             iconType: Types.String.default('fas'),
             action: new Types.String,
-            action: new Types.String,
             tooltip: new Types.String,
             multi: new Types.Boolean,
         };
