@@ -47,7 +47,7 @@ export default class Form extends Fyn.Component
                         return this.submit();
 
                     case 'cancel':
-                        return this.emit('cancel');
+                        return this.emit('cancel', { success: false });
                 }
             },
         });
