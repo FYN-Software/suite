@@ -6,7 +6,7 @@ class Mode extends Types.Enum.define({
     grow: 1,
 }){}
 
-export default class dialog extends Fyn.Component
+export default class Dialog extends Fyn.Component
 {
     static get properties()
     {
