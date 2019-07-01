@@ -11,4 +11,12 @@ export default class Clock extends Fyn.Component
             second: new Types.Number,
         };
     }
+
+    ready()
+    {
+        const date = new Date();
+        this.hour = date.getHours();
+        this.minute = date.getMinutes();
+        this.second = date.getSeconds();
+    }
 }

@@ -16,10 +16,6 @@ export default class Calander extends Fyn.Component
         };
     }
 
-    initialize()
-    {
-    }
-
     ready()
     {
         const date = new Date();
