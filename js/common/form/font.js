@@ -13,7 +13,7 @@ export default class Font extends Fyn.Component
         };
     }
 
-    ready()
+    async ready()
     {
         this.on('#fonts', {
             change: e =>
@@ -25,18 +25,15 @@ export default class Font extends Fyn.Component
             },
         });
 
-        fetch('/suite/fonts.json')
-            .then(r => r.json())
-            .then(f =>
-            {
-                this._items = f.items.slice(0, 99);
+        const fonts = await (await fetch('/node_modules/@fyn-software/suite/fonts.json')).json();
 
-                for(const i of this._items)
-                {
-                    Fyn.Utilities.Font.preview(i);
-                }
+        this._items = fonts.items.slice(0, 99);
 
-                this.fonts = Object.entries(this._items).map(([ k, i ]) => ({ value: k, ...i }));
-            });
+        for(const i of this._items)
+        {
+            Fyn.Utilities.Font.preview(i);
+        }
+
+        this.fonts = Object.entries(this._items).map(([ k, i ]) => ({ value: k, ...i }));
     }
 }

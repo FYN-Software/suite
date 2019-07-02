@@ -1,13 +1,8 @@
 <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
 
-<style>
-    :host {
-    }
-</style>
-
 <fyn-common-form-group combined label="{{ label }}">
     <fyn-common-form-dropdown options="{{ fonts }}" filterable id="fonts">
-        <div style="font-family: {{ option.family }}">{{ option.family }}</div>
+        <div style="font-family: {{ option.family }}"template>{{ option.family }}</div>
     </fyn-common-form-dropdown>
 
     <fyn-common-form-dropdown options="{{ variants }}"></fyn-common-form-dropdown>
