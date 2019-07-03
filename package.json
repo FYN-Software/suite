@@ -19,6 +19,6 @@
         "access": "public"
     },
     "dependencies": {
-        "@fyn-software/component": "^0.0.1"
+        "@fyn-software/component": "^0.0.3"
     }
 }
