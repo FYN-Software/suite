@@ -1,6 +1,6 @@
 {
   "extends": [
-    "base:config"
+    "config:base"
   ],
   "automerge": true,
   "major": {
