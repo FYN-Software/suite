@@ -1,3 +1,8 @@
+notifications:
+  email: false
+
+language: js
+
 deploy:
   provider: npm
   email: "chris@cgames.nl"
