@@ -1,0 +1,7 @@
+deploy:
+  provider: npm
+  email: "chris@cgames.nl"
+  api_key: "25c64dbd-9335-47e3-acea-3108ed2bf4e6"
+  on:
+    tags: true
+    branch: master
