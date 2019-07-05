@@ -14,7 +14,7 @@
     "bugs": {
         "url": "https://github.com/FYN-Software/suite/issues"
     },
-    "homepage": "https://github.com/FYN-Software/suite",
+    "homepage": "https://fyn-software.github.io",
     "publishConfig": {
         "access": "public"
     },
