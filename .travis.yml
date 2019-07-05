@@ -7,7 +7,7 @@ node_js: node
 deploy:
   - provider: script
     skip_cleanup: true
-    script: .travis/pu.sh $TRAVIS_TAG
+    script: bash .travis/pu.sh $TRAVIS_TAG
     on:
       tags: true
       branch: master
