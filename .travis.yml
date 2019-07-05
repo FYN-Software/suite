@@ -11,7 +11,3 @@ deploy:
   on:
     tags: true
     branch: master
-    
-before_script: npm init
-
-script: npm test
