@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "I am going to release " $0
+echo "I am going to release " $1
