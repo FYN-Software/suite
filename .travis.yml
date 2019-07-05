@@ -4,13 +4,12 @@ notifications:
 language: node_js
 node_js: node
 
-after_success:
-- curl https://gist.githubusercontent.com/lxhunter/9d4310462b6972a3f57b5f914543fd51/raw/semver.sh | bash
-
 deploy:
   provider: npm
   email: "chris@cgames.nl"
   api_key: "WMVnwC2f25SLRvXoe1+EMt+RHqW/dipy0oNHGhAcXuHbcwMffc5bvnFtpGBeJLqc+a5agXmr8vk+oBoKmerJde71LFknGKFcQnIWZ56bcM1AjqPaaiX/HW/ClZdLfcnZ1PDo0ojOxuLYzPk8U0QsUnPZMAdqWz7jqPD+cwwrCfmEu6DH3NbD39J4k1Fj+gi5/PCEOgw0cwb6zsJ3tgV05v5qS8Y+MaF1rRLUTuunZ+wpXc2vMYc0vIFpccZVK3jahwsisd3jJaDnx7ySwv/pEjggjw2GoPVFo2MgJyOdCTYOirlfRnKX1ej1eIDWJiX/+Ge/OHH0AKBPqiVAtBp04NxFCYRcryxjPj8MhE7z95jpGFOg3zZXrsP2cXcvEz/UjMQdwYljPfuGY2ewt1iKRGQOLi09BL8SVSCUbQNJdExRoCFM2cGEJLs0K66DYBNMi9TX82buFT6z5x/8fYEHT/2aGF4NNHmJqi9U44YRoKCQsaW85+i9JdVyctNASC/G7pneBkElZv/Un9DphEdZl7pdVnVULTrA9sOJ0JDfNShQDYxG+8rQO5qPfJOaGJK0cPbBbpXkwaGdszWJtVM56LIWPIvL6gzc0zxdibxuTM32wF8Kh1NhsWmGVgpPIIrxgrJcXIV9g8PCsVGtw3EYvUxg1puXBIZkxkz8ZG3bfio="
+  skip_cleanup: true
+  script: .travis/pu.sh
   on:
     tags: true
     branch: master
