@@ -27,4 +27,11 @@ export default class Icon extends Fyn.Component
             }),
         };
     }
+
+    initialize()
+    {
+        // this.observe({
+        //     icons: (o, n) => console.log(o, n),
+        // });
+    }
 }

@@ -24,6 +24,8 @@ export default class Color extends Fyn.Component
             value: (o, n) => {
                 const { hue, saturation, lightness, alpha } = this.value;
 
+                console.log(this.value);
+
                 this.style.setProperty('--value', `hsla(${hue}, ${saturation * 100}%, ${lightness * 100}%, ${alpha})`);
 
                 this.emit('change', { old: o, new: n });
@@ -36,8 +38,7 @@ export default class Color extends Fyn.Component
         let editedValue = Object.assign({}, this.value);
 
         this.on('value', {
-            click: Fyn.Event.debounce(10, (e, t) =>
-            {
+            click: Fyn.Event.debounce(10, (e, t) => {
                 editedValue = Object.assign({}, this.value);
                 const { hue, saturation, lightness, alpha } = editedValue;
 
@@ -96,8 +97,7 @@ export default class Color extends Fyn.Component
         this.on('box > gradient > handle', { mousedown: e => dragging = true });
 
         document.body.on({
-            mousemove: e =>
-            {
+            mousemove: e => {
                 if(dragging === true)
                 {
                     const rect = box.getBoundingClientRect();
