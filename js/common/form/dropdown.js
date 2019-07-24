@@ -14,6 +14,11 @@ export default class Dropdown extends Fyn.Component
                     v = JSON.tryParse(v.replace(/'/g, '"'));
                 }
 
+                if(v.hasOwnProperty(Symbol.iterator))
+                {
+                    v = Array.from(v);
+                }
+
                 if(Array.isArray(v) !== true)
                 {
                     v = [ v ];
@@ -59,6 +64,8 @@ export default class Dropdown extends Fyn.Component
 
         this.observe({
             options: (o, n) => {
+                console.log(o, n);
+
                 this.index = this.options.findIndex(o => Fyn.Extends.equals(o, this.value));
 
                 update();
