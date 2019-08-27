@@ -1,28 +1,25 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Grid extends Fyn.Component
 {
+    static get properties()
+    {
+        return {
+            columns: Types.List.type(Types.String),
+            rows: Types.List.type(Types.String),
+            selection: Types.List.type(Types.String),
+            rowSelection: Types.String.default('none'),
+            editable: Types.Boolean.default(false),
+            resizable: Types.Boolean.default(true),
+        };
+    }
+
     initialize()
     {
         this.observe({
-            rows: () => {
-                if(this.api === undefined || Array.isArray(this.rows) !== true)
-                {
-                    return;
-                }
-
-                this.api.setRowData(this.rows);
-
-                this.autoSize();
-            },
-            headers: () => {
-                if(Array.isArray(this.headers) !== true)
-                {
-                    return;
-                }
-
-                this.agGrid.columnDefs = this.headers;
-            },
+            rows: () => {},
+            columns: () => {},
         });
 
         this.on('bar > fyn-common-form-button', {
@@ -63,10 +60,8 @@ export default class Grid extends Fyn.Component
                 }
             },
         });
-
         this.on('bar > fyn-common-form-input', {
-            change: e =>
-            {
+            change: e => {
                 if(this.api === undefined)
                 {
                     return;
@@ -79,93 +74,15 @@ export default class Grid extends Fyn.Component
 
     ready()
     {
-        let row = null;
-
-        this.agGrid.gridOptions = {
-            columnDefs: [],
-            rowData: [],
-            editType: 'fullRow',
-            animateRows: true,
-            enableFilter: false,
-            rowSelection: this.rowSelection,
-            enableSorting: true,
-            singleClickEdit: true,
-            enableColResize: this.resizable,
-            enableCellChangeFlash: true,
-            suppressMovableColumns: true,
-            stopEditingWhenGridLosesFocus: false,
-            overlayLoadingTemplate: '<modal open fit><i class="fas fa-circle-notch fa-10x fa-spin"></i></modal>',
-            isExternalFilterPresent: () => true,
-            doesExternalFilterPass: n => Object.values(n.data)
-                .filter(v => v !== null && typeof v !== 'object')
-                .some(v => v.toLowerCase().includes(
-                    this.filter.value.toLowerCase()
-                )),
-            onCellClicked: e =>
-            {
-                this.emit('click', e);
-            },
-            onRowEditingStarted: e =>
-            {
-                row = Fyn.Extends.clone(e.data);
-            },
-            onRowValueChanged: e =>
-            {
-                if(row !== null && Object.entries(e.data).some(([ k, v ]) => (row[k] || null) !== v))
-                {
-                    this.emit('change', e.data);
-                }
-
-                row = null;
-            },
-        };
     }
 
     autoSize()
     {
-        this.columnApi.autoSizeColumns(this.columnApi.getAllColumns().map(c => c.colId));
+
     }
 
     get filter()
     {
         return this.shadow.querySelector('fyn-common-form-input');
-    }
-
-    get agGrid()
-    {
-        let g = this.shadow.querySelector('#agGrid');
-
-        // Console.dir(g);
-
-        return g;
-    }
-
-    get api()
-    {
-        try
-        {
-            return this.agGrid.api;
-        }
-        catch(e)
-        {
-            return undefined;
-        }
-    }
-
-    get columnApi()
-    {
-        return this.agGrid.columnApi;
-    }
-
-    static get properties()
-    {
-        return {
-            headers: [],
-            rows: [],
-            selection: [],
-            rowSelection: 'none',
-            editable: false,
-            resizable: true,
-        };
     }
 }

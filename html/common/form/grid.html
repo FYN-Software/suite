@@ -3,9 +3,6 @@
 <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
 
 <style>
-    @import url('https://unpkg.com/ag-grid/dist/styles/ag-grid.css');
-    @import url('https://unpkg.com/ag-grid/dist/styles/ag-theme-material.css');
-
     :host {
         display: grid;
         grid-template-rows: auto 1fr;
@@ -25,66 +22,6 @@
     :host > bar > fyn-common-form-input {
         margin-top: 0;
     }
-
-    :host > ag-grid {
-        width: 100%;
-        height: 100%;
-        border-radius: inherit;
-    }
-
-    :host > .ag-theme-material {
-        background-color: #fff1;
-        color: inherit;
-        font: inherit;
-    }
-
-    :host > .ag-theme-material .ag-header {
-        color: inherit;
-        font: inherit;
-        font-weight: bold;
-    }
-
-    :host > .ag-theme-material .ag-row-hover {
-        background-color: #fff1;
-    }
-
-    :host > .ag-theme-material .ag-row-selected {
-        background-color: #fff3;
-    }
-
-    :host > .ag-theme-material .ag-row-focus {
-        z-index: 10;
-    }
-
-    :host > .ag-theme-material .ag-ltr .ag-cell {
-        display: grid;
-        justify-content: stretch;
-        align-content: center;
-    }
-
-    :host > .ag-theme-material .ag-ltr .ag-cell-focus {
-        border-color: #5bc0de;
-    }
-
-    :host > .ag-theme-material .ag-icon {
-        filter: invert(100%);
-    }
-
-    :host > .ag-theme-material .ag-cell-inline-editing {
-        padding: .75em 23px;
-        height: 100%;
-        background-color: #fff3;
-    }
-
-    :host > .ag-theme-material .ag-cell-inline-editing input {
-        border: none !important;
-        color: inherit !important;
-        padding: 0 !important;
-    }
-
-    :host > .ag-theme-material .ag-overlay-loading-wrapper {
-        background-color: transparent;
-    }
 </style>
 
 <bar>
@@ -95,7 +32,20 @@
     <fyn-common-form-button if="{{ editable === true }}" icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
 </bar>
 
-<ag-grid id="agGrid" class="ag-theme-material"></ag-grid>
+<!-- GRID -->
+<table>
+    <thead>
+        <tr for="{{ column in columns }}">
+            <th>{{ column }}</th>
+        </tr>
+    </thead>
+
+    <tbody for="{{ row in rows }}">
+        <tr for="{{ cell in row.cells }}">
+            <td>{{ cell }}</td>
+        </tr>
+    </tbody>
+</table>
 
 <fyn-common-overlay-modal id="dataGridModal">
     <fyn-common-overlay-dialog id="deleteRowsDialog">
