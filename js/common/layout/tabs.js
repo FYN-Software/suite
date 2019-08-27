@@ -42,12 +42,17 @@ export default class Tabs extends Fyn.Component
                 const bar  = this.shadow.querySelector('#bar');
                 const tabs = this.tabs;
 
-                bar.innerHTML = '';
+                bar.children.clear();
 
                 for(let t of tabs)
                 {
                     const tab = document.createElement('tab');
-                    tab.innerHTML = t.getAttribute('tab-title') || 'no title';
+                    tab.textContent = t.getAttribute('tab-title') || 'no title';
+
+                    if(tab.textContent.length > 30)
+                    {
+                        tab.textContent = tab.textContent.substr(0, 27) + '...';
+                    }
 
                     Object.defineProperty(tab, 'panel', {
                         value: t,
@@ -83,11 +88,10 @@ export default class Tabs extends Fyn.Component
         const placeholder = this.shadow.querySelector('placeholder');
 
         this.on({
-            dragstart: Fyn.Event.throttle(1, e =>
-            {
+            dragstart: Fyn.Event.throttle(1, e => {
                 window.dragTarget = this.shadow
                     .querySelector('content > slot')
-                    .assignedNodes({ flatten: true })[e.composedPath()[0].index()];
+                    .assignedElements({ flatten: true })[e.composedPath()[0].index()];
                 window.dragSource = this;
 
                 window.dragPreview = document.createElement('drag-preview');
