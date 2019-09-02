@@ -64,8 +64,6 @@ export default class Dropdown extends Fyn.Component
 
         this.observe({
             options: (o, n) => {
-                console.log(o, n);
-
                 this.index = this.options.findIndex(o => Fyn.Extends.equals(o, this.value));
 
                 update();
