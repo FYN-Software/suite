@@ -12,7 +12,7 @@ export default class Collapsable extends Fyn.Component
 
     ready()
     {
-        this.on('span[title], fyn-common-graphics-icon', { click: Fyn.Event.debounce(10, e => this.attributes.toggle('closed')) });
+        this.on('[title], fyn-common-graphics-icon', { click: Fyn.Event.debounce(10, e => this.attributes.toggle('closed')) });
     }
 
     get open()
