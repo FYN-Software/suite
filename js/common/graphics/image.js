@@ -41,6 +41,11 @@ export default class Image extends Fyn.Component
                 img.src = String(this.src);
             },
             fit: (o, n) => {
+                if(img === undefined)
+                {
+                    return;
+                }
+
                 img.style.setProperty('--fit', Fit.valueOf(n));
             },
         });

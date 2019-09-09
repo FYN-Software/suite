@@ -9,6 +9,11 @@ export default class Dropdown extends Fyn.Component
             _options: Types.List.type(Types.Object),
             _item: new Types.Object,
             options: Types.List.type(Types.Object).set(v => {
+                if(v === undefined)
+                {
+                    v = [];
+                }
+
                 if(typeof v === 'string')
                 {
                     v = JSON.tryParse(v.replace(/'/g, '"'));
