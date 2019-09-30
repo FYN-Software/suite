@@ -11,10 +11,14 @@
     }
 
     :host > [title],
-    :host > fyn-common-graphics-icon {
+    :host > [handle] {
         align-self: center;
         transition: transform .3s ease-in-out;
         cursor: pointer;
+    }
+
+    :host > [title] {
+        justify-self: start;
     }
 
     :host > content {
@@ -32,14 +36,14 @@
         display: none;
     }
 
-    :host([closed]) > fyn-common-graphics-icon {
+    :host([closed]) > [handle] {
         transform: rotate(180deg);
     }
 </style>
 
-<b title>{{ title }}</b>
+<fyn-common-graphics-icon title icons="{{ icons }}">{{ title }}</fyn-common-graphics-icon>
 
-<fyn-common-graphics-icon icons="angle-down"></fyn-common-graphics-icon>
+<fyn-common-graphics-icon handle icons="angle-down"></fyn-common-graphics-icon>
 
 <content>
     <slot></slot>

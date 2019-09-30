@@ -6,6 +6,24 @@ export default class Collapsable extends Fyn.Component
     static get properties()
     {
         return {
+            icons: Types.List.type(Types.String).set(v => {
+                if(v === undefined || v === null || typeof v === 'boolean')
+                {
+                    v = [];
+                }
+
+                if(Array.isArray(v) !== true)
+                {
+                    v = JSON.tryParse(v.replace(/'/g, '"'));
+                }
+
+                if(Array.isArray(v) !== true)
+                {
+                    v = [ v ];
+                }
+
+                return v;
+            }),
             title: new Types.String,
         };
     }
