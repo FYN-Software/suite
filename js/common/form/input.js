@@ -30,8 +30,6 @@ export default class Input extends Fyn.Component
             },
             keyup: e => {
                 this.value = this.shadow.querySelector('value').textContent;
-
-                this.attributes.setOnAssert(this.value.length > 0, 'has-value');
             },
         });
 
@@ -52,7 +50,13 @@ export default class Input extends Fyn.Component
         });
 
         this.observe({
-            value: Fyn.Event.debounce(250, (o, n) => this.emit('change', { old: o, new: n })),
+            value: Fyn.Event.debounce(250, (o, n) => {
+                this.shadow.querySelector('value').textContent = n;
+
+                this.attributes.setOnAssert(this.value.length > 0, 'has-value');
+
+                this.emit('change', { old: o, new: n });
+            }),
         });
     }
 

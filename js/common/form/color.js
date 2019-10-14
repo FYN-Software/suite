@@ -39,13 +39,15 @@ export default class Color extends Fyn.Component
 
         this.on('value', {
             click: Fyn.Event.debounce(10, (e, t) => {
+                console.log(e);
+
                 editedValue = Object.assign({}, this.value);
                 const { hue, saturation, lightness, alpha } = editedValue;
 
                 const rect = t.getBoundingClientRect();
 
-                this.style.setProperty('--x', rect.x);
-                this.style.setProperty('--y', rect.y);
+                this.style.setProperty('--x', `${rect.x}px`);
+                this.style.setProperty('--y', `${rect.y}px`);
                 this.style.setProperty('--hue', hue);
                 this.style.setProperty('--sat', `${ saturation * 100 }%`);
                 this.style.setProperty('--light', `${ lightness * 100 }%`);
@@ -93,24 +95,33 @@ export default class Color extends Fyn.Component
         let dragging = false;
 
         const box = this.shadow.querySelector('box > gradient');
+        const position = e => {
+            const rect = box.getBoundingClientRect();
+            const contained = rect.contains(e.x, e.y);
 
-        this.on('box > gradient > handle', { mousedown: e => dragging = true });
+            if(contained === true)
+            {
+                editedValue.saturation = (e.x - rect.left) / rect.width;
+                editedValue.lightness = 1 - (e.y - rect.top) / rect.height;
+
+                this.style.setProperty('--sat', `${ editedValue.saturation * 100 }%`);
+                this.style.setProperty('--light', `${ editedValue.lightness * 100 }%`);
+            }
+        };
+
+        this.on('box > gradient', {
+            mousedown: e => {
+                dragging = true;
+
+                position(e);
+            }
+        });
 
         document.body.on({
             mousemove: e => {
                 if(dragging === true)
                 {
-                    const rect = box.getBoundingClientRect();
-                    const contained = rect.contains(e.x, e.y);
-
-                    if(contained === true)
-                    {
-                        editedValue.saturation = (e.x - rect.left) / rect.width;
-                        editedValue.lightness = 1 - (e.y - rect.top) / rect.height;
-
-                        this.style.setProperty('--sat', `${ editedValue.saturation * 100 }%`);
-                        this.style.setProperty('--light', `${ editedValue.lightness * 100 }%`);
-                    }
+                    position(e);
                 }
             },
             mouseup: e => dragging = false,

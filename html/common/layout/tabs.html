@@ -7,7 +7,7 @@
     }
 
     #bar {
-        border-bottom: 1px solid #fff2;
+        border-bottom: 1px solid rgba(var(--plain-fg-rgb), .15);
     }
 
     #bar > tab {
@@ -27,11 +27,11 @@
     }
 
     #bar > tab:not(:only-child):hover {
-        background-color: #fff1;
+        background-color: rgba(var(--plain-fg-rgb), .1);
     }
 
     #bar > tab:not(:only-child)[active] {
-        background-color: #fff2;
+        background-color: rgba(var(--plain-fg-rgb), .15);
     }
 
     content {
@@ -78,7 +78,7 @@
     :host > overlay > block {
         position: relative;
         display: block;
-        background-color: #fff1;
+        background-color: rgba(var(--plain-fg-rgb), .1);
         border-radius: var(--radius);
         box-shadow: 0 0 1em #0003;
     }

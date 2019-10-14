@@ -20,7 +20,7 @@ export default class Image extends Fyn.Component
 
     initialize()
     {
-        let img;
+        let img = document.createElement('img');
 
         this.observe({
             src: (o, n) => {

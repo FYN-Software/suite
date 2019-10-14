@@ -94,7 +94,7 @@ export default class Dropdown extends Fyn.Component
     ready()
     {
         this.on('fyn-common-form-button', {
-            click: (e, t) => {
+            click: Fyn.Event.debounce(1, (e, t) => {
                 const rect = this.getBoundingClientRect();
 
                 this.style.setProperty('--x', `${rect.x}px`);
@@ -108,7 +108,7 @@ export default class Dropdown extends Fyn.Component
                 {
                     t.querySelector('fyn-common-form-input').focus();
                 }
-            },
+            }),
         });
 
         this.on('fyn-common-form-button > fyn-common-form-input', {

@@ -2,7 +2,7 @@
 
 <style>
     :host {
-        --bg: #fff1;
+        --bg: rgba(var(--plain-fg-rgb), .1);
         --vc: var(--info);
         display: grid;
         grid-template-columns: repeat(2, auto);
@@ -45,7 +45,7 @@
         left: var(--w);
         width: 1em;
         height: 1em;
-        background-color: #eee;
+        background-color: var(--plain-fg);
         border-radius: 50%;
         transform: translate(-50%, -50%);
         cursor: pointer;

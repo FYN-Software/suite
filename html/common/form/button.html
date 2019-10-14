@@ -8,7 +8,7 @@
         grid-auto-flow: column;
         grid-gap: .5em;
         padding: .25em 1em;
-        background-color: var(--bg, #fff1);
+        background-color: var(--bg, rgba(var(--plain-fg-rgb), .1));
         color: inherit;
         border: none;
         border-radius: var(--radius);
@@ -16,7 +16,7 @@
         line-height: 2em;
         font-family: inherit;
         font-size: 1em;
-        user-select: none;
+        transition: background-color .3s ease-in-out;
     }
 
     :host([icon-after]) {
@@ -32,6 +32,12 @@
         background-color: transparent;
     }
 
+    :host([open]) {
+        background-color: transparent;
+        border: .1em solid var(--primary-bg);
+        color: var(--primary-bg);
+    }
+
     :host([fab]) {
         --radius: 50%;
         justify-content: center;
@@ -39,6 +45,18 @@
         height: 3em;
         background-color: var(--primary-bg);
         color: var(--primary-fg);
+    }
+
+    :host([start]) {
+        justify-self: start;
+    }
+
+    :host([center]) {
+        justify-self: center;
+    }
+
+    :host([end]) {
+        justify-self: end;
     }
 
     :host > * {
@@ -54,7 +72,7 @@
     }
 
     :host > options {
-        --bg: #333;
+        --bg: var(--plain-bg);
         --spacing: .5em;
         display: grid;
         position: fixed;
@@ -62,6 +80,7 @@
         left: var(--x, 0);
         padding: var(--spacing);
         background-color: var(--bg);
+        color: var(--plain-fg);
         box-shadow: 0 0 1em #0003;
         border-radius: var(--radius);
         opacity: 0;
@@ -95,7 +114,7 @@
     }
 
     :host > options > slot::slotted(*:hover) {
-        background-color: #fff1;
+        background-color: rgba(var(--plain-fg-rgb), .1);
     }
 
     :host > options > slot::slotted(fyn-common-graphics-icon) {
@@ -139,6 +158,16 @@
 
     :host(:disabled) {
         opacity: .25;
+    }
+
+    :host(:hover) {
+        background-color: var(--secondary-bg);
+        color: var(--secondary-fg);
+    }
+
+    :host([active]),
+    :host(:active) {
+        background-color: var(--info);
     }
 
     @keyframes ripple {

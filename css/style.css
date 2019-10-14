@@ -13,8 +13,35 @@
     --success: rgb(var(--success-rgb));
     --primary-bg: var(--info);
     --primary-fg: #eee;
+    --secondary-bg: rgba(var(--info-rgb), .75);
+    --secondary-fg: #fff;
+    --plain-fg-rgb: 51, 51, 51;
+    --plain-bg-rgb: 238, 238, 238;
+    --plain-fg: rgb(vaR(--plain-fg-rgb));
+    --plain-bg: rgb(vaR(--plain-bg-rgb));
     --radius: .5em;
     --checkers: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIklEQVQoU2P8//+/PAMaYGRkfIghNhQUojsaxMfq7iGgEABCMCOXNMUjBwAAAABJRU5ErkJggg==);
+    --inversion: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --inversion: 1;
+        --plain-fg-rgb: 238, 238, 238;
+        --plain-bg-rgb: 51, 51, 51;
+    }
+}
+
+html[color-scheme="light"] {
+    --inversion: 0;
+    --plain-fg-rgb: 51, 51, 51;
+    --plain-bg-rgb: 238, 238, 238;
+}
+
+html[color-scheme="dark"] {
+    --inversion: 1;
+    --plain-fg-rgb: 238, 238, 238;
+    --plain-bg-rgb: 51, 51, 51;
 }
 
 html {
@@ -33,14 +60,12 @@ body {
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: #222;
-    color: #eee;
+    background-color: var(--plain-bg);
+    color: var(--plain-fg);
 }
 
 * {
     box-sizing: border-box;
-    user-select: none;
-    -moz-user-select: none;
 }
 
 a {
@@ -50,6 +75,10 @@ a {
 h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
+}
+
+[contenteditable] {
+    user-select: all;
 }
 
 [tooltip] {
@@ -81,8 +110,8 @@ h1, h2, h3, h4, h5, h6, p {
     content: attr(tooltip);
     padding: .5em 1em;
     line-height: 1em;
-    background-color: #333;
-    color: #eee;
+    background-color: var(--plain-bg);
+    color: var(--plain-fg);
     white-space: nowrap;
     overflow: hidden;
     border-radius: var(--radius);
@@ -103,7 +132,7 @@ drag-preview {
     left: 0;
     width: 10em;
     height: 10em;
-    background-color: #333;
+    background-color: var(--plain-bg);
     box-shadow: 0 0 1em #0003;
     opacity: .75;
     z-index: 10;
@@ -131,7 +160,7 @@ table thead {
 
 table thead tr:last-child {
     background-color: transparent;
-    border-bottom: 1px solid #fff1;
+    border-bottom: 1px solid rgba(var(--plain-fg), .1);
 }
 
 table thead tr:last-child th,
@@ -150,7 +179,7 @@ table tfoot {
 
 table tfoot tr:first-child th,
 table tfoot tr:first-child td {
-    border-top: 1px solid #fff1;
+    border-top: 1px solid rgba(var(--plain-fg), .1);
 }
 
 table tr {
@@ -171,7 +200,7 @@ table th.text-right {
 }
 
 table[striped] tbody > :nth-child(odd) tr {
-    background-color: #fff1;
+    background-color: rgba(var(--plain-fg), .1);
 }
 
 table[sortable] th {
@@ -186,7 +215,7 @@ table[focusable] tbody tr:hover td {
 
 table[selectable] tbody tr:hover td,
 table[selectable] tbody tr:hover th {
-    background-color: #0001;
+    background-color: rgba(var(--plain-bg), .1);
 }
 
 [hidden] {
@@ -201,25 +230,4 @@ table[selectable] tbody tr:hover th {
     width: 100%;
     height: var(--scroller-height);
     pointer-events: none;
-}
-
-::-webkit-scrollbar {
-    width: .5em;
-    height: .5em;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #fff1;
-    backdrop-filter: blur(3px);
-    border-radius: var(--radius);
-    box-sizing: border-box;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: var(--radius);;
-    background-color: #fff3;
-}
-
-::-webkit-scrollbar-corner {
-    background-color: #fff1;
 }

@@ -38,37 +38,37 @@ export default class Resizable extends Fyn.Component
         });
 
         document.body.on({
-            options: { passive: false },
-            pointermove: e =>
-            {
-                e.preventDefault();
-                e.stopPropagation();
-
-                if(e.pointerId === id)
-                {
-                    const delta = { x: e.pageX - start.x, y: e.pageY - start.y };
-
-                    this.emit('resize', {
-                        start,
-                        delta,
-                        size: { x: size.width + delta.x, y: size.height + delta.y },
-                    });
-                }
-            },
-            pointerup: e =>
-            {
-                e.preventDefault();
-                e.stopPropagation();
-
-                if(e.pointerId === id)
-                {
-                    start = null;
-                    size = null;
-                    id = null;
-
-                    this.removeAttribute('resizing');
-                }
-            },
+            // options: { passive: false },
+            // pointermove: e =>
+            // {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //
+            //     if(e.pointerId === id)
+            //     {
+            //         const delta = { x: e.pageX - start.x, y: e.pageY - start.y };
+            //
+            //         this.emit('resize', {
+            //             start,
+            //             delta,
+            //             size: { x: size.width + delta.x, y: size.height + delta.y },
+            //         });
+            //     }
+            // },
+            // pointerup: e =>
+            // {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //
+            //     if(e.pointerId === id)
+            //     {
+            //         start = null;
+            //         size = null;
+            //         id = null;
+            //
+            //         this.removeAttribute('resizing');
+            //     }
+            // },
         });
     }
 

@@ -50,7 +50,8 @@
         left: var(--x);
         width: var(--w);
         max-height: var(--h);
-        background-color: #333;
+        background-color: var(--plain-bg);
+        color: var(--plain-fg);
         padding: .5em 0;
         z-index: 20;
         box-shadow: 0 .25em .5em #000;
@@ -69,7 +70,6 @@
         padding: 0 1em;
         line-height: 2.5em;
         min-height: 2.5em;
-        text-shadow: 0 0 .2em #000;
         cursor: pointer;
         background-color: transparent;
     }
@@ -87,7 +87,7 @@
 
     :host([open]) > fyn-common-form-button {
         border-radius: var(--radius) var(--radius) 0 0;
-        background-color: #333;
+        background-color: var(--plain-bg);
         box-shadow: 0 0 1em #000;
     }
 

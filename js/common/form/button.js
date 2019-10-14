@@ -28,32 +28,35 @@ export default class Button extends Fyn.Component
             action: new Types.String,
             tooltip: new Types.String,
             multi: new Types.Boolean,
+            togglable: new Types.Boolean,
+            state: new Types.Boolean,
         };
     }
 
     initialize()
     {
+        this.observe({
+            state: () => this.attributes.setOnAssert(this.state, 'active'),
+        });
+
         this.on({
-            click: (e, target) =>
+            click: Fyn.Event.debounce(1, (e, target) =>
             {
                 if(e instanceof CustomEvent)
                 {
                     return;
                 }
 
-                e.stopPropagation();
-
                 this.removeAttribute('click');
 
-                setTimeout(() =>
-                {
-                    let { x, y } = target.getBoundingClientRect();
+                (async () => {
+                    const { x, y } = target.getBoundingClientRect();
 
                     this.shadow.querySelector('ripple > inner').style.left = `calc(${e.pageX - x}px - var(--size) / 2)`;
                     this.shadow.querySelector('ripple > inner').style.top = `calc(${e.pageY - y}px - var(--size) / 2)`;
 
                     this.setAttribute('click', '');
-                }, 1);
+                })();
 
                 if(this.multi === true)
                 {
@@ -73,14 +76,18 @@ export default class Button extends Fyn.Component
                 }
                 else
                 {
+                    if(this.togglable === true)
+                    {
+                        this.state = !this.state;
+                    }
+
                     this.emit('click', { previous: e, action: this.action });
                 }
-            },
+            }),
         });
 
         document.body.on({
-            click: () =>
-            {
+            click: () => {
                 if(this.multi === true)
                 {
                     this.removeAttribute('open');

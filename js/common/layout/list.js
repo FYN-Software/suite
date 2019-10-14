@@ -38,7 +38,7 @@ export default class List extends Fyn.Component
         });
 
         document.body.on({
-            dragover: e =>
+            dragover: async e =>
             {
                 if(target === null || target === undefined || animating === true)
                 {
@@ -75,12 +75,11 @@ export default class List extends Fyn.Component
                         { duration: 200, easing: 'ease-in-out' }
                     );
 
-                    Promise.all([ a1.finished, a2.finished ]).then(() =>
-                    {
-                        target.parentNode.insertBefore(target, p === 1 ? sibling.nextSibling : sibling);
-                        start = e.x;
-                        animating = false;
-                    });
+                    await Promise.all([ a1.finished, a2.finished ]);
+
+                    target.parentNode.insertBefore(target, p === 1 ? sibling.nextSibling : sibling);
+                    start = e.x;
+                    animating = false;
                 }
             },
             dragend: e =>
