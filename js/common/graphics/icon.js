@@ -3,6 +3,11 @@ import * as Types from '../../../../data/types.js';
 
 export default class Icon extends Fyn.Component
 {
+    constructor(...args)
+    {
+        super(...args);
+    }
+
     static get properties()
     {
         return {

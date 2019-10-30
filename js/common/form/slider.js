@@ -9,15 +9,15 @@ export default class Slider extends Fyn.Component
             _percentVal: Types.Number
                 .min(0)
                 .max(1)
-                .set(v => Number.isNaN(v) ? (this.value - (this.min || 0)) / ((this.max || 360) - (this.min || 0)) : v),
+                .set(v => Number.isNaN(v) ? (this.value - this.min) / (this.max - this.min) : v),
             step: Types.Number.default(.1),
-            value: Types.Number.set(v => Math.clamp(this.min || 0, this.max || 360, Number.isNaN(v) ? 0 : v)),
+            value: Types.Number.set(v => Math.clamp(this.min, this.max, Number.isNaN(v) ? 0 : v) || 0),
             min: Types.Number.set(v => Math.min(Number.isNaN(v) ? this.min : v, this.max || Infinity)).default(0),
             max: Types.Number.set(v => Math.max(Number.isNaN(v) ? this.max : v, this.min || -Infinity)).default(360),
-            label: new Types.String,
-            showPercentage: new Types.Boolean,
-            showValue: new Types.Boolean,
-            vertical: new Types.Boolean,
+            label: Types.String,
+            showPercentage: Types.Boolean,
+            showValue: Types.Boolean,
+            vertical: Types.Boolean,
         };
     }
 

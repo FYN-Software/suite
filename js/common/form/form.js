@@ -1,12 +1,13 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Form extends Fyn.Component
 {
     static get properties()
     {
         return {
-            action: null,
-            messages: [],
+            action: Types.String,
+            messages: Types.List.type(Types.String),
         };
     }
 

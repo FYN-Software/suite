@@ -16,13 +16,13 @@
         width: 1em;
         height: inherit;
         line-height: inherit;
+        color: var(--i-color, inherit);
         font-size: var(--size, 1em);
         text-align: center;
-        color: var(--i-color, inherit)
     }
 </style>
 
-<inner class="fa-stack" for="{{ i in icons }}" if="{{ icons.length > 0 }}">
+<inner class="fa-stack" :for="{{ i of icons }}" :if="{{ icons.length > 0 }}">
     <i class="{{ this.type }} fa-{{ i }}"></i>
 </inner>
 

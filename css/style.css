@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300|Space+Mono&subset=latin-ext');
-@import url('https://use.fontawesome.com/releases/v5.11.2/css/all.css');
-@import url('https://ep-cdn.fyn.nl/css/flag-icon/css/flag-icon.min.css');
-
 :root {
     --info-rgb: 91, 192, 222;
     --warning-rgb: 240, 173, 78;
@@ -78,7 +74,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 [contenteditable] {
-    user-select: all;
+    user-select: initial;
 }
 
 [tooltip] {

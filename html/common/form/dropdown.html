@@ -100,7 +100,7 @@
 <label if="{{ label.length > 0 }}">{{ label }}</label>
 
 <fyn-common-form-button tabindex="0">
-    <fyn-common-form-input if="{{ index === -1 }}">
+    <fyn-common-form-input :if="{{ index === -1 }}">
         <slot name="placeholder" slot="placeholder">{{ placeholder }}</slot>
     </fyn-common-form-input>
 
@@ -109,6 +109,6 @@
     <fyn-common-graphics-icon icons="caret-down"></fyn-common-graphics-icon>
 </fyn-common-form-button>
 
-<options for="{{ option in _options }}">
-    <slot>{{ option.text || option.value ||'' }}</slot>
+<options :for="{{ option of _options }}">
+    <slot>{{ option.text || option.value || '' }}</slot>
 </options>

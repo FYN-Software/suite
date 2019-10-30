@@ -16,7 +16,7 @@ export default class Docks extends Fyn.Component
         return {
             mode: Direction.default(Direction.vertical),
             layout: new Layout,
-            parent: null,
+            parent: Types.Object,
         };
     }
 
@@ -358,7 +358,7 @@ export default class Docks extends Fyn.Component
 
         const cols = content.style[template].split(' ');
 
-        cols[t.index()] = s !== null
+        cols[t.index] = s !== null
             ? `${Math.clamp(sizes.min, sizes.max, s)}px`
             : 'auto';
 

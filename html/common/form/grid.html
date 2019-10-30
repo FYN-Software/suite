@@ -27,9 +27,13 @@
 <bar>
     <fyn-common-form-input id="filter" name="grid-filter" label="t_search"></fyn-common-form-input>
 
-    <fyn-common-form-button if="{{ editable === true }}" icons="plus" action="add" tooltip="t_new"></fyn-common-form-button>
+    <fyn-common-form-group combined>
+        <fyn-common-form-button if="{{ editable === true }}" icons="plus" action="add" tooltip="t_new"></fyn-common-form-button>
 
-    <fyn-common-form-button if="{{ editable === true }}" icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
+        <fyn-common-form-button if="{{ editable === true }}" icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
+    </fyn-common-form-group>
+
+    <slot name="bar"></slot>
 </bar>
 
 <!-- GRID -->

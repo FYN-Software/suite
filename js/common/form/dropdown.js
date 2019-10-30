@@ -7,9 +7,8 @@ export default class Dropdown extends Fyn.Component
     {
         return {
             _options: Types.List.type(Types.Object),
-            _item: new Types.Object,
             options: Types.List.type(Types.Object).set(v => {
-                if(v === undefined)
+                if(v === undefined || v === null)
                 {
                     v = [];
                 }
@@ -57,8 +56,15 @@ export default class Dropdown extends Fyn.Component
 
     initialize()
     {
+        const renderValue = () => {
+            const c = this.shadow.querySelector('fyn-common-form-button > value');
+            c.childNodes.clear();
+
+            Array.from(this.shadow.querySelectorAll(`options > [index="${this.index}"]`), i => c.appendChild(i.cloneNode(true)));
+        };
+
         this.on('options', {
-            templatechange: e => this.__item = e.detail.loop,
+            templatechange: renderValue,
         });
 
         const update = () => {
@@ -74,19 +80,11 @@ export default class Dropdown extends Fyn.Component
                 update();
             },
             index: (o, n) => {
-                if(this._item === null)
-                {
-                    this.__item = this.shadow.querySelector('options').loop;
-                }
+                renderValue();
 
-                this._item.option = this.options[this.index];
-
-                this.emit('change', { old: this.options[o], new: this.options[n] });
+                this.emit('change', {old: this.options[o], new: this.options[n]});
             },
-            value: (o, n) => {
-                this.index = this.options
-                    .findIndex(o => Fyn.Extends.equals(o, n) || (o.hasOwnProperty('value') && o.value === n));
-            },
+            value: (o, n) => this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n) || (o.hasOwnProperty('value') && o.value === n)),
             filter: update,
         });
     }
@@ -120,26 +118,12 @@ export default class Dropdown extends Fyn.Component
 
         this.on('options > *', {
             click: Fyn.Event.debounce(1, (e, t) => {
-                this.value = t.option;
+                this.index = t.index;
 
                 this.removeAttribute('open');
             }),
         });
 
         document.body.on({ click: () => this.removeAttribute('open') });
-    }
-
-    set __item(loop)
-    {
-        const c = this.shadow.querySelector('fyn-common-form-button > value');
-        const i = loop.item;
-
-        i.option = this.options[this.index] || {};
-
-        c.childNodes.clear();
-
-        this._item = i;
-
-        c.appendChild(i);
     }
 }

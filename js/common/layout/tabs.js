@@ -79,7 +79,7 @@ export default class Tabs extends Fyn.Component
         this.on('#bar > tab', {
             click: (e, t) =>
             {
-                this.index = t.index();
+                this.index = t.index;
             },
         });
 

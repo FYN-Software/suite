@@ -186,11 +186,11 @@
 
 <ripple><inner></inner></ripple>
 
-<fyn-common-graphics-icon main icons="{{ icons }}" if="{{ icons.length > 0 }}" type="{{ iconType || 'fab' }}"></fyn-common-graphics-icon>
+<fyn-common-graphics-icon main icons="{{ icons }}" :if="{{ icons.length > 0 }}" type="{{ iconType || 'fab' }}"></fyn-common-graphics-icon>
 
 <slot></slot>
 
-<fyn-common-graphics-icon icons="caret-down" if="{{ multi }}"></fyn-common-graphics-icon>
+<fyn-common-graphics-icon icons="caret-down" :if="{{ multi }}"></fyn-common-graphics-icon>
 
 <options if="{{ multi }}">
     <slot name="options"></slot>
