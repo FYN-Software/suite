@@ -22,26 +22,6 @@ export default class Dialog extends Fyn.Component
         };
     }
 
-    static get animations()
-    {
-        return {
-            open: [
-                [ { opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(1)' } ],
-                {
-                    duration: 300,
-                    easing: 'ease-in-out',
-                },
-            ],
-            close: [
-                [],
-                {
-                    extend: 'open',
-                    direction: 'reverse',
-                },
-            ],
-        };
-    }
-
     ready()
     {
         let moving = false;
