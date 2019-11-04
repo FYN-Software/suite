@@ -6,11 +6,11 @@ export default class Json extends Fyn.Component
     static get properties()
     {
         return {
-            depth: Types.Number.default(0),
-            data: Types.Object.default({}),
-            children: Types.Object.default({}),
-            key: new Types.String,
-            value: new Types.String,
+            depth: Types.Number,
+            data: Types.Object,
+            children: Types.Object,
+            key: Types.String,
+            value: Types.String,
         };
     }
 

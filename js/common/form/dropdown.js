@@ -44,13 +44,13 @@ export default class Dropdown extends Fyn.Component
                 });
             }),
             index: Types.Number.default(-1),
-            name: new Types.String,
+            name: Types.String,
             valid: Types.Boolean.default(true),
-            value: new Types.Object,
-            label: new Types.String,
-            filter: new Types.String,
+            value: Types.Object,
+            label: Types.String,
+            filter: Types.String,
             placeholder: Types.String.default('t_select'),
-            filterable: new Types.Boolean,
+            filterable: Types.Boolean,
         };
     }
 

@@ -1,15 +1,16 @@
 import * as Fyn from '../../../../component/fyn.js';
+import * as Types from '../../../../data/types.js';
 
 export default class Font extends Fyn.Component
 {
     static get properties()
     {
         return {
-            _items: [],
-            fonts: [],
-            variants: [],
-            key: '',
-            label: '',
+            _items: Types.List,
+            fonts: Types.List,
+            variants: Types.List,
+            key: Types.String,
+            label: Types.String,
         };
     }
 

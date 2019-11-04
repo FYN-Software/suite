@@ -6,10 +6,10 @@ export default class Datetime extends Fyn.Component
     static get properties()
     {
         return {
-            date: new Types.Datetime,
-            label: new Types.String,
-            name: new Types.String,
-            value: new Types.String,
+            date: Types.Datetime,
+            label: Types.String,
+            name: Types.String,
+            value: Types.String,
         };
     }
 

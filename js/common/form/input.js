@@ -6,11 +6,11 @@ export default class Input extends Fyn.Component
     static get properties()
     {
         return {
-            type: new Types.String,
-            label: new Types.String,
-            name: new Types.String,
-            value: new Types.String,
-            placeholder: new Types.String,
+            type: Types.String,
+            label: Types.String,
+            name: Types.String,
+            value: Types.String,
+            placeholder: Types.String,
         };
     }
 

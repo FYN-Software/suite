@@ -6,7 +6,7 @@ export default class Tabs extends Fyn.Component
     static get properties()
     {
         return {
-            index: Types.Number.default(-1),
+            index: Types.Number.min(-1).default(-1),
         };
     }
 
@@ -48,6 +48,7 @@ export default class Tabs extends Fyn.Component
                 {
                     const tab = document.createElement('tab');
                     tab.textContent = t.getAttribute('tab-title') || 'no title';
+                    tab.classList.add('fas', `fa-${t.getAttribute('tab-icon') || ''}`);
 
                     if(tab.textContent.length > 30)
                     {

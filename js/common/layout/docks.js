@@ -15,7 +15,7 @@ export default class Docks extends Fyn.Component
     {
         return {
             mode: Direction.default(Direction.vertical),
-            layout: new Layout,
+            layout: Layout,
             parent: Types.Object,
         };
     }

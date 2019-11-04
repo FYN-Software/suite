@@ -6,7 +6,7 @@ export default class List extends Fyn.Component
     static get properties()
     {
         return {
-            sortable: Types.Boolean.default(false),
+            sortable: Types.Boolean,
         };
     }
 

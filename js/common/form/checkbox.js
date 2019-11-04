@@ -6,9 +6,9 @@ export default class Checkbox extends Fyn.Component
     static get properties()
     {
         return {
-            toggle: new Types.Boolean,
-            checked: new Types.Boolean,
-            label: new Types.String,
+            toggle: Types.Boolean,
+            checked: Types.Boolean,
+            label: Types.String,
         };
     }
 

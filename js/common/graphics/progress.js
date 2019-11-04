@@ -6,7 +6,7 @@ export default class Progress extends Fyn.Component
     static get properties()
     {
         return {
-            value: Types.Number.min(0.0).max(1.0),
+            value: Types.Number.min(0).max(1),
         };
     }
 

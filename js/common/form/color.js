@@ -3,7 +3,7 @@ import * as Types from '../../../../data/types.js';
 
 const color = Types.Object.define({
     hue: Types.Number.min(0).max(360).default(180),
-    saturation: Types.Number.min(0).max(1).default(0),
+    saturation: Types.Number.min(0).max(1),
     lightness: Types.Number.min(0).max(1).default(.2),
     alpha: Types.Number.min(0).max(1).default(1),
 });
@@ -13,8 +13,8 @@ export default class Color extends Fyn.Component
     static get properties()
     {
         return {
-            label: new Types.String,
-            value: new color,
+            label: Types.String,
+            value: color,
         };
     }
 

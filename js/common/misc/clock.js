@@ -6,9 +6,9 @@ export default class Clock extends Fyn.Component
     static get properties()
     {
         return {
-            hour: new Types.Number,
-            minute: new Types.Number,
-            second: new Types.Number,
+            hour: Types.Number,
+            minute: Types.Number,
+            second: Types.Number,
         };
     }
 

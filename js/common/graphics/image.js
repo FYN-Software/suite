@@ -12,7 +12,7 @@ export default class Image extends Fyn.Component
     static get properties()
     {
         return {
-            src: Types.String.default(''),
+            src: Types.String,
             fit: Fit.default(Fit.auto),
             loading: Types.Boolean.default(true),
         };

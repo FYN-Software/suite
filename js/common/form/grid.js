@@ -10,7 +10,7 @@ export default class Grid extends Fyn.Component
             rows: Types.List.type(Types.String),
             selection: Types.List.type(Types.String),
             rowSelection: Types.String.default('none'),
-            editable: Types.Boolean.default(false),
+            editable: Types.Boolean,
             resizable: Types.Boolean.default(true),
         };
     }

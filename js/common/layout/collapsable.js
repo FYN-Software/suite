@@ -24,7 +24,7 @@ export default class Collapsable extends Fyn.Component
 
                 return v;
             }),
-            title: new Types.String,
+            title: Types.String,
         };
     }
 

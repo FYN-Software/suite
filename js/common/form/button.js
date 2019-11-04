@@ -25,11 +25,11 @@ export default class Button extends Fyn.Component
                 return v;
             }),
             iconType: Types.String.default('fas'),
-            action: new Types.String,
-            tooltip: new Types.String,
-            multi: new Types.Boolean,
-            togglable: new Types.Boolean,
-            state: new Types.Boolean,
+            action: Types.String,
+            tooltip: Types.String,
+            multi: Types.Boolean,
+            togglable: Types.Boolean,
+            state: Types.Boolean,
         };
     }
 

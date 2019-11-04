@@ -5,6 +5,8 @@ export default class Group extends Fyn.Component
 {
     static get properties()
     {
-        return { label: Types.String };
+        return {
+            label: Types.String,
+        };
     }
 }

@@ -6,13 +6,13 @@ export default class Calander extends Fyn.Component
     static get properties()
     {
         return {
-            value: new Types.Datetime,
-            today: Types.Datetime.default(Date.now()),
-            year: new Types.Number,
-            month: new Types.Number,
-            day: new Types.Number,
+            value: Types.Datetime,
+            today: Types.Datetime,
+            year: Types.Number,
+            month: Types.Number,
+            day: Types.Number,
             days: Types.List.type(Types.Number),
-            firstDayOfMonth: new Types.Number,
+            firstDayOfMonth: Types.Number,
         };
     }
 

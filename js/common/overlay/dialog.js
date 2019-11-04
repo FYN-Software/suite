@@ -11,14 +11,14 @@ export default class Dialog extends Fyn.Component
     static get properties()
     {
         return {
-            title: new Types.String,
-            img: new Types.String,
+            title: Types.String,
+            img: Types.String,
             width:  Types.Number.default(800).min(300),
             height:  Types.Number.default(500).min(200),
-            top: new Types.Number,
-            left: new Types.Number,
+            top: Types.Number,
+            left: Types.Number,
             mode: Mode.default(Mode.grow),
-            resizable: new Types.Boolean,
+            resizable: Types.Boolean,
         };
     }
 

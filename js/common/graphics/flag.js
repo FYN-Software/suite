@@ -6,7 +6,7 @@ export default class Flag extends Fyn.Component
     static get properties()
     {
         return {
-            iso: Types.String.default('').set(v => String(v || '').replace(/ /g, '')),
+            iso: Types.String,
         };
     }
 
