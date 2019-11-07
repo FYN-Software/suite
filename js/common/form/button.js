@@ -40,12 +40,17 @@ export default class Button extends Fyn.Component
         });
 
         this.on({
-            click: Fyn.Event.debounce(1, (e, target) =>
-            {
+            options: {
+                details: false,
+            },
+            click: (e, target) => {
                 if(e instanceof CustomEvent)
                 {
                     return;
                 }
+
+                e.stopPropagation();
+                e.stopImmediatePropagation();
 
                 this.removeAttribute('click');
 
@@ -83,7 +88,7 @@ export default class Button extends Fyn.Component
 
                     this.emit('click', { previous: e, action: this.action });
                 }
-            }),
+            },
         });
 
         document.body.on({

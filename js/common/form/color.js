@@ -24,8 +24,6 @@ export default class Color extends Fyn.Component
             value: (o, n) => {
                 const { hue, saturation, lightness, alpha } = this.value;
 
-                console.log(this.value);
-
                 this.style.setProperty('--value', `hsla(${hue}, ${saturation * 100}%, ${lightness * 100}%, ${alpha})`);
 
                 this.emit('change', { old: o, new: n });
@@ -37,10 +35,8 @@ export default class Color extends Fyn.Component
     {
         let editedValue = Object.assign({}, this.value);
 
-        this.on('value', {
-            click: Fyn.Event.debounce(10, (e, t) => {
-                console.log(e);
-
+        this.shadow.on('value', {
+            click: (_, t) => {
                 editedValue = Object.assign({}, this.value);
                 const { hue, saturation, lightness, alpha } = editedValue;
 
@@ -57,11 +53,11 @@ export default class Color extends Fyn.Component
                 this.shadow.querySelector('fyn-common-form-slider[horizontal]').value = 1 - alpha;
 
                 this.setAttribute('open', '');
-            }),
+            },
         });
 
-        this.on('box [action]', {
-            click: Fyn.Event.debounce(10, (e, t) =>
+        this.shadow.on('box [action]', {
+            click: (e, t) =>
             {
                 switch(t.action)
                 {
@@ -72,11 +68,11 @@ export default class Color extends Fyn.Component
                 }
 
                 this.removeAttribute('open');
-            }),
+            },
         });
 
-        this.on('fyn-common-form-slider[vertical]', {
-            change: (e, t) =>
+        this.shadow.on('fyn-common-form-slider[vertical]', {
+            change: (_, t) =>
             {
                 editedValue.hue = t.value;
 
@@ -84,8 +80,8 @@ export default class Color extends Fyn.Component
             },
         });
 
-        this.on('fyn-common-form-slider[horizontal]', {
-            change: (e, t) =>
+        this.shadow.on('fyn-common-form-slider[horizontal]', {
+            change: (_, t) =>
             {
                 editedValue.alpha = 1 - t.value;
 
@@ -95,33 +91,39 @@ export default class Color extends Fyn.Component
         let dragging = false;
 
         const box = this.shadow.querySelector('box > gradient');
-        const position = e => {
+        const position = (x, y) => {
             const rect = box.getBoundingClientRect();
-            const contained = rect.contains(e.x, e.y);
+            const contained = rect.contains(x, y);
 
             if(contained === true)
             {
-                editedValue.saturation = (e.x - rect.left) / rect.width;
-                editedValue.lightness = 1 - (e.y - rect.top) / rect.height;
+                editedValue.saturation = (x - rect.left) / rect.width;
+                editedValue.lightness = 1 - (y - rect.top) / rect.height;
 
                 this.style.setProperty('--sat', `${ editedValue.saturation * 100 }%`);
                 this.style.setProperty('--light', `${ editedValue.lightness * 100 }%`);
             }
         };
 
-        this.on('box > gradient', {
+        this.shadow.on('box > gradient', {
+            options: {
+                details: false,
+            },
             mousedown: e => {
                 dragging = true;
 
-                position(e);
+                position(e.x, e.y);
             }
         });
 
         document.body.on({
+            options: {
+                details: false,
+            },
             mousemove: e => {
                 if(dragging === true)
                 {
-                    position(e);
+                    position(e.x, e.y);
                 }
             },
             mouseup: e => dragging = false,

@@ -16,10 +16,8 @@ export default class List extends Fyn.Component
             sortable: (o, n) => this.items.forEach(i => i.draggable = this.sortable),
         });
 
-        this.on('slot', {
-            slotchange: e => {
-                this.items.forEach(i => i.draggable = this.sortable);
-            },
+        this.shadow.on('slot', {
+            slotchange: e => this.items.forEach(i => i.draggable = this.sortable),
         });
 
         let target;
@@ -27,19 +25,17 @@ export default class List extends Fyn.Component
         let position;
         let animating = false;
 
-        this.on({
-            dragstart: Fyn.Event.debounce(1, e =>
-            {
+        this.shadow.on({
+            dragstart: e => {
                 target = e.composedPath()[0];
 
                 start = e.x;
                 position = e.x;
-            }),
+            },
         });
 
         document.body.on({
-            dragover: async e =>
-            {
+            dragover: async e => {
                 if(target === null || target === undefined || animating === true)
                 {
                     return;
@@ -82,8 +78,7 @@ export default class List extends Fyn.Component
                     animating = false;
                 }
             },
-            dragend: e =>
-            {
+            dragend: e => {
                 if(target === null || target === undefined)
                 {
                     return;

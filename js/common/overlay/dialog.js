@@ -36,10 +36,9 @@ export default class Dialog extends Fyn.Component
         this.top = document.body.offsetHeight / 2 - this.offsetHeight / 2;
         this.left = document.body.offsetWidth / 2 - this.offsetWidth / 2;
 
-        this.on('handlers > handler', {
-            mousedown(e, target)
-            {
-                if(!moving)
+        this.shadow.on('handlers > handler', {
+            mousedown: (e, target) => {
+                if(moving === false)
                 {
                     moving = true;
                     moveHandle = target;
@@ -47,9 +46,9 @@ export default class Dialog extends Fyn.Component
             },
         });
 
-        this.on('[slot="footer"][action]', {
-            click: (e, t) => {
-                switch(t.action)
+        this.shadow.on('[slot="footer"][action]', {
+            click: (e) => {
+                switch(e.action)
                 {
                     case 'close':
                         this.close();
@@ -91,9 +90,7 @@ export default class Dialog extends Fyn.Component
 
         await this.open();
 
-        const res = await Promise.race([
-            this.await('cancel|success'),
-        ]);
+        const res = await this.await('cancel|success');
 
         await this.close();
 

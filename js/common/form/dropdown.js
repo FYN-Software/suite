@@ -6,8 +6,8 @@ export default class Dropdown extends Fyn.Component
     static get properties()
     {
         return {
-            _options: Types.List.type(Types.Object),
-            options: Types.List.type(Types.Object).set(v => {
+            _options: Types.List.type(Types.Any),
+            options: Types.List.type(Types.Any).set(v => {
                 if(v === undefined || v === null)
                 {
                     v = [];
@@ -46,7 +46,7 @@ export default class Dropdown extends Fyn.Component
             index: Types.Number.default(-1),
             name: Types.String,
             valid: Types.Boolean.default(true),
-            value: Types.Object,
+            value: Types.Any,
             label: Types.String,
             filter: Types.String,
             placeholder: Types.String.default('t_select'),
@@ -63,7 +63,7 @@ export default class Dropdown extends Fyn.Component
             Array.from(this.shadow.querySelectorAll(`options > [index="${this.index}"]`), i => c.appendChild(i.cloneNode(true)));
         };
 
-        this.on('options', {
+        this.shadow.on('options', {
             templatechange: renderValue,
         });
 
@@ -91,8 +91,8 @@ export default class Dropdown extends Fyn.Component
 
     ready()
     {
-        this.on('fyn-common-form-button', {
-            click: Fyn.Event.debounce(1, (e, t) => {
+        this.shadow.on('fyn-common-form-button', {
+            click: (_, t) => {
                 const rect = this.getBoundingClientRect();
 
                 this.style.setProperty('--x', `${rect.x}px`);
@@ -106,24 +106,25 @@ export default class Dropdown extends Fyn.Component
                 {
                     t.querySelector('fyn-common-form-input').focus();
                 }
-            }),
-        });
-
-        this.on('fyn-common-form-button > fyn-common-form-input', {
-            change: (e, t) =>
-            {
-                this.filter = e.detail.new;
             },
         });
 
-        this.on('options > *', {
-            click: Fyn.Event.debounce(1, (e, t) => {
+        this.shadow.on('fyn-common-form-button > fyn-common-form-input', {
+            change: ({ new: n }) => {
+                this.filter = n;
+            },
+        });
+
+        this.shadow.on('options > *', {
+            click: (_, t) => {
                 this.index = t.index;
 
                 this.removeAttribute('open');
-            }),
+            },
         });
 
-        document.body.on({ click: () => this.removeAttribute('open') });
+        document.body.on({
+            click: () => this.removeAttribute('open'),
+        });
     }
 }

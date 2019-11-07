@@ -44,11 +44,10 @@ export default class Slider extends Fyn.Component
         let dragging = false;
         const box = this.shadow.querySelector('box');
 
-        this.on('box > handle', { mousedown: e => dragging = true });
+        this.shadow.on('box > handle', { mousedown: _ => dragging = true });
 
         document.on({
-            mousemove: e =>
-            {
+            mousemove: (e, t) => {
                 if(dragging === true)
                 {
                     const rect = this.getBoundingClientRect();
@@ -68,8 +67,8 @@ export default class Slider extends Fyn.Component
                     }
                 }
             },
-            mouseup: e => dragging = false,
-            mouseleave: e => dragging = false,
+            mouseup: _ => dragging = false,
+            mouseleave: _ => dragging = false,
         });
     }
 }

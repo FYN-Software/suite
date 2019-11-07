@@ -17,19 +17,19 @@ export default class Datetime extends Fyn.Component
     {
         const box = this.shadow.querySelector('box');
 
-        this.on('fyn-common-form-input', {
-            click: Fyn.Event.debounce(1, () => {
+        this.shadow.on('fyn-common-form-input', {
+            click: () => {
                 const rect = this.getBoundingClientRect();
 
                 this.style.setProperty('--x', `${rect.x + rect.width / 2}px`);
                 this.style.setProperty('--y', `${rect.bottom}px`);
 
                 this.attributes.toggle('open');
-            }),
+            },
         });
 
         document.on({
-            click: (e) =>
+            click: (d, t, e) =>
             {
                 if(e.composedPath().includes(box) === false)
                 {

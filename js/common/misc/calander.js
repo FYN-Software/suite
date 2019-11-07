@@ -26,8 +26,8 @@ export default class Calander extends Fyn.Component
         this.days = Array.from(Array(new Date(this.year, this.month, 0).getDate()).keys(), i => Types.Number.default(++i));
         this.firstDayOfMonth = new Date(this.year, this.month - 1, 1).getDay();
 
-        this.on('inner span', {
-            click: (e, t) => {
+        this.shadow.on('inner span', {
+            click: (_, t) => {
                 this.shadow
                     .querySelectorAll('inner span[selected]')
                     .forEach(el => el.removeAttribute('selected'));

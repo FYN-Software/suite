@@ -16,12 +16,11 @@ export default class Font extends Fyn.Component
 
     async ready()
     {
-        this.on('#fonts', {
-            change: e =>
-            {
-                if(e.detail.new !== undefined)
+        this.shadow.on('#fonts', {
+            change: e => {
+                if(e.new !== undefined)
                 {
-                    this.variants = e.detail.new.variants;
+                    this.variants = e.new.variants;
                 }
             },
         });

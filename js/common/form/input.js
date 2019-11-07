@@ -18,7 +18,7 @@ export default class Input extends Fyn.Component
     {
         const keys = [ 'Enter' ];
 
-        this.on('value', {
+        this.shadow.on('value', {
             options: {
                 passive: false,
             },
@@ -28,12 +28,12 @@ export default class Input extends Fyn.Component
                     e.preventDefault();
                 }
             },
-            keyup: e => {
+            keyup: _ => {
                 this.value = this.shadow.querySelector('value').textContent;
             },
         });
 
-        this.on('value', {
+        this.shadow.on('value', {
             options: {
                 capture: true,
             },

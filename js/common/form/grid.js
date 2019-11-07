@@ -22,10 +22,9 @@ export default class Grid extends Fyn.Component
             columns: () => {},
         });
 
-        this.on('bar > fyn-common-form-button', {
-            click: (e, t) =>
-            {
-                switch(t.action)
+        this.shadow.on('bar > fyn-common-form-button', {
+            click: (e, t) => {
+                switch(e.action)
                 {
                     case 'add':
                         this.filter.value = '';
@@ -60,25 +59,9 @@ export default class Grid extends Fyn.Component
                 }
             },
         });
-        this.on('bar > fyn-common-form-input', {
-            change: e => {
-                if(this.api === undefined)
-                {
-                    return;
-                }
-
-                this.api.onFilterChanged();
-            },
+        this.shadow.on('bar > fyn-common-form-input', {
+            change: e => console.log(e),
         });
-    }
-
-    ready()
-    {
-    }
-
-    autoSize()
-    {
-
     }
 
     get filter()

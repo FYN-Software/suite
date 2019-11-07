@@ -5,8 +5,8 @@ import Tabs from './tabs.js';
 
 export const Layout = Types.Object.define({
     mode: Direction.default(Direction.vertical),
-    children: new Types.List,
-    sizes: new Types.List,
+    children: Types.List,
+    sizes: Types.List,
 });
 
 export default class Docks extends Fyn.Component
@@ -34,20 +34,20 @@ export default class Docks extends Fyn.Component
 
     ready()
     {
-        this.on('content > fyn-common-layout-resizable', {
-            options: { passive: false },
-            resize: (e, t) =>
-            {
+        this.shadow.on('content > fyn-common-layout-resizable', {
+            options: {
+                passive: false,
+            },
+            resize: (d, t, e) => {
                 e.preventDefault();
 
-                this.updateSize(t, e.detail.size[this.mode === Docks.vertical ? 'x' : 'y']);
+                this.updateSize(t, d.size[this.mode === Docks.vertical ? 'y' : 'x']);
             },
         });
 
         this.on({
             options: { capture: true },
-            dropped: Fyn.Event.debounce(1, (e, t) =>
-            {
+            dropped: e => {
                 e.detail.path.push(this);
 
                 if(this.parent !== null)
@@ -139,8 +139,7 @@ export default class Docks extends Fyn.Component
 
                 // TODO(Chris Kruining)
                 // Implement `edge` behavior
-                const mutateTree = (tree, path = []) =>
-                {
+                const mutateTree = (tree, path = []) => {
                     for(let [ i, c ] of tree.children.entries())
                     {
                         let p = [ ...path, i ];
@@ -204,7 +203,7 @@ export default class Docks extends Fyn.Component
                 };
 
                 this.layout = mutateTree(layout);
-            }),
+            },
         });
 
         this.draw();
@@ -242,6 +241,11 @@ export default class Docks extends Fyn.Component
         }
 
         const count = content.children.length;
+
+        if(this.layout.children === undefined)
+        {
+            return;
+        }
 
         for(let [ c, i ] of Object.entries(this.layout.children).map(([ k, v ]) => [ Number.parseInt(k), v ]))
         {
@@ -355,7 +359,6 @@ export default class Docks extends Fyn.Component
 
         const mode = this.mode === Direction.vertical ? 1 : 0;
         const template = `gridTemplate${[ 'Rows', 'Columns' ][mode]}`;
-
         const cols = content.style[template].split(' ');
 
         cols[t.index] = s !== null

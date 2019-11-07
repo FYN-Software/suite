@@ -35,8 +35,8 @@ export default class Tabs extends Fyn.Component
             },
         });
 
-        this.on('content > slot', {
-            slotchange: e => {
+        this.shadow.on('content > slot', {
+            slotchange: () => {
                 this.index = -1;
 
                 const bar  = this.shadow.querySelector('#bar');
@@ -44,20 +44,16 @@ export default class Tabs extends Fyn.Component
 
                 bar.children.clear();
 
-                for(let t of tabs)
+                for(const t of tabs)
                 {
                     const tab = document.createElement('tab');
                     tab.textContent = t.getAttribute('tab-title') || 'no title';
-                    tab.classList.add('fas', `fa-${t.getAttribute('tab-icon') || ''}`);
-
-                    if(tab.textContent.length > 30)
-                    {
-                        tab.textContent = tab.textContent.substr(0, 27) + '...';
-                    }
 
                     Object.defineProperty(tab, 'panel', {
                         value: t,
                         writable: false,
+                        configurable: false,
+                        enumerable: false,
                     });
 
                     bar.appendChild(tab);
@@ -70,18 +66,12 @@ export default class Tabs extends Fyn.Component
 
     ready()
     {
-        this.on('#bar', {
-            wheel: (e, t) =>
-            {
-                t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25;
-            },
+        this.shadow.on('#bar', {
+            wheel: (e, t) => t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25,
         });
 
-        this.on('#bar > tab', {
-            click: (e, t) =>
-            {
-                this.index = t.index;
-            },
+        this.shadow.on('#bar > tab', {
+            click: (_, t) => this.index = t.index,
         });
 
         // const content = this.shadow.querySelector('content');

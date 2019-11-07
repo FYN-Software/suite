@@ -13,23 +13,11 @@ export default class Form extends Fyn.Component
 
     ready()
     {
-        this.on('fields > *', {
+        this.shadow.on('fields > *', {
             options: {
                 passive: false,
             },
-            keydown: (e, target) => {
-                // if(e.keyCode === 9)
-                // {
-                //     e.preventDefault();
-                //
-                //     let newElement = Application.page.component(target[e.shiftKey ? 'previousSibling' : 'nextSibling']);
-                //
-                //     if(newElement !== null && newElement.hasOwnProperty('focus'))
-                //     {
-                //         newElement.focus();
-                //     }
-                // }
-
+            keydown: e => {
                 if(e.keyCode === 13)
                 {
                     e.stopPropagation();
@@ -40,9 +28,9 @@ export default class Form extends Fyn.Component
             },
         });
 
-        this.on('[slot="buttons"][action]', {
-            click: (e, target) => {
-                switch(target.getAttribute('action'))
+        this.shadow.on('[slot="buttons"][action]', {
+            click: (e) => {
+                switch(e.action)
                 {
                     case 'submit':
                         return this.submit();
