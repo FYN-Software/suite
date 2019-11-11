@@ -27,6 +27,9 @@ export default class List extends Fyn.Component
 
         this.shadow.on({
             dragstart: e => {
+                // e.stopPropagation();
+                e.dataTransfer.effectAllowed = 'move';
+
                 target = e.composedPath()[0];
 
                 start = e.x;

@@ -31,7 +31,7 @@ export default class Tabs extends Fyn.Component
                 }
 
                 tabs.forEach(t => t.removeAttribute('active'));
-                tabs[this.index].setAttribute('active', '');
+                Array.from(tabs).find(t => t.index === this.index).setAttribute('active', '');
             },
         });
 
@@ -44,10 +44,11 @@ export default class Tabs extends Fyn.Component
 
                 bar.children.clear();
 
-                for(const t of tabs)
+                for(const [ i, t ] of Object.entries(tabs))
                 {
                     const tab = document.createElement('tab');
                     tab.textContent = t.getAttribute('tab-title') || 'no title';
+                    tab.setAttribute('index', i);
 
                     Object.defineProperty(tab, 'panel', {
                         value: t,
