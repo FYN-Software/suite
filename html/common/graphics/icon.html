@@ -22,7 +22,7 @@
 </style>
 
 <inner class="fa-stack" :for="{{ i of icons }}" :if="{{ icons.length > 0 }}">
-    <i class="{{ this.type }} fa-{{ i }}"></i>
+    <i class="{{ i.includes('.') ? i.split(/\./).first : this.type }} fa-{{ i.split(/\./).last }}"></i>
 </inner>
 
 <slot></slot>
