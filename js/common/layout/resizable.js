@@ -27,7 +27,6 @@ export default class Resizable extends Fyn.Component
                 passive: false,
             },
             pointerdown: e => {
-                e.preventDefault();
                 e.stopPropagation();
 
                 start = { x: e.pageX, y: e.pageY };
@@ -43,11 +42,10 @@ export default class Resizable extends Fyn.Component
                 passive: false,
             },
             pointermove: e => {
-                e.preventDefault();
-                e.stopPropagation();
-
                 if(e.pointerId === id)
                 {
+                    e.stopPropagation();
+
                     const delta = { x: e.pageX - start.x, y: e.pageY - start.y };
 
                     this.emit('resize', {
@@ -58,11 +56,10 @@ export default class Resizable extends Fyn.Component
                 }
             },
             pointerup: e => {
-                e.preventDefault();
-                e.stopPropagation();
-
                 if(e.pointerId === id)
                 {
+                    e.stopPropagation();
+
                     start = null;
                     size = null;
                     id = null;
