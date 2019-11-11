@@ -16,7 +16,7 @@ export default class Docks extends Fyn.Component
         return {
             mode: Direction.default(Direction.vertical),
             layout: Layout,
-            parent: Types.Object,
+            parent: Types.Object.default(null),
         };
     }
 
@@ -45,166 +45,170 @@ export default class Docks extends Fyn.Component
             },
         });
 
-        this.on({
-            options: { capture: true },
-            dropped: e => {
-                e.detail.path.push(this);
-
-                if(this.parent !== null)
-                {
-                    return;
-                }
-
-                const findPath = (id, tree) =>
-                {
-                    let path = [];
-
-                    for(let [ i, c ] of tree.entries())
-                    {
-                        if(Array.isArray(c) && c.includes(id))
-                        {
-                            return [ i, c.findIndex(i => i === id) ];
-                        }
-                        else if(c.hasOwnProperty('children'))
-                        {
-                            let p = findPath(id, c.children);
-
-                            path.push(i, ...p);
-
-                            if(p.length > 0)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    return path;
-                };
-                const findPathToRoot = el =>
-                {
-                    let path = [];
-
-                    if(el instanceof Tabs)
-                    {
-                        path.push(...findPathToRoot(el.parentElement), el.parentElement.index());
-                    }
-                    else if(el instanceof Resizable)
-                    {
-                        const o = el.ownerComponent;
-
-                        if(o !== this)
-                        {
-                            path.push(...findPathToRoot(o.parentElement), o.parentElement.index());
-                        }
-                    }
-
-                    return path;
-                };
-
-                const { slot, edge, target, path, zone } = e.detail;
-                const id = Number.parseInt(target.name);
-                const layout = Fyn.Extends.clone(this.layout);
-                const oldPath = findPath(id, layout.children);
-                const newPath = findPathToRoot(zone);
-
-                let placement;
-                let generate = false;
-
-                switch(slot)
-                {
-                    case 'top':
-                        placement = 'before';
-                        generate = path.first.mode === Direction.vertical;
-
-                        break;
-
-                    case 'left':
-                        placement = 'before';
-                        generate = path.first.mode === Direction.horizontal;
-
-                        break;
-
-                    case 'right':
-                        placement = 'after';
-                        generate = path.first.mode === Direction.horizontal;
-
-                        break;
-
-                    case 'bottom':
-                        placement = 'after';
-                        generate = path.first.mode === Direction.vertical;
-
-                        break;
-                }
-
-                // TODO(Chris Kruining)
-                // Implement `edge` behavior
-                const mutateTree = (tree, path = []) => {
-                    for(let [ i, c ] of tree.children.entries())
-                    {
-                        let p = [ ...path, i ];
-
-                        if(Array.isArray(c))
-                        {
-                            if(p.compare(oldPath.slice(0, -1)))
-                            {
-                                delete c[oldPath.last];
-                            }
-
-                            if(p.compare(newPath))
-                            {
-                                if(placement === undefined)
-                                {
-                                    c.push(id);
-                                }
-                                else
-                                {
-                                    let t = tree;
-
-                                    if(generate === true)
-                                    {
-                                        c = {
-                                            mode: tree.mode,
-                                            children: [ c ],
-                                        };
-
-                                        t = c;
-                                    }
-
-                                    const o = placement === 'after'
-                                        ? 1
-                                        : 0;
-
-                                    t.children.splice(i + o, 0, [ id ]);
-                                }
-                            }
-
-                            tree.children[i] = c;
-
-                            if(Array.isArray(c) && c.filter(i => i !== undefined).length === 0)
-                            {
-                                delete tree.children[i];
-                            }
-                        }
-                        else if(c.hasOwnProperty('children'))
-                        {
-                            c = mutateTree(c, p);
-
-                            if(c.children.length === 1)
-                            {
-                                c = tree.children.first;
-                            }
-
-                            tree.children[i] = c;
-                        }
-                    }
-
-                    return tree;
-                };
-
-                this.layout = mutateTree(layout);
-            },
-        });
+        // this.on({
+        //     options: { capture: true },
+        //     dropped: e => {
+        //         if(this.parent !== null)
+        //         {
+        //             return;
+        //         }
+        //
+        //         const findPath = (id, tree) => {
+        //             let path = [];
+        //
+        //             for(let [ i, c ] of tree.entries())
+        //             {
+        //                 if(Array.isArray(c) && c.includes(id))
+        //                 {
+        //                     return [ i, c.findIndex(i => i === id) ];
+        //                 }
+        //                 else if(c.hasOwnProperty('children'))
+        //                 {
+        //                     let p = findPath(id, c.children);
+        //
+        //                     path.push(i, ...p);
+        //
+        //                     if(p.length > 0)
+        //                     {
+        //                         break;
+        //                     }
+        //                 }
+        //             }
+        //
+        //             return path;
+        //         };
+        //         const findPathToRoot = el => {
+        //             let path = [];
+        //
+        //             if(el instanceof Tabs)
+        //             {
+        //                 path.push(...findPathToRoot(el.parentElement), el.parentElement.index);
+        //             }
+        //             else if(el instanceof Resizable)
+        //             {
+        //                 const o = el.ownerComponent;
+        //
+        //                 if(o !== this)
+        //                 {
+        //                     path.push(...findPathToRoot(o.parentElement), o.parentElement.index);
+        //                 }
+        //             }
+        //
+        //             return path;
+        //         };
+        //
+        //         const { slot, edge, target, path, zone } = e;
+        //         const id = Number.parseInt(target.name);
+        //         const layout = Fyn.Extends.clone(this.layout);
+        //         const oldPath = findPath(id, layout.children);
+        //         const newPath = findPathToRoot(zone);
+        //
+        //         let placement;
+        //         let generate = false;
+        //
+        //         console.log(e, this.parent);
+        //
+        //         switch(slot)
+        //         {
+        //             case 'top':
+        //                 console.log(path, path.first);
+        //
+        //                 placement = 'before';
+        //                 generate = path.first.mode === Direction.vertical;
+        //
+        //                 break;
+        //
+        //             case 'left':
+        //                 placement = 'before';
+        //                 generate = path.first.mode === Direction.horizontal;
+        //
+        //                 break;
+        //
+        //             case 'right':
+        //                 placement = 'after';
+        //                 generate = path.first.mode === Direction.horizontal;
+        //
+        //                 break;
+        //
+        //             case 'bottom':
+        //                 placement = 'after';
+        //                 generate = path.first.mode === Direction.vertical;
+        //
+        //                 break;
+        //         }
+        //
+        //         // TODO(Chris Kruining)
+        //         // Implement `edge` behavior
+        //         const mutateTree = (tree, path = []) => {
+        //             for(const [ i, c ] of tree.children.entries())
+        //             {
+        //                 const p = [ ...path, i ];
+        //
+        //                 console.log(p, i, c);
+        //
+        //                 if(Array.isArray(c))
+        //                 {
+        //                     if(p.compare(oldPath.slice(0, -1)))
+        //                     {
+        //                         delete c[oldPath.last];
+        //                     }
+        //
+        //                     if(p.compare(newPath))
+        //                     {
+        //                         if(placement === undefined)
+        //                         {
+        //                             c.push(id);
+        //                         }
+        //                         else
+        //                         {
+        //                             let t = tree;
+        //
+        //                             if(generate === true)
+        //                             {
+        //                                 c = {
+        //                                     mode: tree.mode,
+        //                                     children: [ c ],
+        //                                 };
+        //
+        //                                 t = c;
+        //                             }
+        //
+        //                             const o = placement === 'after'
+        //                                 ? 1
+        //                                 : 0;
+        //
+        //                             t.children.splice(i + o, 0, [ id ]);
+        //                         }
+        //                     }
+        //
+        //                     tree.children[i] = c;
+        //
+        //                     if(Array.isArray(c) && c.filter(i => i !== undefined).length === 0)
+        //                     {
+        //                         delete tree.children[i];
+        //                     }
+        //                 }
+        //                 else if(c.hasOwnProperty('children'))
+        //                 {
+        //                     c = mutateTree(c, p);
+        //
+        //                     if(c.children.length === 1)
+        //                     {
+        //                         c = tree.children.first;
+        //                     }
+        //
+        //                     tree.children[i] = c;
+        //                 }
+        //             }
+        //
+        //             return tree;
+        //         };
+        //
+        //         console.log(layout);
+        //
+        //         this.layout = mutateTree(layout);
+        //     },
+        // });
 
         this.draw();
     }
