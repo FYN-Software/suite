@@ -55,6 +55,18 @@
         text-align: right;
     }
 
+    :host([vertical]) {
+        grid-template-columns: unset;
+        grid-template-rows: auto 1fr auto;
+        grid-gap: .5em 1em;
+        align-content: space-between;
+        justify-content: unset;
+    }
+
+    :host([vertical]) > label {
+        grid-column: unset;
+    }
+
     :host([vertical]) > box {
         width: .5em;
         height: 100%;
@@ -79,6 +91,6 @@
     <handle></handle>
 </box>
 
-<span if="{{ showPercentage }}">{{ (_percentVal * 100).toFixed(1) }}%</span>
+<span :if="{{ showPercentage }}">{{ (_percentVal * 100).toFixed(1) }}%</span>
 
-<span if="{{ showValue }}">{{ (value).toFixed(1) }}</span>
+<span :if="{{ showValue }}">{{ (value).toFixed(1) }}</span>
