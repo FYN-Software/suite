@@ -325,7 +325,6 @@ export default class Docks extends Fyn.Component
                     if(create)
                     {
                         tabs.add(slot);
-                        // tabs.appendChild(slot);
                     }
                 }
             }
@@ -333,8 +332,7 @@ export default class Docks extends Fyn.Component
 
         if(this.layout.hasOwnProperty('sizes'))
         {
-            const mode = this.mode === Direction.vertical ? 1 : 0;
-            const template = `gridTemplate${[ 'Rows', 'Columns' ][mode]}`;
+            const template = `gridTemplate${[ 'Rows', 'Columns' ][this.mode === Direction.vertical ? 1 : 0]}`;
 
             content.style[template] = Array(content.children.length)
                 .fill('auto')
@@ -361,8 +359,7 @@ export default class Docks extends Fyn.Component
                 { min: -Infinity, max: Infinity }
             );
 
-        const mode = this.mode === Direction.vertical ? 1 : 0;
-        const template = `gridTemplate${[ 'Rows', 'Columns' ][mode]}`;
+        const template = `gridTemplate${[ 'Rows', 'Columns' ][this.mode === Direction.vertical ? 1 : 0]}`;
         const cols = content.style[template].split(' ');
 
         cols[t.index] = s !== null

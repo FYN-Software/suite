@@ -11,7 +11,11 @@ export default class Slider extends Fyn.Component
                 .max(1)
                 .set(v => Number.isNaN(v) ? (this.value - this.min) / (this.max - this.min) : v),
             step: Types.Number.default(.1),
-            value: Types.Number.set(v => Math.clamp(this.min, this.max, Number.isNaN(v) ? 0 : v) || 0),
+            value: Types.Number,//.set(v => {
+            //     console.log(v, this.min, this.max, Number.isNaN(v) ? 0 : v, Math.clamp(this.min, this.max, Number.isNaN(v) ? 0 : v) || 0);
+            //
+            //     return Math.clamp(this.min, this.max, Number.isNaN(v) ? 0 : v) || 0
+            // }),
             min: Types.Number.set(v => Math.min(Number.isNaN(v) ? this.min : v, this.max || Infinity)).default(0),
             max: Types.Number.set(v => Math.max(Number.isNaN(v) ? this.max : v, this.min || -Infinity)).default(360),
             label: Types.String,
@@ -27,7 +31,7 @@ export default class Slider extends Fyn.Component
             _percentVal: (o, n) => {
                 this.shadow.querySelector('box').style.setProperty('--w', `${(this._percentVal * 100).toFixed(1)}%`);
 
-                this.value = (this.max - this.min) * this._percentVal;
+                this.value = (this.max - this.min) * this._percentVal + this.min;
             },
             value: (o, n) => {
                 this._percentVal = (this.value - this.min) / (this.max - this.min);
