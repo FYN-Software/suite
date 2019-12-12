@@ -2,8 +2,8 @@ import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
 export class Direction extends Types.Enum.define({
-    vertical: Symbol('vertical'),
-    horizontal: Symbol('horizontal'),
+    vertical: { property: 'gridTemplateColumns' },
+    horizontal: { property: 'gridTemplateRows' },
 }){}
 
 export default class Resizable extends Fyn.Component
