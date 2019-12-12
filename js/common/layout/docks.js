@@ -15,7 +15,11 @@ export default class Docks extends Fyn.Component
     {
         return {
             mode: Direction.default(Direction.vertical),
-            layout: Layout,
+            layout: Layout.default({
+                mode: Direction.vertical,
+                sizes: [],
+                children: [],
+            }),
             parent: Types.Object.default(null),
         };
     }
@@ -217,20 +221,19 @@ export default class Docks extends Fyn.Component
     {
         // TODO(Chris Kruining)
         //  Implement positioned addition
-
         this.appendChild(element);
 
         const i = this.children.length;
-
         element.setAttribute('slot', i);
+
         this.layout.children.last.push(i);
 
         this.draw();
     }
 
-    draw()
+    async draw()
     {
-        if((this.layout instanceof Object) !== true || Array.isArray(this.layout))
+        if((this.layout instanceof Layout) !== true || Array.isArray(this.layout))
         {
             return;
         }
@@ -239,17 +242,12 @@ export default class Docks extends Fyn.Component
 
         const content = this.shadow.querySelector('content');
 
-        if(content === null)
+        if(content === null || this.layout.children === undefined)
         {
             return;
         }
 
         const count = content.children.length;
-
-        if(this.layout.children === undefined)
-        {
-            return;
-        }
 
         for(let [ c, i ] of Object.entries(this.layout.children).map(([ k, v ]) => [ Number.parseInt(k), v ]))
         {
@@ -332,13 +330,14 @@ export default class Docks extends Fyn.Component
 
         if(this.layout.hasOwnProperty('sizes'))
         {
-            const template = `gridTemplate${[ 'Rows', 'Columns' ][this.mode === Direction.vertical ? 1 : 0]}`;
-
-            content.style[template] = Array(content.children.length)
+            content.style.gridTemplateRows = '';
+            content.style.gridTemplateColumns = '';
+            content.style[Direction.valueOf(this.mode).property] = Array(content.children.length)
                 .fill('auto')
                 .join(' ');
 
-            for(let [ i, s ] of this.layout.sizes.entries())
+
+            for(let [ i, s ] of (await this.layout.sizes).entries())
             {
                 this.updateSize(content.children[i], s);
             }
@@ -359,13 +358,14 @@ export default class Docks extends Fyn.Component
                 { min: -Infinity, max: Infinity }
             );
 
-        const template = `gridTemplate${[ 'Rows', 'Columns' ][this.mode === Direction.vertical ? 1 : 0]}`;
-        const cols = content.style[template].split(' ');
+        const cols = content.style[Direction.valueOf(this.mode).property].split(' ');
 
         cols[t.index] = s !== null
             ? `${Math.clamp(sizes.min, sizes.max, s)}px`
             : 'auto';
 
-        content.style[template] = cols.join(' ');
+        content.style.gridTemplateRows = '';
+        content.style.gridTemplateColumns = '';
+        content.style[Direction.valueOf(this.mode).property] = cols.join(' ');
     }
 }
