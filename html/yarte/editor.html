@@ -1,0 +1,43 @@
+<link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid-auto-flow: row;
+        background-color: rgba(var(--plain-fg-rgb), .1);
+        border-radius: var(--radius);
+    }
+
+    :host > toolbar {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: 1em;
+        justify-content: start;
+        border-bottom: 1px solid var(--plain-fg);
+        z-index: 2;
+    }
+
+    :host > article {
+        white-space: pre;
+        min-height: 10em;
+        padding: 1em;
+    }
+</style>
+
+<toolbar>
+    <fyn-common-form-group combined flat>
+        <fyn-common-form-button icons="save" flat></fyn-common-form-button>
+
+        <fyn-common-form-button icons="folder-open" flat></fyn-common-form-button>
+    </fyn-common-form-group>
+
+    <fyn-common-form-group combined>
+        <fyn-common-form-button icons="undo" flat></fyn-common-form-button>
+
+        <fyn-common-form-button icons="redo" flat></fyn-common-form-button>
+    </fyn-common-form-group>
+
+    <slot name="toolbar"></slot>
+</toolbar>
+
+<article contenteditable>{{ value }}</article>

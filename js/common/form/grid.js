@@ -7,7 +7,7 @@ export default class Grid extends Fyn.Component
     {
         return {
             columns: Types.List.type(Types.String),
-            rows: Types.List.type(Types.String),
+            rows: Types.List.type(Types.List.type(Types.String)),
             selection: Types.List.type(Types.String),
             rowSelection: Types.String.default('none'),
             editable: Types.Boolean,

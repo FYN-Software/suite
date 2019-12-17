@@ -43,7 +43,7 @@
     }
 </style>
 
-<messages for="{{ item in messages }}">
+<messages :for="{{ item of messages }}">
     <message type="{{ item.type }}">{{ item.message }}</message>
 </messages>
 

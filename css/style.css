@@ -96,7 +96,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 [tooltip]::before {
     content: '';
-    border-top: .75em solid #333;
+    border-top: .75em solid rgba(var(--plain-fg-rgb), .25);
     border-left: 1em solid transparent;
     border-right: 1em solid transparent;
     transform: translate(-50%, 0);
@@ -106,7 +106,7 @@ h1, h2, h3, h4, h5, h6, p {
     content: attr(tooltip);
     padding: .5em 1em;
     line-height: 1em;
-    background-color: var(--plain-bg);
+    background-color: rgba(var(--plain-fg-rgb), .25);
     color: var(--plain-fg);
     white-space: nowrap;
     overflow: hidden;

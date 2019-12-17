@@ -36,8 +36,8 @@ export default class Tabs extends Fyn.Component
         });
 
         this.shadow.on('content > slot', {
-            slotchange: () => {
-                this.index = -1;
+            slotchange: async () => {
+                await (this.index = -1);
 
                 const bar  = this.shadow.querySelector('#bar');
                 const tabs = this.tabs;
@@ -60,7 +60,7 @@ export default class Tabs extends Fyn.Component
                     bar.appendChild(tab);
                 }
 
-                this.index = Math.max(tabs.findIndex(t => t.hasAttribute('active')), 0);
+                await (this.index = Math.max(tabs.findIndex(t => t.hasAttribute('active')), 0));
             },
         });
     }

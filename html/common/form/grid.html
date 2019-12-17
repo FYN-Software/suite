@@ -1,5 +1,3 @@
-<script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
-
 <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
 
 <style>
@@ -27,42 +25,39 @@
 <bar>
     <fyn-common-form-input id="filter" name="grid-filter" label="t_search"></fyn-common-form-input>
 
-    <fyn-common-form-group combined>
-        <fyn-common-form-button if="{{ editable === true }}" icons="plus" action="add" tooltip="t_new"></fyn-common-form-button>
+    <fyn-common-form-group combined :if="{{ editable === true }}">
+        <fyn-common-form-button icons="plus" action="add" tooltip="t_new"></fyn-common-form-button>
 
-        <fyn-common-form-button if="{{ editable === true }}" icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
+        <fyn-common-form-button icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
     </fyn-common-form-group>
 
     <slot name="bar"></slot>
 </bar>
 
-<!-- GRID -->
 <table>
     <thead>
-        <tr for="{{ column in columns }}">
+        <tr :for="{{ column of columns }}">
             <th>{{ column }}</th>
         </tr>
     </thead>
 
-    <tbody for="{{ row in rows }}">
-        <tr for="{{ cell in row.cells }}">
+    <tbody :for="{{ row of rows }}">
+        <tr :for="{{ cell of row }}">
             <td>{{ cell }}</td>
         </tr>
     </tbody>
 </table>
 
-<fyn-common-overlay-modal id="dataGridModal">
-    <fyn-common-overlay-dialog id="deleteRowsDialog">
-        <fyn-common-form-form name="deleteRowsForm">
-            are you sure you want to permanently delete the following keys?
+<fyn-common-overlay-dialog id="deleteRowsDialog">
+    <fyn-common-form-form name="deleteRowsForm">
+        are you sure you want to permanently delete the following keys?
 
-            <ul for="{{ i in selection }}">
-                <li no-translate>{{ i }}</li>
-            </ul>
+        <ul :for="{{ i of selection }}">
+            <li no-translate>{{ i }}</li>
+        </ul>
 
-            <fyn-common-form-button action="cancel" slot="buttons">t_cancel</fyn-common-form-button>
+        <fyn-common-form-button action="cancel" slot="buttons">t_cancel</fyn-common-form-button>
 
-            <fyn-common-form-button action="submit" slot="buttons">t_submit</fyn-common-form-button>
-        </fyn-common-form-form>
-    </fyn-common-overlay-dialog>
-</fyn-common-overlay-modal>
+        <fyn-common-form-button action="submit" slot="buttons">t_submit</fyn-common-form-button>
+    </fyn-common-form-form>
+</fyn-common-overlay-dialog>

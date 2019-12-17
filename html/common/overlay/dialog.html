@@ -8,9 +8,9 @@
         align-content: start;
         position: fixed;
         box-shadow: 0 0 1em #0007;
-        background-color: #222;
+        background-color: var(--plain-bg);
         padding: 1em;
-        color: #eee;
+        color: var(--plain-fg);
         opacity: 0;
         pointer-events: none;
         width: 60vw;
@@ -61,23 +61,18 @@
     }
 
     :host > header h1 {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-
         background-color: inherit;
         color: inherit;
 
         font-size: 2.5em;
         font-weight: 900;
+        text-align: center;
         text-transform: uppercase;
-        text-shadow: 0 0 1em #000;
 
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
 
-        transform: translate(-50%, -50%);
         z-index: 1;
     }
 
@@ -106,7 +101,7 @@
     }
 </style>
 
-<handlers if="{{ resizable }}">
+<handlers :if="{{ resizable }}">
     <handler corner="bottom-left"></handler>
     <handler side="left"></handler>
     <handler corner="top-left"></handler>
@@ -118,9 +113,9 @@
 </handlers>
 
 <header>
-    <h1 if="{{ title.length > 0 }}">{{ title }}</h1>
+    <h1 :if="{{ title.length > 0 }}">{{ title }}</h1>
 
-    <fyn-common-graphics-image src="{{ img }}" if="{{ img.length > 0 }}"></fyn-common-graphics-image>
+    <fyn-common-graphics-image src="{{ img }}" :if="{{ img.length > 0 }}"></fyn-common-graphics-image>
 
     <slot name="header"></slot>
 </header>

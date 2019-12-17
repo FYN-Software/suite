@@ -11,7 +11,7 @@ export default class Form extends Fyn.Component
         };
     }
 
-    ready()
+    async ready()
     {
         this.shadow.on('fields > *', {
             options: {
@@ -28,7 +28,7 @@ export default class Form extends Fyn.Component
             },
         });
 
-        this.shadow.on('[slot="buttons"][action]', {
+        this.on('[slot="buttons"][action]', {
             click: (e) => {
                 switch(e.action)
                 {
@@ -51,7 +51,7 @@ export default class Form extends Fyn.Component
             .filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined)
             .reduce((t, c) => Object.assign(t, { [c.name]: c.value }), {});
 
-        console.log(f, this.shadow.querySelector('fields > slot').assignedElements().filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined));
+        // console.log(f, this.shadow.querySelector('fields > slot').assignedElements().filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined));
 
         this.emit('success', { success: true, ...f });
     }

@@ -11,6 +11,7 @@ export default class Input extends Fyn.Component
             name: Types.String,
             value: Types.String,
             placeholder: Types.String,
+            multiline: Types.Boolean,
         };
     }
 
@@ -62,7 +63,6 @@ export default class Input extends Fyn.Component
 
     ready()
     {
-        this.shadow.querySelector('value').textContent = this.value;
     }
 
     focus()
