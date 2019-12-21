@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/temp.css">
+
+<style>
+    :host {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 1em;
+        align-items: center;
+        justify-content: start;
+    }
+
+    :host > main {
+        margin-bottom: -50%;
+    }
+</style>
+
+<span>{{ label }}</span>
+
+<main>
+    <div id="chart"></div>
+</main>
