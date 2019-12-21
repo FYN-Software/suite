@@ -38,8 +38,6 @@ export default class Slider extends Fyn.Component
 
                 this.emit('change', { old: o, new: n });
             },
-            min: () => this.value = this.value,
-            max: () => this.value = this.value,
         });
     }
 
@@ -48,27 +46,37 @@ export default class Slider extends Fyn.Component
         let dragging = false;
         const box = this.shadow.querySelector('box');
 
-        this.shadow.on('box > handle', { mousedown: _ => dragging = true });
+        const move = async ({ x, y }) => {
+            const rect = this.getBoundingClientRect();
+            const contained = this.vertical === true
+                ? rect.contains(rect.x + 1, y)
+                : rect.contains(x, rect.y + 1);
+
+            if(contained === true)
+            {
+                const rect = box.getBoundingClientRect();
+                const p = this.vertical === true
+                    ? (y - rect.top) / rect.height
+                    : (x - rect.left) / rect.width;
+                const s = 10 / (this.step / (this.max - this.min));
+
+                this._percentVal = Math.round(p * s) / s;
+            }
+        };
+
+        this.shadow.on('box, box > handle', {
+            mousedown: e => {
+                dragging = true;
+
+                move(e);
+            },
+        });
 
         document.on({
             mousemove: (e, t) => {
                 if(dragging === true)
                 {
-                    const rect = this.getBoundingClientRect();
-                    const contained = this.vertical === true
-                        ? rect.contains(rect.x + 1, e.y)
-                        : rect.contains(e.x, rect.y + 1);
-
-                    if(contained === true)
-                    {
-                        const rect = box.getBoundingClientRect();
-                        const p = this.vertical === true
-                            ? (e.y - rect.top) / rect.height
-                            : (e.x - rect.left) / rect.width;
-                        const s = 10 / (this.step / (this.max - this.min));
-
-                        this._percentVal = Math.round(p * s) / s;
-                    }
+                    move(e);
                 }
             },
             mouseup: _ => dragging = false,

@@ -25,7 +25,7 @@ export default class Checkbox extends Fyn.Component
 
     ready()
     {
-        this.on('box, label', {
+        this.shadow.on('box, label', {
             click: () => this.checked = !this.checked,
         });
     }

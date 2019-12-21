@@ -27,6 +27,7 @@
         align-self: center;
         background: var(--bg);
         border-radius: var(--radius);
+        cursor: pointer;
     }
 
     :host > box > value {
@@ -48,7 +49,6 @@
         background-color: var(--plain-fg);
         border-radius: 50%;
         transform: translate(-50%, -50%);
-        cursor: pointer;
     }
 
     :host > span:last-of-type {
@@ -83,7 +83,7 @@
     }
 </style>
 
-<label if="{{ label.length > 0 }}">{{ label }}</label>
+<label :if="{{ label.length > 0 }}">{{ label }}</label>
 
 <box>
     <value></value>
@@ -91,6 +91,6 @@
     <handle></handle>
 </box>
 
-<span :if="{{ showPercentage }}">{{ (_percentVal * 100).toFixed(1) }}%</span>
+<span :if="{{ showPercentage && _percentVal !== -Infinity }}">{{ (_percentVal * 100).toFixed(1) }}%</span>
 
-<span :if="{{ showValue }}">{{ (value).toFixed(1) }}</span>
+<span :if="{{ showValue && value !== -Infinity }}">{{ value.toFixed(1) }}</span>

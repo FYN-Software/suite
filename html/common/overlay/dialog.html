@@ -3,6 +3,7 @@
 <style>
     :host {
         display: grid;
+        grid-auto-columns: 100%;
         grid-template-rows: auto 1fr auto;
         grid-gap: 1em;
         align-content: start;
@@ -60,7 +61,7 @@
         position: relative;
     }
 
-    :host > header h1 {
+    :host > header > h1 {
         background-color: inherit;
         color: inherit;
 
@@ -76,14 +77,14 @@
         z-index: 1;
     }
 
-    :host > header fyn-common-graphics-image {
+    :host > header > fyn-common-graphics-image {
         --img-radius: var(--radius) var(--radius) 0 0 ;
         --mode: cover;
         margin: -1em;
         height: 200px;
     }
 
-    :host > header fyn-common-graphics-image::before {
+    :host > header > fyn-common-graphics-image::before {
         content: '';
         display: block;
         position: absolute;
@@ -94,6 +95,10 @@
         background-color: #0007;
         mix-blend-mode: multiply;
         border-radius: var(--img-radius);
+    }
+
+    :host > main > * {
+        max-width: 100%;
     }
 
     :host > footer {
@@ -120,9 +125,9 @@
     <slot name="header"></slot>
 </header>
 
-<article>
+<main>
     <slot></slot>
-</article>
+</main>
 
 <footer>
     <slot name="footer"></slot>
