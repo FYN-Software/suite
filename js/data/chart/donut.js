@@ -1,7 +1,6 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
-// import ApexCharts from 'https://unpkg.com/apexcharts@3.7.0/dist/apexcharts.esm.js';
-import ApexCharts from '/js/apex.js';
+import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.esm.js';
 
 export default class Donut extends Fyn.Component
 {
@@ -34,13 +33,14 @@ export default class Donut extends Fyn.Component
         const chart = new ApexCharts(this.shadow.querySelector('#chart'), {
             chart: {
                 type: 'donut',
-                height: 120,
+                height: 200,
             },
             dataLabels: {
                 enabled: false
             },
             series: [],
             labels: [ 'TODO', 'In progress', 'Declined', 'Passed' ],
+            colors:['#5bc0de', '#f0ad4e', '#d9534f', '#5cb85c'],
             legend: {
                 show: false,
             },
