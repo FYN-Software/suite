@@ -68,6 +68,6 @@
     <span>zo</span>
 </header>
 
-<inner for="{{ i in days }}">
+<inner :for="{{ i of days }}">
     <span today="{{ i === this.day }}">{{ i }}</span>
 </inner>

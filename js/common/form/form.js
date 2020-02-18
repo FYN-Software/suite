@@ -20,7 +20,7 @@ export default class Form extends Fyn.Component
                 passive: false,
             },
             keydown: e => {
-                if(e.keyCode === 13)
+                if(e.key === 'Enter')
                 {
                     e.stopPropagation();
                     e.preventDefault();
@@ -56,5 +56,13 @@ export default class Form extends Fyn.Component
         // console.log(f, this.shadow.querySelector('fields > slot').assignedElements().filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined));
 
         this.emit('success', { success: true, ...f });
+    }
+
+    clear()
+    {
+        for(const field of this.shadow.querySelector('fields > slot').assignedElements())
+        {
+            field.clear();
+        }
     }
 }

@@ -62,10 +62,13 @@
     }
 
     :host > header > h1 {
-        background-color: inherit;
+        margin-bottom: -1em;
+
         color: inherit;
+        background-color: inherit;
 
         font-size: 2.5em;
+        line-height: 1em;
         font-weight: 900;
         text-align: center;
         text-transform: uppercase;
@@ -78,8 +81,8 @@
     }
 
     :host > header > fyn-common-graphics-image {
-        --img-radius: var(--radius) var(--radius) 0 0 ;
-        --mode: cover;
+        --img-radius: var(--radius) var(--radius) 0 0;
+        --fit: cover;
         margin: -1em;
         height: 200px;
     }

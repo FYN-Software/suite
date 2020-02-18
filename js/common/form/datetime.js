@@ -17,8 +17,6 @@ export default class Datetime extends Fyn.Component
 
     ready()
     {
-        const box = this.shadow.querySelector('box');
-
         this.shadow.on('fyn-common-form-input', {
             click: () => {
                 const rect = this.getBoundingClientRect();
@@ -33,7 +31,7 @@ export default class Datetime extends Fyn.Component
         document.on({
             click: (d, t, e) =>
             {
-                if(e.composedPath().includes(box) === false)
+                if(e.composedPath().includes(this) === false)
                 {
                     this.removeAttribute('open');
                 }

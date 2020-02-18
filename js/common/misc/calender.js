@@ -18,14 +18,14 @@ export default class Calender extends Fyn.Component
         };
     }
 
-    ready()
+    async ready()
     {
         const date = new Date();
         this.year = date.getFullYear();
         this.month = date.getMonth() + 1;
         this.day = date.getDate();
 
-        this.days = Array.from(Array(new Date(this.year, this.month, 0).getDate()).keys(), i => Types.Number.default(++i));
+        this.days = Array.from(Array(new Date(this.year, this.month, 0).getDate()).keys(), i => ++i);
         this.firstDayOfMonth = new Date(this.year, this.month - 1, 1).getDay();
 
         this.shadow.on('inner span', {

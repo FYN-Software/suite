@@ -15,6 +15,7 @@ export default class Image extends Fyn.Component
     {
         return {
             src: Types.String,
+            alt: Types.String,
             fit: Fit.default(Fit.auto),
             loading: Types.Boolean.default(true),
         };
@@ -41,6 +42,7 @@ export default class Image extends Fyn.Component
                     this.removeAttribute('loading');
                 };
                 img.src = String(this.src);
+                img.alt = this.alt || this.src;
                 img.draggable = false;
                 img.part = 'img'
             },

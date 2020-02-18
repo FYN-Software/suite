@@ -24,7 +24,27 @@ export default class Dialog extends Fyn.Component
         };
     }
 
-    ready()
+    static get animations()
+    {
+        return {
+            open: [
+                [ { opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(1)' } ],
+                {
+                    duration: 300,
+                    easing: 'ease-in-out',
+                },
+            ],
+            close: [
+                [],
+                {
+                    extend: 'open',
+                    direction: 'reverse',
+                },
+            ],
+        };
+    }
+
+    async ready()
     {
         let moving = false;
         let moveHandle = null;
@@ -48,7 +68,7 @@ export default class Dialog extends Fyn.Component
             },
         });
 
-        this.shadow.on('[slot="footer"][action]', {
+        this.on('[slot="footer"][action]', {
             click: (e) => {
                 switch(e.action)
                 {
@@ -83,7 +103,7 @@ export default class Dialog extends Fyn.Component
     {
         let added = false;
 
-        if(this.parentElement === null)
+        if(this.parentNode === null)
         {
             added = true;
 
