@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class List extends Fyn.Component
 {
+    static localName = 'fyn-common-layout-list';
+
     static get properties()
     {
         return {
@@ -27,6 +29,11 @@ export default class List extends Fyn.Component
 
         this.shadow.on({
             dragstart: e => {
+                if(this.sortable !== true)
+                {
+                    return;
+                }
+
                 // e.stopPropagation();
                 e.dataTransfer.effectAllowed = 'move';
 
@@ -48,7 +55,7 @@ export default class List extends Fyn.Component
 
                 const d = position - start;
                 const p = Math.abs(d) / (d);
-                const sibling = target[`${ p === -1 ? 'previous' : 'next' }Sibling`];
+                const sibling = target[`${ p === -1 ? 'previous' : 'next' }ElementSibling`];
 
                 if(sibling === null)
                 {

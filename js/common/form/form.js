@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Form extends Fyn.Component
 {
+    static localName = 'fyn-common-form-form';
+
     static get properties()
     {
         return {

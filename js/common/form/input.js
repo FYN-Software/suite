@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Input extends Fyn.Component
 {
+    static localName = 'fyn-common-form-input';
+
     static get properties()
     {
         return {

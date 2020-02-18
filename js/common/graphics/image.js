@@ -9,6 +9,8 @@ export const Fit = Types.Enum.define({
 
 export default class Image extends Fyn.Component
 {
+    static localName = 'fyn-common-graphics-image';
+
     static get properties()
     {
         return {
@@ -39,6 +41,8 @@ export default class Image extends Fyn.Component
                     this.removeAttribute('loading');
                 };
                 img.src = String(this.src);
+                img.draggable = false;
+                img.part = 'img'
             },
             fit: (o, n) => {
                 if(img === undefined)

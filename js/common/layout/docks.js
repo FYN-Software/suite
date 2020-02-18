@@ -11,6 +11,8 @@ export const Layout = Types.Object.define({
 
 export default class Docks extends Fyn.Component
 {
+    static localName = 'fyn-common-layout-docks';
+
     static get properties()
     {
         return {
@@ -22,11 +24,6 @@ export default class Docks extends Fyn.Component
             }),
             parent: Types.Object.default(null),
         };
-    }
-
-    static get dependencies()
-    {
-        return [ 'fyn-common-layout-resizable', 'fyn-common-layout-tabs' ];
     }
 
     initialize()

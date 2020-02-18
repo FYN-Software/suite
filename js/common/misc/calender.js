@@ -1,8 +1,10 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Calander extends Fyn.Component
+export default class Calender extends Fyn.Component
 {
+    static localName = 'fyn-common-misc-calender';
+
     static get properties()
     {
         return {

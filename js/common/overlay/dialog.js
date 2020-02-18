@@ -8,6 +8,8 @@ class Mode extends Types.Enum.define({
 
 export default class Dialog extends Fyn.Component
 {
+    static localName = 'fyn-common-overlay-dialog';
+
     static get properties()
     {
         return {

@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Tabs extends Fyn.Component
 {
+    static localName = 'fyn-common-layout-tabs';
+
     static get properties()
     {
         return {
@@ -30,8 +32,8 @@ export default class Tabs extends Fyn.Component
                     return;
                 }
 
-                tabs.forEach(t => t.removeAttribute('active'));
-                Array.from(tabs).find(t => t.index === this.index).setAttribute('active', '');
+                tabs.forEach(t => t.part = 'tab');
+                Array.from(tabs).find(t => t.index === this.index).part = 'tab tab-active';
             },
         });
 
@@ -49,6 +51,7 @@ export default class Tabs extends Fyn.Component
                     const tab = document.createElement('tab');
                     tab.textContent = t.getAttribute('tab-title') || 'no title';
                     tab.setAttribute('index', i);
+                    tab.part = 'tab';
 
                     Object.defineProperty(tab, 'panel', {
                         value: t,
@@ -60,7 +63,7 @@ export default class Tabs extends Fyn.Component
                     bar.appendChild(tab);
                 }
 
-                await (this.index = Math.max(tabs.findIndex(t => t.hasAttribute('active')), 0));
+                await (this.index = Math.max(tabs.findIndex(t => t.part.contains('tab-active')), 0));
             },
         });
     }
@@ -74,194 +77,6 @@ export default class Tabs extends Fyn.Component
         this.shadow.on('#bar > tab', {
             click: (_, t) => this.index = t.index,
         });
-
-        // const content = this.shadow.querySelector('content');
-        // const overlay = this.shadow.querySelector('overlay');
-        // const placeholder = this.shadow.querySelector('placeholder');
-        //
-        // this.on({
-        //     dragstart: e => {
-        //         window.dragTarget = this.shadow
-        //             .querySelector('content > slot')
-        //             .assignedElements({ flatten: true })[e.composedPath()[0].index];
-        //         window.dragSource = this;
-        //
-        //         window.dragPreview = document.createElement('drag-preview');
-        //         window.dragPreview.appendChild(
-        //             window.dragTarget
-        //                 .cloneNode(true)
-        //                 .cloneStyle(window.dragTarget, [ 'color', 'background-color' ])
-        //         );
-        //
-        //         document.body.appendChild(window.dragPreview);
-        //
-        //         e.dataTransfer.setDragImage(new Image(), 0, 0);
-        //         e.dataTransfer.effectAllowed = 'move';
-        //     },
-        // });
-        //
-        // let lastPos = { x: 0, y: 0 };
-        //
-        // // TODO(Chris Kruining)
-        // // Migrate all drag and
-        // // Drop behavior that's
-        // // Is more than sorting
-        // // The tabs to the
-        // // `Docks` component
-        // //
-        // // Idea for migration ::
-        // // Have a single overlay
-        // // & placeholder in the
-        // // Root `Docks` and utilize
-        // // The `clientRect` of child
-        // // `Tabs` to place the
-        // // Overlay & placeholder
-        // document.body.on({
-        //     options: {
-        //         passive: false,
-        //     },
-        //     dragover: e => {
-        //         if(window.dragPreview === undefined)
-        //         {
-        //             return;
-        //         }
-        //
-        //         window.dragPreview.style.setProperty('--x', `${e.pageX}px`);
-        //         window.dragPreview.style.setProperty('--y', `${e.pageY}px`);
-        //
-        //         e.preventDefault();
-        //         e.dataTransfer.dropEffect = 'move';
-        //
-        //         lastPos = { x: e.x, y: e.y };
-        //     },
-        //     dragend: e => {
-        //         overlay.setAttribute('hidden', '');
-        //         Array.from(overlay.children).forEach(c => c.removeAttribute('hovering'));
-        //
-        //         placeholder.setAttribute('hidden', '');
-        //         placeholder.style.setProperty('--x', '0');
-        //         placeholder.style.setProperty('--y', '0');
-        //         placeholder.style.setProperty('--w', '0');
-        //         placeholder.style.setProperty('--h', '0');
-        //
-        //         if(window.dragPreview === undefined)
-        //         {
-        //             return;
-        //         }
-        //
-        //         window.dragPreview.remove();
-        //         window.dragPreview = undefined;
-        //     },
-        //     dragleave: (e, t) => {
-        //         if(window.dragPreview === undefined)
-        //         {
-        //             return;
-        //         }
-        //
-        //         window.dragPreview.style.setProperty('--x', '0px');
-        //         window.dragPreview.style.setProperty('--y', '0px');
-        //
-        //         e.dataTransfer.setDragImage(window.dragPreview, 0, 0);
-        //
-        //         // Const s = document.createElement('style');
-        //         // S.innerHTML = `* { background-color: #333; }`;
-        //         //
-        //         // Const w = window.open('https://toolkit.fyn.nl/docks.html', '', `left=${lastPos.x},top=${lastPos.y},width=800,height=800`);
-        //         // W.addEventListener('DOMContentLoaded', e => {
-        //         //     Const docks = new Docks();
-        //         //
-        //         //     Docks.on({
-        //         //         Ready: e => {
-        //         //             Docks.appendChild(window.dragTarget);
-        //         //
-        //         //             Docks.layout = {
-        //         //                 Mode: Docks.vertical,
-        //         //                 Children: [
-        //         //                     [ 1 ],
-        //         //                 ],
-        //         //             };
-        //         //         },
-        //         //     });
-        //         //
-        //         //     W.document.body.appendChild(docks);
-        //         // });
-        //     },
-        // });
-        //
-        // this.shadow.on('content', {
-        //     dragover: (e, t) => {
-        //         placeholder.removeAttribute('hidden');
-        //         overlay.attributes.setOnAssert(content.getBoundingClientRect().contains(e.x, e.y) === false, 'hidden');
-        //     },
-        // });
-        //
-        // this.shadow.on('overlay', {
-        //     dragleave: (e, t) => {
-        //         overlay.attributes.setOnAssert(overlay.getBoundingClientRect().contains(e.x, e.y) === false, 'hidden');
-        //     },
-        // });
-        //
-        // this.shadow.on('overlay > block', {
-        //     dragover: (e, t) => {
-        //         t.attributes.setOnAssert(t.getBoundingClientRect().contains(e.pageX, e.pageY), 'hovering');
-        //
-        //         const s = t.hasAttribute('static');
-        //
-        //         let x = s
-        //             ? (t.hasAttribute('right') ? 98 : 0)
-        //             : (t.hasAttribute('right') ? 50 : 0);
-        //         let y = s
-        //             ? (t.hasAttribute('bottom') ? 98 : 0)
-        //             : (t.hasAttribute('bottom') ? 50 : 0);
-        //         let w = s
-        //             ? (t.hasAttribute('top') || t.hasAttribute('bottom') ? 100 : 2)
-        //             : (t.hasAttribute('top') || t.hasAttribute('bottom') || t.hasAttribute('center') ? 100 : 50);
-        //         let h = s
-        //             ? (t.hasAttribute('left') || t.hasAttribute('right') ? 100 : 2)
-        //             : (t.hasAttribute('left') || t.hasAttribute('right') || t.hasAttribute('center') ? 100 : 50);
-        //
-        //         placeholder.style.setProperty('--x', `${x}%`);
-        //         placeholder.style.setProperty('--y', `${y}%`);
-        //         placeholder.style.setProperty('--w', `${w}%`);
-        //         placeholder.style.setProperty('--h', `${h}%`);
-        //     },
-        //     dragleave: (e, t) => {
-        //         t.removeAttribute('hovering');
-        //
-        //         placeholder.style.setProperty('--x', '0');
-        //         placeholder.style.setProperty('--y', '0');
-        //         placeholder.style.setProperty('--w', '0');
-        //         placeholder.style.setProperty('--h', '0');
-        //     },
-        //     drop: (e, t) => {
-        //         if(window.dragTarget === undefined)
-        //         {
-        //             return;
-        //         }
-        //
-        //         const names = [ 'top', 'left', 'center', 'right', 'bottom' ];
-        //
-        //         this.emit('dropped', {
-        //             slot: Array.from(t.attributes, a => a.name).filter(n => names.includes(n)).last,
-        //             edge: t.hasAttribute('static'),
-        //             path: [],
-        //             zone: this,
-        //             target: window.dragTarget,
-        //             source: window.dragSource,
-        //         }, true);
-        //
-        //         window.dragTarget = undefined;
-        //         window.dragSource = undefined;
-        //
-        //         if(window.dragPreview === undefined)
-        //         {
-        //             return;
-        //         }
-        //
-        //         window.dragPreview.remove();
-        //         window.dragPreview = undefined;
-        //     },
-        // });
     }
 
     add(tab, title = '')

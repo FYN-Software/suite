@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Font extends Fyn.Component
 {
+    static localName = 'fyn-common-form-font';
+
     static get properties()
     {
         return {

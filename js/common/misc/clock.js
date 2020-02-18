@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Clock extends Fyn.Component
 {
+    static localName = 'fyn-common-misc-clock';
+
     static get properties()
     {
         return {

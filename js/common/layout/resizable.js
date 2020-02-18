@@ -8,6 +8,8 @@ export class Direction extends Types.Enum.define({
 
 export default class Resizable extends Fyn.Component
 {
+    static localName = 'fyn-common-layout-resizable';
+
     static get properties()
     {
         return {

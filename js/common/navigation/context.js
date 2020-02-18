@@ -1,9 +1,9 @@
 import Component from '../../../../component/component.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Item extends Component
+export default class Context extends Component
 {
-    static localName = 'fyn-common-navigation-item';
+    static localName = 'fyn-common-navigation-context';
 
     static get properties()
     {

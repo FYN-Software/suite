@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Slider extends Fyn.Component
 {
+    static localName = 'fyn-common-form-slider';
+
     static get properties()
     {
         return {

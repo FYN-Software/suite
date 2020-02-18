@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Progress extends Fyn.Component
 {
+    static localName = 'fyn-common-graphics-progress';
+
     static get properties()
     {
         return {

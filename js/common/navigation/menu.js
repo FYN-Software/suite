@@ -3,12 +3,14 @@ import * as Fyn from '../../../../component/fyn.js';
 
 export default class Menu extends Component
 {
-    ready()
+    static localName = 'fyn-common-navigation-menu';
+
+    async ready()
     {
-        this.on(':scope > *', {
-            click: Fyn.Event.debounce(1, (e, t) => {
+        this.on(':scope > :not([slot])', {
+            click: (e, t) => {
                 this.emit('select', t);
-            }),
+            },
         })
     }
 }

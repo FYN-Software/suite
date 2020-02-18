@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Json extends Fyn.Component
 {
+    static localName = 'fyn-common-data-json';
+
     static get properties()
     {
         return {

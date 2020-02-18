@@ -3,6 +3,8 @@ import * as Types from '../../../../data/types.js';
 
 export default class Dropdown extends Fyn.Component
 {
+    static localName = 'fyn-common-form-dropdown';
+
     static get properties()
     {
         return {
@@ -91,15 +93,29 @@ export default class Dropdown extends Fyn.Component
 
     ready()
     {
+        const options = this.shadow.querySelector('options');
+        const container = new Container();
+        container.shadow.appendChild(this.shadow.querySelector('style').cloneNode(true));
+        container.shadow.appendChild(options);
+
+        options.on(':scope > *', {
+            click: (_, t) => {
+                this.index = t.index;
+
+                this.removeAttribute('open');
+            },
+        });
+
         this.shadow.on('fyn-common-form-button', {
             click: (_, t) => {
                 const rect = this.getBoundingClientRect();
 
-                this.style.setProperty('--x', `${rect.x}px`);
-                this.style.setProperty('--y', `${rect.bottom}px`);
-                this.style.setProperty('--w', `${rect.width}px`);
-                this.style.setProperty('--h', `${Math.clamp(50, 500, window.innerHeight - rect.bottom)}px`);
+                container.style.setProperty('--x', `${rect.x}px`);
+                container.style.setProperty('--y', `${rect.bottom}px`);
+                container.style.setProperty('--w', `${rect.width}px`);
+                container.style.setProperty('--h', `${Math.clamp(50, 500, window.innerHeight - rect.bottom)}px`);
 
+                container.attributes.toggle('open');
                 this.attributes.toggle('open');
 
                 if(this.filterable === true)
@@ -115,16 +131,30 @@ export default class Dropdown extends Fyn.Component
             },
         });
 
-        this.shadow.on('options > *', {
-            click: (_, t) => {
-                this.index = t.index;
-
+        document.body.appendChild(container);
+        document.body.on({
+            click: () => {
+                container.removeAttribute('open');
                 this.removeAttribute('open');
             },
         });
-
-        document.body.on({
-            click: () => this.removeAttribute('open'),
-        });
     }
 }
+
+class Container extends HTMLElement
+{
+    #shadow = this.attachShadow({ mode: 'open' });
+
+    constructor()
+    {
+        super();
+
+        this.style.zIndex = 100;
+    }
+
+    get shadow()
+    {
+        return this.#shadow;
+    }
+}
+window.customElements.define('fyn-container', Container);
