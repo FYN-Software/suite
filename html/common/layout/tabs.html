@@ -33,7 +33,7 @@
         background-color: rgba(var(--plain-fg-rgb), .1);
     }
 
-    #bar > tab:not(:only-child)[active] {
+    #bar > tab:not(:only-child)[part~="tab-active"] {
         background-color: rgba(var(--plain-fg-rgb), .15);
     }
 
@@ -87,7 +87,7 @@
     }
 
     :host > overlay > block[hovering] {
-        background-color: rgba(var(--info-rgb), .5);
+        background-color: rgba(var(--info-bg-rgb), .5);
     }
 
     :host > overlay > [top] { grid-area: top; }
@@ -133,7 +133,7 @@
         left: var(--x);
         width: var(--w);
         height: var(--h);
-        background-color: rgba(var(--info-rgb), .25);
+        background-color: rgba(var(--info-bg-rgb), .25);
         box-shadow: 0 0 1em #0003;
         z-index: 9;
         transition: .3s ease-out .1s;
@@ -141,9 +141,9 @@
     }
 </style>
 
-<fyn-common-layout-list horizontal sortable id="bar"></fyn-common-layout-list>
+<fyn-common-layout-list horizontal sortable id="bar" part="bar"></fyn-common-layout-list>
 
-<content>
+<content part="content">
     <slot></slot>
 </content>
 

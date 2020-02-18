@@ -58,9 +58,10 @@
 
     :host([has-value]) > label,
     :host(:focus-within) > label {
-        top: -1.8em;
+        top: -.8em;
         left: 0;
-        font-size: .75em;
+        font-size: .6em;
+        line-height: 1em;
         color: var(--plain-fg);
     }
 
@@ -69,8 +70,8 @@
     }
 </style>
 
-<label if="{{ label.length > 0 }}">{{ label }}</label>
+<label if="{{ label.length > 0 }}" part="label">{{ label }}</label>
 
-<value contenteditable>{{ value }}</value>
+<value contenteditable part="value">{{ value }}</value>
 
-<slot name="placeholder" if="{{ value.length === 0 }}">{{ placeholder }}</slot>
+<slot name="placeholder" if="{{ value.length === 0 }}" part="placeholder">{{ placeholder }}</slot>

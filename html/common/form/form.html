@@ -11,7 +11,7 @@
 
     :host > fields {
         display: grid;
-        grid-gap: 1em;
+        grid-gap: 1.25em;
         align-content: start;
     }
 
@@ -44,18 +44,18 @@
     }
 
     :host > messages message[type="error"] {
-        color: var(--failure);
+        color: var(--failure-bg);
     }
 </style>
 
-<messages :for="{{ item of messages }}">
+<messages :for="{{ item of messages }}" part="label">
     <message type="{{ item.type }}">{{ item.message }}</message>
 </messages>
 
-<fields>
+<fields part="label">
     <slot></slot>
 </fields>
 
-<footer>
+<footer part="label">
     <slot name="buttons"></slot>
 </footer>

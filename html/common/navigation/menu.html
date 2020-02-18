@@ -5,8 +5,17 @@
         display: grid;
         grid-auto-flow: column;
         grid-gap: .5em;
+        justify-content: space-between;
+    }
+
+    :host > slot {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: .5em;
         justify-content: start;
     }
 </style>
 
 <slot id="items"></slot>
+
+<slot name="icons"></slot>

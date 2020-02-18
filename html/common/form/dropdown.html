@@ -12,7 +12,7 @@
     }
 
     :host([invalid]) {
-        border: 1px solid var(--failure);
+        border: 1px solid var(--failure-bg);
     }
 
     :host > label {
@@ -76,7 +76,7 @@
 
     :host > options > *:hover,
     :host > options > [selected] {
-        background-color: rgba(var(--info-rgb), .25);
+        background-color: rgba(var(--info-bg-rgb), .25);
     }
 
     :host > options > *[disabled] {
