@@ -120,7 +120,7 @@
     <handler side="bottom"></handler>
 </handlers>
 
-<header>
+<header part="header">
     <h1 :if="{{ title.length > 0 }}">{{ title }}</h1>
 
     <fyn-common-graphics-image src="{{ img }}" :if="{{ img.length > 0 }}"></fyn-common-graphics-image>
@@ -128,10 +128,10 @@
     <slot name="header"></slot>
 </header>
 
-<main>
+<main part="main">
     <slot></slot>
 </main>
 
-<footer>
+<footer part="footer">
     <slot name="footer"></slot>
 </footer>
