@@ -49,7 +49,7 @@ export default class Tabs extends Fyn.Component
                 for(const [ i, t ] of Object.entries(tabs))
                 {
                     const tab = document.createElement('tab');
-                    tab.textContent = t.getAttribute('tab-title') || 'no title';
+                    tab.textContent = t.getAttribute('tab-title') || '';
                     tab.setAttribute('index', i);
                     tab.part = 'tab';
 

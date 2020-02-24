@@ -17,7 +17,7 @@ export default class Input extends Fyn.Component
         };
     }
 
-    initialize()
+    async initialize()
     {
         const keys = [ 'Enter' ];
 
@@ -53,18 +53,17 @@ export default class Input extends Fyn.Component
         });
 
         this.observe({
-            value: Fyn.Event.debounce(250, (o, n) => {
-                this.shadow.querySelector('value').textContent = n;
-
+            value: (o, n) => {
                 this.attributes.setOnAssert(this.value.length > 0, 'has-value');
 
                 this.emit('change', { old: o, new: n });
-            }),
+            },
         });
     }
 
-    ready()
+    async ready()
     {
+        this.shadow.querySelector('value').textContent = this.value;
     }
 
     focus()

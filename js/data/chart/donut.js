@@ -8,52 +8,65 @@ export default class Donut extends Fyn.Component
     {
         return {
             label: Types.String,
+            legend: Types.Boolean.default(false),
+            group: Types.String,
             data: Types.List.type(Types.Number),
         };
     }
 
-    ready()
+    async ready()
     {
-        const randomizeArray = array => {
-            let currentIndex = array.length;
-            let out = [];
-            let randomIndex;
-
-            while (0 !== currentIndex)
-            {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                out[currentIndex] = array[randomIndex];
-            }
-
-            return out;
-        };
-
         const chart = new ApexCharts(this.shadow.querySelector('#chart'), {
             chart: {
                 type: 'donut',
-                height: 200,
+                id: this.id,
+                group: this.group,
+                foreColor: 'var(--plain-fg)',
+                dropShadow: {
+                    enabled: true,
+                    top: 1,
+                    left: 1,
+                    blur: 2,
+                    opacity: 0.2,
+                }
+            },
+            plotOptions: {
+                pie: {
+                    offsetY: 20,
+                    donut: {
+                        labels: {
+                            show: true,
+                            name: {
+                                show: false,
+                            },
+                            value: {
+                                offsetY: 0,
+                            },
+                            total: {
+                                show: true,
+                                color: '#eee',
+                            },
+                        },
+                    },
+                },
             },
             dataLabels: {
-                enabled: false
+                enabled: false,
+            },
+            stroke: {
+                width: 0,
             },
             series: [],
             labels: [ 'TODO', 'In progress', 'Declined', 'Passed' ],
             colors:['#5bc0de', '#f0ad4e', '#d9534f', '#5cb85c'],
             legend: {
-                show: false,
-            },
-            dropShadow: {
-                enabled: true,
-                top: 0,
-                left: 0,
-                blur: 3,
-                opacity: 0.5
+                show: this.legend,
+                position: 'left',
             },
         });
 
         chart.render();
+        chart.updateSeries(this.data);
 
         this.observe({
             data: (o, n) => chart.updateSeries(this.data),

@@ -9,6 +9,10 @@
         align-items: center;
         justify-content: start;
     }
+
+    :host > span:empty {
+        display: none;
+    }
 </style>
 
 <span>{{ label }}</span>

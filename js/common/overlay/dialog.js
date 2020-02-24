@@ -68,6 +68,65 @@ export default class Dialog extends Fyn.Component
             },
         });
 
+        document.on({
+            mousemove: e =>
+            {
+                if(moving)
+                {
+                    const directions = (moveHandle.getAttribute('side') || moveHandle.getAttribute('corner')).split('-');
+                    const delta = {
+                        x: 0,
+                        y: 0,
+                        reposition: moveHandle.index < 5,
+                    };
+
+                    for(const direction of directions)
+                    {
+                        switch(direction)
+                        {
+                            case 'top':
+                                delta.y = this.top - e.clientY;
+
+                                break;
+                            case 'right':
+                                delta.x = -1 * (this.left + this.width - e.clientX);
+
+                                break;
+                            case 'bottom':
+                                delta.y = -1 * (this.top + this.height - e.clientY);
+
+                                break;
+                            case 'left':
+                                delta.x = this.left - e.clientX;
+
+                                break;
+                        }
+                    }
+
+                    if(delta.reposition)
+                    {
+                        this.left += (moveHandle.index === 4 ? 1 : -1) * delta.x;
+                        this.top += (moveHandle.index === 0 ? 1 : -1) * delta.y;
+                    }
+
+                    this.width += delta.x;
+                    this.height += delta.y;
+
+                    this.correctSize();
+                }
+            },
+            mouseup: (e, target) =>
+            {
+                if(moving)
+                {
+                    moving = false;
+                    moveHandle = null;
+                }
+            },
+        });
+
+        this.correctSize();
+
         this.on('[slot="footer"][action]', {
             click: (e) => {
                 switch(e.action)
@@ -78,6 +137,38 @@ export default class Dialog extends Fyn.Component
                 }
             },
         });
+    }
+
+    correctSize()
+    {
+        if(this.resizable)
+        {
+            if(this.width < this.min_width)
+            {
+                this.width = this.min_width;
+            }
+
+            const style = window.getComputedStyle(this, null);
+            const min_height = this.mode === Mode.grow
+                ? Math.max(
+                    this.shadow.querySelector(':scope > header').offsetHeight
+                    + this.shadow.querySelector(':scope > main').offsetHeight
+                    + Number.parseInt(style.getPropertyValue('padding-top'))
+                    + Number.parseInt(style.getPropertyValue('padding-bottom')),
+                    this.min_height
+                )
+                : this.min_height;
+
+            if(this.height < min_height)
+            {
+                this.height = min_height;
+            }
+
+            this.style.setProperty('--x', `${this.left}px`);
+            this.style.setProperty('--y', `${this.top}px`);
+            this.style.setProperty('--w', `${this.width}px`);
+            this.style.setProperty('--h', `${this.height}px`);
+        }
     }
 
     async open()
@@ -122,5 +213,45 @@ export default class Dialog extends Fyn.Component
         }
 
         return res;
+    }
+
+    async showAsWindow()
+    {
+        // const dialog = window.open('https://toolkit.fyn.nl/dialog.html', 'this is my window title', 'menubar=no,location=no,resizable=yes,scrollbars=yes,status=0,dependent=on,dialog=on,modal=on,alwaysOnTop=on');
+        const dialog = window.open('', 'this is my window title', 'menubar=no,location=no,resizable=yes,scrollbars=yes,status=0,dependent=on,dialog=on,modal=on,alwaysOnTop=on');
+        dialog.onerror = e => {
+            console.error(e);
+        };
+        dialog.document.write(`
+            <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/preload.css">
+            <link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
+            <link rel="stylesheet" type="text/css" href="/css/style.css">
+            
+            <style>
+                fyn-common-overlay-dialog {
+                    width: 100%;
+                    height: 100%;
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+            </style>
+        `);
+        dialog.document.write(this.outerHTML);
+
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.innerText = `
+            import Composer from 'https://toolkit.fyn.nl/node_modules/@fyn-software/component/composer.js';
+            import Dialog from '${import.meta.url}';
+
+            Composer.register({
+                fyn: (n, t) => \`https://toolkit.fyn.nl/node_modules/@fyn-software/suite/\${t}/\${n.join('/')}.\${t}\`,
+                toolkit: (n, t, ns) => \`https://toolkit.fyn.nl/\${t}/\${[ns, ...n].join('/')}.\${t}\`,
+            });
+
+            Dialog.init();
+        `;
+
+        dialog.document.body.appendChild(script);
     }
 }
