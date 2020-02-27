@@ -9,22 +9,25 @@ export default class Tabs extends Fyn.Component
     {
         return {
             index: Types.Number.min(-1).default(-1),
+            tabs: Types.List.type(Types.String),
+            delimiter: Types.String,
         };
     }
 
-    initialize()
+    async initialize()
     {
         this.observe({
-            index: (o, n) => {
-                if(this.index < 0 || this.index >= this.tabs.length)
+            index: async (o, n) => {
+                if(this.index < 0 || this.index >= this.pages.length)
                 {
                     return;
                 }
 
-                const content = this.tabs;
+                const content = this.pages;
                 content.forEach(t => t.removeAttribute('active'));
                 content[this.index].setAttribute('active', '');
 
+                await Promise.delay(50);
                 const tabs = this.shadow.querySelectorAll('#bar > tab');
 
                 if(tabs.length === 0)
@@ -42,16 +45,16 @@ export default class Tabs extends Fyn.Component
                 await (this.index = -1);
 
                 const bar  = this.shadow.querySelector('#bar');
-                const tabs = this.tabs;
+                const pages = this.pages;
 
                 bar.children.clear();
 
-                for(const [ i, t ] of Object.entries(tabs))
+                for(const [ i, t ] of Object.entries(pages))
                 {
                     const tab = document.createElement('tab');
                     tab.textContent = t.getAttribute('tab-title') || '';
                     tab.setAttribute('index', i);
-                    tab.part = 'tab';
+                    tab.dataset.delimiter = this.delimiter;
 
                     Object.defineProperty(tab, 'panel', {
                         value: t,
@@ -60,15 +63,17 @@ export default class Tabs extends Fyn.Component
                         enumerable: false,
                     });
 
-                    bar.appendChild(tab);
+                    this.tabs.push(tab.textContent);
+
+                    // bar.appendChild(tab);
                 }
 
-                await (this.index = Math.max(tabs.findIndex(t => t.part.contains('tab-active')), 0));
+                await (this.index = Math.max(pages.findIndex(t => t.part.contains('tab-active')), 0));
             },
         });
     }
 
-    ready()
+    async ready()
     {
         this.shadow.on('#bar', {
             wheel: (e, t) => t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25,
@@ -112,7 +117,7 @@ export default class Tabs extends Fyn.Component
         }
     }
 
-    get tabs()
+    get pages()
     {
         const slot = this.shadow.querySelector('content > slot');
 

@@ -1,0 +1,42 @@
+<link rel="stylesheet" type="text/css" href="/node_modules/@fyn-software/suite/css/style.css">
+
+<style>
+    :host {
+        display: grid;
+        grid: auto 1fr / 1fr;
+        contain: content;
+    }
+
+    :host > fyn-common-layout-list > span {
+        position: relative;
+        grid-auto-flow: column;
+        gap: .5em;
+        background-color: transparent;
+        border-radius: var(--radius) var(--radius) 0 0;
+        padding: .5em 1em;
+        user-select: none;
+        cursor: pointer;
+        transition: .3s background-color ease-in-out;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 20em;
+    }
+
+    :host > fyn-common-layout-list > delimiter {
+        padding: .5em 1em;
+    }
+
+    :host > fyn-common-layout-list > span:last-of-type + delimiter {
+        display: none;
+    }
+</style>
+
+<fyn-common-layout-list horizontal part="bar" :for="{{ i, step of steps }}">
+    <span part="step {{ i == this.index ? 'active' : '' }}">{{ step }}</span>
+    <delimiter part="delimiter {{ i == this.index ? 'active' : '' }}">/</delimiter>
+</fyn-common-layout-list>
+
+<content :switch="{{ index }}">
+    <slot></slot>
+</content>

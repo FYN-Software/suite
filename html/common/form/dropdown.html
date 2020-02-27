@@ -20,6 +20,7 @@
     }
 
     :host > fyn-common-form-button {
+        min-width: var(--min-width, 0);
         border-radius: inherit;
     }
 
@@ -63,11 +64,13 @@
     }
 
     :host > options > * {
+        grid-column: 1;
         display: grid;
         grid-auto-flow: column;
         justify-content: start;
         align-content: center;
         padding: 0 1em;
+        padding-right: 2.5em;
         line-height: 2.5em;
         min-height: 2.5em;
         cursor: pointer;
@@ -97,7 +100,7 @@
     }
 </style>
 
-<label if="{{ label.length > 0 }}">{{ label }}</label>
+<label :if="{{ label.length > 0 }}">{{ label }}</label>
 
 <fyn-common-form-button tabindex="0">
     <fyn-common-form-input :if="{{ index === -1 }}">

@@ -128,11 +128,15 @@ export default class Dialog extends Fyn.Component
         this.correctSize();
 
         this.on('[slot="footer"][action]', {
-            click: (e) => {
-                switch(e.action)
+            click: ({ action }) => {
+                switch(action)
                 {
                     case 'close':
                         this.close();
+                        break;
+
+                    default:
+                        this.emit(action);
                         break;
                 }
             },
@@ -177,6 +181,10 @@ export default class Dialog extends Fyn.Component
         this.style.setProperty('--y', `${window.innerHeight / 2 - this.height / 2}px`);
         this.style.setProperty('--w', `${this.width}px`);
         this.style.setProperty('--h', `${this.height}px`);
+
+        await this.requestFullscreen({
+            navigationUI: 'show',
+        });
 
         this.hasAttribute('open') === false
             ? this.animate('open', .25).stage(() => this.setAttribute('open', ''))

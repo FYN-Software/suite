@@ -22,11 +22,33 @@
         font-size: 1rem;
         z-index: 1000;
         border-radius: var(--radius);
+        backdrop-filter: blur(5px);
+    }
+    :host:fullscreen {
+        object-fit: contain;
+        position: inherit;
+        top: inherit !important;
+        right: inherit !important;
+        bottom: inherit !important;
+        left: inherit !important;
+        box-sizing: inherit !important;
+        min-width: inherit !important;
+        max-width: inherit !important;
+        min-height: inherit !important;
+        max-height: inherit !important;
+        width: inherit !important;
+        height: inherit !important;
+        transform: inherit !important;
+        margin: inherit !important;
     }
 
     :host([open]) {
         opacity: 1;
         pointer-events: all;
+    }
+
+    :host([open])::backdrop {
+        filter: blur(3px);
     }
 
     :host > handlers {

@@ -5,6 +5,8 @@ export default class Dropdown extends Fyn.Component
 {
     static localName = 'fyn-common-form-dropdown';
 
+    #options;
+
     static get properties()
     {
         return {
@@ -56,23 +58,44 @@ export default class Dropdown extends Fyn.Component
         };
     }
 
-    initialize()
+    async initialize()
     {
         const renderValue = () => {
+            if(this.#options === undefined)
+            {
+                return;
+            }
+
             const c = this.shadow.querySelector('fyn-common-form-button > value');
             c.childNodes.clear();
 
-            Array.from(this.shadow.querySelectorAll(`options > [index="${this.index}"]`), i => c.appendChild(i.cloneNode(true)));
+            Array.from(this.#options.querySelectorAll(`:scope > [index="${this.index}"]`), i => c.appendChild(i.cloneNode(true)));
+
+            setWidth();
         };
 
         this.shadow.on('options', {
             templatechange: renderValue,
         });
 
-        const update = () => {
+        const update = async () => {
             this._options = this.options.filter(
                 o => this.filter.length === 0 || Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(this.filter))
             );
+
+            await Promise.delay(100);
+
+            setWidth();
+        };
+
+        const setWidth = () => {
+            const placeholder = this.shadow.querySelector('fyn-common-form-button > value');
+            const width = Math.max(
+                placeholder && placeholder.clientWidth || 0,
+                ...this.optionElements.map(o => o.clientWidth)
+            );
+
+            this.style.setProperty('--min-width', `${width}px`);
         };
 
         this.observe({
@@ -91,14 +114,14 @@ export default class Dropdown extends Fyn.Component
         });
     }
 
-    ready()
+    async ready()
     {
-        const options = this.shadow.querySelector('options');
-        const container = new Container();
+        this.#options = this.shadow.querySelector('options');
+        const container = new Fyn.Container();
         container.shadow.appendChild(this.shadow.querySelector('style').cloneNode(true));
-        container.shadow.appendChild(options);
+        container.shadow.appendChild(this.#options);
 
-        options.on(':scope > *', {
+        this.#options.on(':scope > *', {
             click: (_, t) => {
                 this.index = t.index;
 
@@ -133,28 +156,20 @@ export default class Dropdown extends Fyn.Component
 
         document.body.appendChild(container);
         document.body.on({
-            click: () => {
+            click: (e, t) => {
                 container.removeAttribute('open');
                 this.removeAttribute('open');
             },
         });
     }
-}
 
-class Container extends HTMLElement
-{
-    #shadow = this.attachShadow({ mode: 'open' });
-
-    constructor()
+    get optionElements()
     {
-        super();
+        if(this.#options === undefined)
+        {
+            return [];
+        }
 
-        this.style.zIndex = 100;
-    }
-
-    get shadow()
-    {
-        return this.#shadow;
+        return Array.from(this.#options.querySelectorAll(`:scope > *`));
     }
 }
-window.customElements.define('fyn-container', Container);

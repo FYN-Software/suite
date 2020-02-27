@@ -11,6 +11,7 @@
     }
 
     #bar > tab {
+        position: relative;
         grid-auto-flow: column;
         gap: .5em;
         background-color: transparent;
@@ -23,6 +24,15 @@
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 20em;
+    }
+
+    #bar > delimiter {
+        padding: .5em 1em;
+    }
+
+    #bar > delimiter:empty,
+    #bar > tab:last-of-type + delimiter {
+        display: none;
     }
 
     #bar > tab:empty {
@@ -145,7 +155,10 @@
     }
 </style>
 
-<fyn-common-layout-list horizontal sortable id="bar" part="bar"></fyn-common-layout-list>
+<fyn-common-layout-list horizontal sortable id="bar" part="bar" :for="{{ i, tab of tabs }}">
+    <tab part="tab" index="{{ i }}">{{ tab }}</tab>
+    <delimiter part="delimiter">{{ this.delimiter }}</delimiter>
+</fyn-common-layout-list>
 
 <content part="content">
     <slot></slot>
