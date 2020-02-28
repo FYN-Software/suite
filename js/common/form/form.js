@@ -31,8 +31,8 @@ export default class Form extends Fyn.Component
         });
 
         this.on('[slot="buttons"][action]', {
-            click: (e) => {
-                switch(e.action)
+            click: ({ action }) => {
+                switch(action)
                 {
                     case 'submit':
                         return this.submit();

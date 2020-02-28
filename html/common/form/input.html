@@ -33,12 +33,16 @@
         left: var(--padding);
         top: 0;
         z-index: 1;
+        width: 100%;
         font-size: 1em;
         transition: .3s;
         pointer-events: none;
         color: rgba(var(--plain-fg-rgb), .75);;
         line-height: 2em;
         user-select: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     :host > slot[name="placeholder"] {

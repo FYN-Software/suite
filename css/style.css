@@ -21,7 +21,7 @@
     --secondary-bg: rgba(var(--secondary-bg-rgb), .75);
     --secondary-fg: #fff;
 
-    --plain-fg-rgb: 125, 125, 125;
+    --plain-fg-rgb: 80, 80, 80;
     --plain-bg-rgb: 238, 238, 238;
     --plain-fg: rgb(vaR(--plain-fg-rgb));
     --plain-bg: rgb(vaR(--plain-bg-rgb));
@@ -41,7 +41,7 @@
 
 html[color-scheme="light"] {
     --inversion: 0;
-    --plain-fg-rgb: 125, 125, 125;
+    --plain-fg-rgb: 80, 80, 80;
     --plain-bg-rgb: 238, 238, 238;
 }
 

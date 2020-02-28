@@ -88,7 +88,7 @@ export default class Button extends Fyn.Component
                         this.state = !this.state;
                     }
 
-                    this.emit('click', { previous: e, action: this.getAttribute('action') });
+                    this.emit('click', { previous: e, action: this.action || this.getAttribute('action') });
                 }
             },
         });

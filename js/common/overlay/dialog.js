@@ -182,10 +182,6 @@ export default class Dialog extends Fyn.Component
         this.style.setProperty('--w', `${this.width}px`);
         this.style.setProperty('--h', `${this.height}px`);
 
-        await this.requestFullscreen({
-            navigationUI: 'show',
-        });
-
         this.hasAttribute('open') === false
             ? this.animate('open', .25).stage(() => this.setAttribute('open', ''))
             : null;

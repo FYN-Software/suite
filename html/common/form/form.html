@@ -4,9 +4,12 @@
     :host {
         display: grid;
         grid-auto-columns: 100%;
-        grid-template-rows: auto 1fr auto;
         grid-gap: 1em;
         width: 100%;
+    }
+
+    :host > messages:empty {
+        display: none;
     }
 
     :host > fields {
@@ -22,8 +25,13 @@
     :host > footer {
         display: grid;
         grid-auto-flow: column;
-        grid-gap: 1em;
+        gap: 1em;
+        align-self: end;
         justify-content: end;
+    }
+
+    :host > footer:empty {
+        display: none;
     }
 
     :host > footer > [action="submit"] {
@@ -48,14 +56,14 @@
     }
 </style>
 
-<messages :for="{{ item of messages }}" part="label">
+<messages :for="{{ item of messages }}" part="messages">
     <message type="{{ item.type }}">{{ item.message }}</message>
 </messages>
 
-<fields part="label">
+<fields part="fields">
     <slot></slot>
 </fields>
 
-<footer part="label">
+<footer part="footer">
     <slot name="buttons"></slot>
 </footer>

@@ -5,6 +5,15 @@ export default class Tabs extends Fyn.Component
 {
     static localName = 'fyn-common-layout-tabs';
 
+    #detect = async () => {
+        await (this.index = -1);
+
+        const pages = this.pages;
+
+        this.tabs = pages.map(p => p.getAttribute('tab-title') || '');
+        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
+    };
+
     static get properties()
     {
         return {
@@ -26,50 +35,11 @@ export default class Tabs extends Fyn.Component
                 const content = this.pages;
                 content.forEach(t => t.removeAttribute('active'));
                 content[this.index].setAttribute('active', '');
-
-                await Promise.delay(50);
-                const tabs = this.shadow.querySelectorAll('#bar > tab');
-
-                if(tabs.length === 0)
-                {
-                    return;
-                }
-
-                tabs.forEach(t => t.part = 'tab');
-                Array.from(tabs).find(t => t.index === this.index).part = 'tab tab-active';
             },
         });
 
         this.shadow.on('content > slot', {
-            slotchange: async () => {
-                await (this.index = -1);
-
-                const bar  = this.shadow.querySelector('#bar');
-                const pages = this.pages;
-
-                bar.children.clear();
-
-                for(const [ i, t ] of Object.entries(pages))
-                {
-                    const tab = document.createElement('tab');
-                    tab.textContent = t.getAttribute('tab-title') || '';
-                    tab.setAttribute('index', i);
-                    tab.dataset.delimiter = this.delimiter;
-
-                    Object.defineProperty(tab, 'panel', {
-                        value: t,
-                        writable: false,
-                        configurable: false,
-                        enumerable: false,
-                    });
-
-                    this.tabs.push(tab.textContent);
-
-                    // bar.appendChild(tab);
-                }
-
-                await (this.index = Math.max(pages.findIndex(t => t.part.contains('tab-active')), 0));
-            },
+            slotchange: () => this.#detect(),
         });
     }
 
@@ -82,6 +52,8 @@ export default class Tabs extends Fyn.Component
         this.shadow.on('#bar > tab', {
             click: (_, t) => this.index = t.index,
         });
+
+        this.#detect();
     }
 
     add(tab, title = '')
@@ -126,6 +98,6 @@ export default class Tabs extends Fyn.Component
             return [];
         }
 
-        return slot.assignedNodes({ flatten: true }).filter(n => n.nodeType === 1);
+        return slot.assignedElements({ flatten: true });
     }
 }

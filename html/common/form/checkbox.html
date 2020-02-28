@@ -65,6 +65,11 @@
         transform: translate(calc(var(--size) - 1px), -50%);
         font-size: 1em;
     }
+
+    :host([locked]) > box {
+        filter: grayscale(.5);
+        opacity: .5;
+    }
 </style>
 
 <box></box>

@@ -14,6 +14,7 @@ export default class Input extends Fyn.Component
             value: Types.String,
             placeholder: Types.String,
             multiline: Types.Boolean,
+            regex: Types.String.default('[^\\n]'),
         };
     }
 
@@ -26,7 +27,25 @@ export default class Input extends Fyn.Component
                 passive: false,
             },
             keydown: e => {
-                if(keys.includes(e.key))
+                if([ 8, 16, 17, 37, 38, 39, 40].includes(e.keyCode))
+                {
+                    return;
+                }
+
+                // FUCK ES SOMETHIMES!! cant just read the character about to be inserted...
+                let char;
+                switch (e.key)
+                {
+                    case 'Enter':
+                        char = '\n';
+                        break;
+
+                    default:
+                        char = e.key;
+                        break;
+                }
+
+                if((this.value + char).match(new RegExp(`^(${this.regex})*$`, 'g')) === null)
                 {
                     e.preventDefault();
                 }

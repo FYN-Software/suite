@@ -51,14 +51,14 @@
         background-color: rgba(var(--plain-fg-rgb), .15);
     }
 
-    content {
+    :host > content {
         position: relative;
         display: grid;
         grid-auto-rows: 100%;
         grid-auto-columns: 100%;
     }
 
-    content > slot::slotted(*) {
+    :host > content > slot::slotted(*) {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -66,7 +66,7 @@
         pointer-events: none;
     }
 
-    content > slot::slotted(*[active]) {
+    :host > content > slot::slotted(*[active]) {
         opacity: 1;
         pointer-events: all;
     }
@@ -156,8 +156,8 @@
 </style>
 
 <fyn-common-layout-list horizontal sortable id="bar" part="bar" :for="{{ i, tab of tabs }}">
-    <tab part="tab" index="{{ i }}">{{ tab }}</tab>
-    <delimiter part="delimiter">{{ this.delimiter }}</delimiter>
+    <tab part="tab {{ i === this.index ? 'tab-active' : '' }}" index="{{ i }}">{{ tab }}</tab>
+    <delimiter part="delimiter {{ i === this.index ? 'delimiter-active' : '' }}">{{ this.delimiter }}</delimiter>
 </fyn-common-layout-list>
 
 <content part="content">

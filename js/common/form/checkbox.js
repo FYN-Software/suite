@@ -10,6 +10,7 @@ export default class Checkbox extends Fyn.Component
         return {
             toggle: Types.Boolean,
             checked: Types.Boolean,
+            locked: Types.Boolean,
             label: Types.String,
         };
     }
@@ -28,7 +29,14 @@ export default class Checkbox extends Fyn.Component
     ready()
     {
         this.shadow.on('box, label', {
-            click: () => this.checked = !this.checked,
+            click: () => {
+                if(this.locked)
+                {
+                    return;
+                }
+
+                this.checked = !this.checked
+            },
         });
     }
 }
