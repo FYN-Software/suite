@@ -58,6 +58,14 @@ export default class Progress extends Fyn.Component
                     e.preventDefault()
                 }
             },
+            // touchmove: e => {
+            //     console.log(e);
+            //
+            //     e.preventDefault();
+            //     e.stopPropagation ();
+            //
+            //     return false;
+            // },
         });
 
         this.shadow.on('footer > [action]', {
