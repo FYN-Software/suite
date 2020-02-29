@@ -14,13 +14,18 @@ export default class Input extends Fyn.Component
             value: Types.String,
             placeholder: Types.String,
             multiline: Types.Boolean,
-            regex: Types.String.default('[^\\n]'),
+            regex: Types.String.default('[^\\n]+'),
         };
     }
 
     async initialize()
     {
-        const keys = [ 'Enter' ];
+        this.modify({
+            value: {
+                get: () => this.shadow.querySelector('value').textContent,
+                set: v => this.shadow.querySelector('value').textContent = v,
+            }
+        });
 
         this.shadow.on('value', {
             options: {
