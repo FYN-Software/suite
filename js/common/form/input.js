@@ -56,7 +56,7 @@ export default class Input extends Fyn.Component
                 }
             },
             keyup: _ => {
-                this.value = this.shadow.querySelector('value').textContent;
+                // this.value = this.shadow.querySelector('value').textContent;
             },
         });
 
@@ -87,7 +87,7 @@ export default class Input extends Fyn.Component
 
     async ready()
     {
-        this.shadow.querySelector('value').textContent = this.value;
+        // this.shadow.querySelector('value').textContent = this.value;
     }
 
     focus()
