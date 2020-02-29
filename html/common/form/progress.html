@@ -30,6 +30,11 @@
         display: none;
     }
 
+    :host > block > fyn-common-form-progress::part(step) {
+        scroll-snap-align: center;
+        overflow: visible;
+    }
+
     :host > content {
         position: relative;
         display: grid;
@@ -38,6 +43,12 @@
         grid-auto-columns: 100%;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    :host > content::-webkit-scrollbar {
+        display: none;
     }
 
     :host > content > slot::slotted(*) {

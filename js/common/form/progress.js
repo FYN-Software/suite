@@ -22,9 +22,15 @@ export default class Progress extends Fyn.Component
                     return;
                 }
 
-                const content = this.pages;
-                content.forEach(t => t.removeAttribute('active'));
-                content[this.index].setAttribute('active', '');
+                const pages = this.pages;
+                pages.forEach(t => t.removeAttribute('active'));
+                pages[this.index].setAttribute('active', '');
+
+                const content = this.shadow.querySelector('content');
+                content.scrollTo({
+                    left: Math.floor(content.scrollWidth * (this.index / this.steps.length)),
+                    behavior: 'smooth',
+                })
             },
         });
 
@@ -43,16 +49,19 @@ export default class Progress extends Fyn.Component
     async ready()
     {
         this.shadow.on({
-            success: () => {
-                this.index = Math.min(this.steps.length - 1, this.index + 1);
+            options: {
+                passive: false,
             },
-            cancel: () => this.index = Math.max(0, this.index - 1),
+            wheel: e => {
+                if(e.shiftKey)
+                {
+                    e.preventDefault()
+                }
+            },
         });
 
         this.shadow.on('footer > [action]', {
             click: ({ action }) => {
-                console.log(action);
-
                 switch (action)
                 {
                     case 'next':
