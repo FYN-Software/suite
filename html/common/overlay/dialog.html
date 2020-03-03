@@ -120,6 +120,10 @@
         border-radius: var(--img-radius);
     }
 
+    :host > main {
+        overflow-y: auto;
+    }
+
     :host > main > * {
         max-width: 100%;
     }
@@ -153,5 +157,7 @@
 </main>
 
 <footer part="footer">
-    <slot name="footer"></slot>
+    <slot name="footer">
+        <fyn-common-form-button action="cancel">Cancel</fyn-common-form-button>
+    </slot>
 </footer>

@@ -9,6 +9,7 @@ export default class Item extends Component
     {
         return {
             route: Types.String,
+            icon: Types.String,
         };
     }
 }

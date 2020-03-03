@@ -22,13 +22,6 @@ export default class Donut extends Fyn.Component
                 id: this.id,
                 group: this.group,
                 foreColor: 'var(--plain-fg)',
-                dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 1,
-                    blur: 2,
-                    opacity: 0.2,
-                }
             },
             plotOptions: {
                 pie: {

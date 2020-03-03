@@ -4,18 +4,14 @@
     :host {
         display: grid;
         grid-auto-flow: column;
-        grid-gap: .5em;
-        justify-content: space-between;
+        gap: .5em;
+        justify-content: start;
     }
 
-    :host > slot {
-        display: grid;
-        grid-auto-flow: column;
-        grid-gap: .5em;
-        justify-content: start;
+    :host([vertical]) {
+        grid-auto-flow: row;
+        justify-content: stretch;
     }
 </style>
 
-<slot id="items"></slot>
-
-<slot name="icons"></slot>
+<slot id="items" part="items"></slot>

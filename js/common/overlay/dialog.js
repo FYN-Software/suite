@@ -127,7 +127,7 @@ export default class Dialog extends Fyn.Component
 
         this.correctSize();
 
-        this.on('[slot="footer"][action]', {
+        const listener = {
             click: ({ action }) => {
                 switch(action)
                 {
@@ -140,7 +140,10 @@ export default class Dialog extends Fyn.Component
                         break;
                 }
             },
-        });
+        };
+
+        this.shadow.on('slot[name="footer"] > [action]', listener);
+        this.on('[slot="footer"][action]', listener);
     }
 
     correctSize()
