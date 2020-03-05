@@ -18,8 +18,8 @@
 
     --secondary-bg-rgb: var(--info-bg-rgb);
     --secondary-fg-rgb: 255, 255, 255;
-    --secondary-bg: rgba(var(--secondary-bg-rgb), .75);
-    --secondary-fg: #fff;
+    --secondary-bg: rgb(var(--secondary-bg-rgb));
+    --secondary-fg: rgb(var(--secondary-fg-rgb));
 
     --plain-fg-rgb: 80, 80, 80;
     --plain-bg-rgb: 238, 238, 238;
