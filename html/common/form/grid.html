@@ -3,36 +3,11 @@
 <style>
     :host {
         display: grid;
-        grid-template-rows: auto 1fr;
+        grid: 1fr / 1fr;
         grid-gap: 1em;
         border-radius: var(--radius);
     }
-
-    :host > bar {
-        display: grid;
-        grid-gap: 1em;
-        grid-auto-flow: column;
-        justify-content: start;
-        border-radius: inherit;
-        margin-top: 1em;
-    }
-
-    :host > bar > fyn-common-form-input {
-        margin-top: 0;
-    }
 </style>
-
-<bar>
-    <fyn-common-form-input id="filter" name="grid-filter" label="t_search"></fyn-common-form-input>
-
-    <fyn-common-form-group combined :if="{{ editable === true }}">
-        <fyn-common-form-button icons="plus" action="add" tooltip="t_new"></fyn-common-form-button>
-
-        <fyn-common-form-button icons="trash" action="delete" tooltip="t_delete"></fyn-common-form-button>
-    </fyn-common-form-group>
-
-    <slot name="bar"></slot>
-</bar>
 
 <table>
     <thead>
