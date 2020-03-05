@@ -18,7 +18,7 @@ export default class Resizable extends Fyn.Component
         };
     }
 
-    initialize()
+    async initialize()
     {
         let start = null;
         let size = null;
@@ -74,11 +74,16 @@ export default class Resizable extends Fyn.Component
 
     get scrollWidth()
     {
-        return this.shadow.querySelector('content').scrollWidth;
+        return this.shadow.querySelector('main').scrollWidth;
     }
 
     get offsetWidth()
     {
-        return this.shadow.querySelector('content').offsetWidth;
+        return this.shadow.querySelector('main').offsetWidth;
+    }
+
+    get Direction()
+    {
+        return Direction;
     }
 }

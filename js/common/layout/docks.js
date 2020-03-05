@@ -26,16 +26,16 @@ export default class Docks extends Fyn.Component
         };
     }
 
-    initialize()
+    async initialize()
     {
         this.observe({
             layout: (o, n) => this.draw(),
         });
     }
 
-    ready()
+    async ready()
     {
-        this.shadow.on('content > fyn-common-layout-resizable', {
+        this.shadow.on('main > fyn-common-layout-resizable', {
             options: {
                 passive: false,
             },
@@ -237,7 +237,7 @@ export default class Docks extends Fyn.Component
 
         this.mode = this.layout.mode || Direction.vertical;
 
-        const content = this.shadow.querySelector('content');
+        const content = this.shadow.querySelector('main');
 
         if(content === null || this.layout.children === undefined)
         {
@@ -343,7 +343,7 @@ export default class Docks extends Fyn.Component
 
     updateSize(t, s)
     {
-        const content = this.shadow.querySelector('content');
+        const content = this.shadow.querySelector('main');
 
         const sizes = Array.from(t.children, c => window.getComputedStyle(c))
             .map(c => ({
@@ -364,5 +364,10 @@ export default class Docks extends Fyn.Component
         content.style.gridTemplateRows = '';
         content.style.gridTemplateColumns = '';
         content.style[Direction.valueOf(this.mode).property] = cols.join(' ');
+    }
+
+    get Direction()
+    {
+        return Direction;
     }
 }

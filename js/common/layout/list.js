@@ -12,7 +12,7 @@ export default class List extends Fyn.Component
         };
     }
 
-    ready()
+    async ready()
     {
         this.observe({
             sortable: (o, n) => this.items.forEach(i => i.draggable = this.sortable),

@@ -7,7 +7,7 @@
         display: block;
     }
 
-    :host > content {
+    :host > main {
         display: grid;
         position: relative;
         overflow: hidden;
@@ -71,8 +71,8 @@
     }
 </style>
 
-<content>
+<main part="content">
     <slot></slot>
-</content>
+</main>
 
-<handle if="{{ handle }}" mode="{{ mode }}"></handle>
+<handle if="{{ handle }}" mode="{{ this.Direction.nameof(mode) }}"></handle>
