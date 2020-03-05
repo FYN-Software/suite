@@ -1,5 +1,6 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
+import Drag from '../../drag.js';
 
 export default class List extends Fyn.Component
 {
@@ -27,25 +28,22 @@ export default class List extends Fyn.Component
         let position;
         let animating = false;
 
-        this.shadow.on({
-            dragstart: e => {
+        Drag.on(this.shadow, 'fyn-tab', {
+            start: e => {
                 if(this.sortable !== true)
                 {
                     return;
                 }
 
-                // e.stopPropagation();
                 e.dataTransfer.effectAllowed = 'move';
 
                 target = e.composedPath()[0];
-
                 start = e.x;
                 position = e.x;
-            },
-        });
 
-        document.body.on({
-            dragover: async e => {
+                return target;
+            },
+            over: async e => {
                 if(target === null || target === undefined || animating === true)
                 {
                     return;
@@ -88,7 +86,7 @@ export default class List extends Fyn.Component
                     animating = false;
                 }
             },
-            dragend: e => {
+            end: e => {
                 if(target === null || target === undefined)
                 {
                     return;
