@@ -197,7 +197,7 @@ export default class Dialog extends Fyn.Component
             : null;
     }
 
-    async show()
+    async show(modal = false)
     {
         let added = false;
 
@@ -208,11 +208,23 @@ export default class Dialog extends Fyn.Component
             document.body.appendChild(this);
         }
 
+        console.log(this.modal);
+
+        if(modal)
+        {
+            document.body.setAttribute('modal', '');
+        }
+
         await this.open();
 
         const res = await this.await('cancel|success');
 
         await this.close();
+
+        if(modal)
+        {
+            document.body.removeAttribute('modal');
+        }
 
         if(added)
         {
