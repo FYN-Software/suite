@@ -8,29 +8,12 @@ export default class Collapsible extends Fyn.Component
     static get properties()
     {
         return {
-            icons: Types.List.type(Types.String).set(v => {
-                if(v === undefined || v === null || typeof v === 'boolean')
-                {
-                    v = [];
-                }
-
-                if(Array.isArray(v) !== true)
-                {
-                    v = JSON.tryParse(v.replace(/'/g, '"'));
-                }
-
-                if(Array.isArray(v) !== true)
-                {
-                    v = [ v ];
-                }
-
-                return v;
-            }),
+            icons: Types.String,
             title: Types.String,
         };
     }
 
-    ready()
+    async ready()
     {
         this.shadow.on('[title], fyn-common-graphics-icon', {
             click: _ => this.attributes.toggle('closed'),

@@ -10,41 +10,41 @@
         border-top: 1px solid rgba(var(--plain-fg-rgb), .5);
     }
 
-    :host > [title],
-    :host > [handle] {
+    :host > [part="title"],
+    :host > [part="handle"] {
         align-self: center;
         transition: transform .3s ease-in-out;
         cursor: pointer;
     }
 
-    :host > [title] {
+    :host > [part="title"] {
         justify-self: start;
     }
 
-    :host > content {
+    :host > main {
         grid-column: span 2;
         display: grid;
         gap: 1em;
     }
 
-    :host > content ::slotted(*) {
+    :host > main ::slotted(*) {
         min-height: 0;
         min-width: 0;
     }
 
-    :host([closed]) > content {
+    :host([closed]) > main {
         display: none;
     }
 
-    :host([closed]) > [handle] {
+    :host([closed]) > [part="handle"] {
         transform: rotate(180deg);
     }
 </style>
 
-<fyn-common-graphics-icon title icons="{{ icons }}">{{ title }}</fyn-common-graphics-icon>
+<fyn-common-graphics-icon part="title" icons="{{ icons }}">{{ title }}</fyn-common-graphics-icon>
 
-<fyn-common-graphics-icon handle icons="angle-down"></fyn-common-graphics-icon>
+<fyn-common-graphics-icon part="handle" icons="angle-down"></fyn-common-graphics-icon>
 
-<content>
+<main part="content">
     <slot></slot>
-</content>
+</main>
