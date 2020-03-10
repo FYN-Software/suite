@@ -12,8 +12,12 @@
     --success-bg: rgb(var(--success-bg-rgb));
 
     --primary-bg-rgb: var(--info-bg-rgb);
+    --primary-bg-light-rgb: var(--info-bg-rgb);
+    --primary-bg-dark-rgb: var(--info-bg-rgb);
     --primary-fg-rgb: 238, 238, 238;
     --primary-bg: rgb(var(--primary-bg-rgb));
+    --primary-light-bg: rgb(var(--primary-bg-light-rgb));
+    --primary-dark-bg: rgb(var(--primary-bg-dark-rgb));
     --primary-fg: rgb(var(--primary-fg-rgb));
 
     --secondary-bg-rgb: var(--info-bg-rgb);
