@@ -1,0 +1,20 @@
+{
+    "name": "Fyn Components Suite",
+    "components": [
+        {
+            "namespace": "fyn-common",
+            "html": "html/common/",
+            "js": "js/common/"
+        },
+        {
+            "namespace": "fyn-data",
+            "html": "html/data/",
+            "js": "js/data/"
+        },
+        {
+            "namespace": "fyn-yarte",
+            "html": "html/yarte/",
+            "js": "js/yarte/"
+        }
+    ]
+}
