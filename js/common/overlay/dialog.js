@@ -186,14 +186,14 @@ export default class Dialog extends Fyn.Component
         this.style.setProperty('--h', `${this.height}px`);
 
         this.hasAttribute('open') === false
-            ? this.animate('open', .25).stage(() => this.setAttribute('open', ''))
+            ? this.animateKey('open', .25).stage(() => this.setAttribute('open', ''))
             : null;
     }
 
     async close()
     {
         return this.hasAttribute('open') === true
-            ? this.animate('close', .25).stage(() => this.removeAttribute('open'))
+            ? this.animateKey('close', .25).stage(() => this.removeAttribute('open'))
             : null;
     }
 
