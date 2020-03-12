@@ -16,7 +16,11 @@ export default class Collapsible extends Fyn.Component
     async ready()
     {
         this.shadow.on('[title], fyn-common-graphics-icon', {
-            click: _ => this.attributes.toggle('closed'),
+            click: _ => {
+                this.attributes.toggle('closed');
+
+                this.emit('toggle', { open: this.hasAttribute('closed') === false });
+            },
         });
     }
 
