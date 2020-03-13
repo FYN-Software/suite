@@ -2,7 +2,7 @@ export default class Drag
 {
     static draggable(target, scope, config)
     {
-        const { query = ':scope', effect = 'move' } = config;
+        const { query = '*', effect = 'move' } = config;
 
         target.on(query, {
             options: {
@@ -50,16 +50,27 @@ export default class Drag
                 config.enter?.invoke(e);
             },
             dragover: e => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.dataTransfer.dropEffect = valid ? 'copy' : 'none';
-
-                if(last.x === x && last.y === y)
+                if(valid === false)
                 {
-
+                    return;
                 }
 
-                config.move?.invoke({ x: e.x, y: e.y });
+                e.preventDefault();
+                e.stopPropagation();
+                e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed;
+
+                if(last.x === e.x && last.y === e.y)
+                {
+                    return;
+                }
+
+                last.x = e.x;
+                last.y = e.y;
+
+                if(valid)
+                {
+                    config.move?.invoke({ x: e.x, y: e.y });
+                }
             },
             dragleave: async e => {
                 if(e.composedPath().includes(target) === false || e.dataTransfer.types.every(t => t !== scope))
@@ -77,6 +88,8 @@ export default class Drag
             drop: e => {
                 const data = e.dataTransfer.types.filter(t => t === scope);
 
+                console.log(data);
+
                 if(data.length > 0)
                 {
                     for(const item of e.dataTransfer.items)
@@ -86,7 +99,7 @@ export default class Drag
                             continue;
                         }
 
-                        item[`getAs${item.kind.capitalize()}`](r => config.drop?.invoke({ result: JSON.parse(r), x: e.x, y: e.y, path: e.composedPath() }));
+                        item[`getAs${item.kind.capitalize()}`](r => config.drop?.invoke({ effect: e.dataTransfer.effectAllowed, result: JSON.parse(r), x: e.x, y: e.y, path: e.composedPath() }));
                     }
                 }
 
