@@ -1,6 +1,6 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
-import Drag from '../../drag.js';
+import Drag from '../../../../core/drag.js';
 
 export default class List extends Fyn.Component
 {
