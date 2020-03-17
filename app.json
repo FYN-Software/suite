@@ -16,5 +16,11 @@
             "html": "html/yarte/",
             "js": "js/yarte/"
         }
+    ],
+    "stylesheets": [
+        [ "fyn.suite.preload", "./css/preload.css" ],
+        [ "fyn.suite.base", "./css/style.css" ],
+        [ "fyn.suite.fontawesome", "https://use.fontawesome.com/releases/v5.11.2/css/all.css" ],
+        [ "fyn.suite.apexcharts", "https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.css" ]
     ]
 }

@@ -10,6 +10,7 @@ export const Fit = Types.Enum.define({
 export default class Image extends Fyn.Component
 {
     static localName = 'fyn-common-graphics-image';
+    static styles = [ 'fyn.suite.base' ];
 
     static get properties()
     {

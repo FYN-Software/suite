@@ -4,6 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Checkbox extends Fyn.Component
 {
     static localName = 'fyn-common-form-checkbox';
+    static styles = [ 'fyn.suite.base' ];
 
     static get properties()
     {

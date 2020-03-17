@@ -9,6 +9,7 @@ export const Type = Types.Enum.define({
 export default class Context extends Component
 {
     static localName = 'fyn-common-navigation-context';
+    static styles = [ 'fyn.suite.base' ];
 
     static get properties()
     {

@@ -5,6 +5,7 @@ import Drag from '../../../../core/drag.js';
 export default class List extends Fyn.Component
 {
     static localName = 'fyn-common-layout-list';
+    static styles = [ 'fyn.suite.base' ];
 
     static get properties()
     {

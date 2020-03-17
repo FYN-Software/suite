@@ -4,6 +4,9 @@ import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apex
 
 export default class Sparkline extends Fyn.Component
 {
+    static localName = 'fyn-data-chart-sparkline';
+    static styles = [ 'fyn.suite.base', 'fyn.suite.apexcharts' ];
+
     static get properties()
     {
         return {

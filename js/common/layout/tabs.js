@@ -4,6 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Tabs extends Fyn.Component
 {
     static localName = 'fyn-common-layout-tabs';
+    static styles = [ 'fyn.suite.base' ];
 
     #detect = async () => {
         await (this.index = -1);
@@ -38,7 +39,7 @@ export default class Tabs extends Fyn.Component
             },
         });
 
-        this.shadow.on('content > slot', {
+        this.shadow.on('main > slot', {
             slotchange: () => this.#detect(),
         });
     }
@@ -91,7 +92,7 @@ export default class Tabs extends Fyn.Component
 
     get pages()
     {
-        const slot = this.shadow.querySelector('content > slot');
+        const slot = this.shadow.querySelector('main > slot');
 
         if(slot === null)
         {
