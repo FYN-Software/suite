@@ -27,8 +27,8 @@
 
     --plain-fg-rgb: 80, 80, 80;
     --plain-bg-rgb: 238, 238, 238;
-    --plain-fg: rgb(vaR(--plain-fg-rgb));
-    --plain-bg: rgb(vaR(--plain-bg-rgb));
+    --plain-fg: rgb(var(--plain-fg-rgb));
+    --plain-bg: rgb(var(--plain-bg-rgb));
 
     --radius: .5em;
     --checkers: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIklEQVQoU2P8//+/PAMaYGRkfIghNhQUojsaxMfq7iGgEABCMCOXNMUjBwAAAABJRU5ErkJggg==);
@@ -71,7 +71,7 @@ body {
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: var(--plain-bg);
+    /*background-color: var(--plain-bg);*/
     color: var(--plain-fg);
 }
 
