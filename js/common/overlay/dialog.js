@@ -209,8 +209,6 @@ export default class Dialog extends Fyn.Component
             document.body.appendChild(this);
         }
 
-        console.log(this.modal);
-
         if(modal)
         {
             document.body.setAttribute('modal', '');

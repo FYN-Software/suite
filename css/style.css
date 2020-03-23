@@ -88,6 +88,10 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 0;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 [contenteditable] {
     user-select: initial;
 }
@@ -132,31 +136,6 @@ h1, h2, h3, h4, h5, h6, p {
 [tooltip]:hover::before,
 [tooltip]:hover::after {
     opacity: 1;
-}
-
-drag-preview {
-    --x: 0px;
-    --y: 0px;
-    display: grid;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 10em;
-    height: 10em;
-    background-color: var(--plain-bg);
-    box-shadow: 0 0 1em #0003;
-    opacity: .75;
-    z-index: 10;
-    pointer-events: none;
-    transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
-}
-
-drag-preview > * {
-    --scale: .3;
-    width: calc(100% * (1 / var(--scale)));
-    height: calc(100% * (1 / var(--scale)));
-    transform: scale(var(--scale));
-    transform-origin: 0 0;
 }
 
 table {
@@ -227,10 +206,6 @@ table[focusable] tbody tr:hover td {
 table[selectable] tbody tr:hover td,
 table[selectable] tbody tr:hover th {
     background-color: rgba(var(--plain-bg), .1);
-}
-
-[hidden] {
-    display: none !important;
 }
 
 [scroller]::after {
