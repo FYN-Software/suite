@@ -1,10 +1,21 @@
 <style>
     :host {
-        --gap: 1em;
         display: grid;
-        grid-gap: var(--gap);
-        overflow-y: auto;
+        grid: var(--grid, auto);
+        gap: 1em;
+    }
+
+    :host main {
+        display: contents;
+    }
+
+    :host main > slot {
+        display: block;
     }
 </style>
 
 <slot></slot>
+
+<main part="content" :for="{{ i, cell of cells }}">
+    <slot name="{{ i }}" style="grid-area: {{ cell }}"></slot>
+</main>

@@ -1,44 +1,22 @@
 <style>
     :host {
-        display: block;
-        overflow: hidden;
+        display: contents;
     }
 
-    :host > hidden {
-        display: none;
+    :host fyn-common-layout-grid {
+        gap: 0;
+        overflow-y: auto;
     }
 
-    :host > main {
-        display: grid;
-        grid-auto-flow: column;
+    :host fyn-common-layout-tabs {
         width: 100%;
         height: 100%;
-    }
-
-    :host > main > * {
-        position: relative;
-    }
-
-    :host > main[mode="Symbol(vertical)"] {
-        grid-auto-flow: column;
-    }
-
-    :host > main[mode="Symbol(vertical)"] > *:last-child {
-        justify-self: stretch;
-    }
-
-    :host > main[mode="Symbol(horizontal)"] {
-        grid-auto-flow: row;
-    }
-
-    :host > main[mode="Symbol(horizontal)"] > *:last-child {
-        align-self: stretch;
+        /*border: 3px solid coral;*/
     }
 </style>
 
-<hidden>
-    <slot></slot>
-</hidden>
-
-<main mode="{{ this.Direction.nameOf(mode) }}">
-</main>
+<fyn-common-layout-grid grid="{{ grid }}" cells="{{ cells }}" :for="{{ i, cell of cells }}" part="content">
+    <fyn-common-layout-tabs slot="{{ i }}">
+        <slot name="{{ i }}"></slot>
+    </fyn-common-layout-tabs>
+</fyn-common-layout-grid>
