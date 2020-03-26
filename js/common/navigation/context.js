@@ -1,10 +1,19 @@
 import Component from '../../../../component/component.js';
 import * as Types from '../../../../data/types.js';
 
-export const Type = Types.Enum.define({
-    item: {},
-    separator: {},
+export const Command = Types.Object.define({
+    name: Types.String,
+    icon: Types.String,
+    keys: Types.List.type(Types.Object.define({
+        key: Types.String,
+        ctrl: Types.Boolean,
+        shift: Types.Boolean,
+        meta: Types.Boolean,
+    })),
+    action: Types.Any,
 });
+
+export const GroupedCommandList = Types.List.type(Types.Object);
 
 export default class Context extends Component
 {
@@ -14,23 +23,13 @@ export default class Context extends Component
     static get properties()
     {
         return {
-            items: Types.List.type(Types.Object.define({
-                name: Types.String,
-                icon: Types.String,
-                action: Types.String,
-                type: Type,
-            })).default([
-                { name: 'copy', action: 'copy', icon: 'far.copy', type: Type.item },
-                { name: 'paste', action: 'paste', icon: 'paste', type: Type.item },
-                { name: 'delete', action: 'delete', icon: 'times', type: Type.item },
-                { type: Type.separator },
-            ]),
+            commands: GroupedCommandList,
         };
     }
 
     async ready()
     {
-        globalThis.on({ 'click|blur': () => this.close(), })
+        globalThis.on({ 'click|blur': this.close.bind(this) });
     }
 
     close()
@@ -38,9 +37,9 @@ export default class Context extends Component
         this.removeAttribute('open');
     }
 
-    static for(node, items)
+    static for(node, commands)
     {
-        const inst = new this({ items });
+        const inst = new this({ commands });
         globalThis.document.body.appendChild(inst);
 
         node.on({

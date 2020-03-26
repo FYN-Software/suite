@@ -5,7 +5,7 @@
         left: var(--x);
         top: var(--y);
         width: 15em;
-        height: 20em;
+        /*height: 20em;*/
         background-color: var(--plain-bg);
         color: var(--plain-fg);
         box-shadow: 0 0 1em #0007;
@@ -18,12 +18,39 @@
         pointer-events: all;
     }
 
+    :host fyn-common-form-group:not(:last-of-type) {
+        border-bottom: 1px solid rgba(var(--plain-fg-rgb), .1);
+    }
+
+
+    :host fyn-common-form-group::part(content) {
+        grid-auto-flow: row;
+    }
+
     fyn-common-graphics-icon {
-        justify-content: start;
-        padding: 1em;
+        grid-template-columns: auto auto 1fr;
+        justify-content: stretch;
+        padding: .25em 1em;
+        cursor: pointer;
+    }
+
+    fyn-common-graphics-icon:hover {
+        background-color: rgba(var(--plain-fg-rgb), .1);
+    }
+
+    fyn-common-graphics-icon > span:last-of-type {
+        justify-self: end;
+        font-size: .8em;
+        opacity: .8;
     }
 </style>
 
-<fyn-common-layout-list :for="{{ item of items }}">
-    <fyn-common-graphics-icon icons="{{ item.icon }}">{{ item.name }}</fyn-common-graphics-icon>
+<fyn-common-layout-list :for="{{ group of commands }}">
+    <fyn-common-form-group :for="{{ command of group }}">
+        <fyn-common-graphics-icon icons="{{ command.icon }}">
+            <span>{{ command.name }}</span>
+
+            <span>{{ command.keys[0].ctrl ? 'Ctrl+' : '' }}{{ command.keys[0].shift ? 'Shift+' : '' }}{{ command.keys[0].key }}</span>
+        </fyn-common-graphics-icon>
+    </fyn-common-form-group>
 </fyn-common-layout-list>
