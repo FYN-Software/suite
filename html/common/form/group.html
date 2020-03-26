@@ -7,17 +7,17 @@
         font-size: .75em;
     }
 
-    :host > inner {
+    :host > main {
         display: grid;
         grid-auto-flow: column;
         gap: .25em .5em;
     }
 
-    :host([combined]) > inner {
+    :host([combined]) > main {
         grid-column-gap: 0;
     }
 
-    :host([combined][separators]) > inner {
+    :host([combined][separators]) > main {
         grid-column-gap: 1px;
     }
 
@@ -44,6 +44,6 @@
 
 <label :if="{{ label.length > 0 }}">{{ label }}</label>
 
-<inner>
+<main part="content">
     <slot></slot>
-</inner>
+</main>
