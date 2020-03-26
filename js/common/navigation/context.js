@@ -18,7 +18,7 @@ export const GroupedCommandList = Types.List.type(Types.Object);
 export default class Context extends Component
 {
     static localName = 'fyn-common-navigation-context';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

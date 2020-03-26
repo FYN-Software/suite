@@ -4,7 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Item extends Component
 {
     static localName = 'fyn-common-navigation-item';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

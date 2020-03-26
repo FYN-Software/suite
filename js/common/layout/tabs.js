@@ -4,7 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Tabs extends Fyn.Component
 {
     static localName = 'fyn-common-layout-tabs';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     #detect = async () => {
         await (this.index = -1);

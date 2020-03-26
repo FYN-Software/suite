@@ -4,7 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Calender extends Fyn.Component
 {
     static localName = 'fyn-common-misc-calender';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

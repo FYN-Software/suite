@@ -9,7 +9,7 @@ export class Direction extends Types.Enum.define({
 export default class Resizable extends Fyn.Component
 {
     static localName = 'fyn-common-layout-resizable';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

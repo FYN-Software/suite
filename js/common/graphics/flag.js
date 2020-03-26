@@ -4,7 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Flag extends Fyn.Component
 {
     static localName = 'fyn-common-graphics-flag';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

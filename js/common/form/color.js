@@ -11,7 +11,7 @@ const color = Types.Object.define({
 export default class Color extends Fyn.Component
 {
     static localName = 'fyn-common-form-color';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

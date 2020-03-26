@@ -12,7 +12,7 @@ export const Layout = Types.Object.define({
 export default class Docks extends Fyn.Component
 {
     static localName = 'fyn-common-layout-docks';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

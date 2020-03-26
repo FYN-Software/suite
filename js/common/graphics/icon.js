@@ -5,7 +5,7 @@ import * as Types from '../../../../data/types.js';
 export default class Icon extends Fyn.Component
 {
     static localName = 'fyn-common-graphics-icon';
-    static styles = [ 'fyn.suite.base', 'fyn.suite.fontawesome' ];
+    static styles = [ 'fyn.suite.base', 'fyn.suite.fontawesome', 'global.theme' ];
 
     static get properties()
     {

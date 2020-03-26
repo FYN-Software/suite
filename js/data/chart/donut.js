@@ -5,7 +5,7 @@ import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apex
 export default class Donut extends Fyn.Component
 {
     static localName = 'fyn-data-chart-donut';
-    static styles = [ 'fyn.suite.base', 'fyn.suite.apexcharts' ];
+    static styles = [ 'fyn.suite.base', 'fyn.suite.apexcharts', 'global.theme' ];
 
     static get properties()
     {

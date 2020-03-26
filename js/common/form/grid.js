@@ -4,7 +4,7 @@ import * as Types from '../../../../data/types.js';
 export default class Grid extends Fyn.Component
 {
     static localName = 'fyn-common-form-grid';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     static get properties()
     {

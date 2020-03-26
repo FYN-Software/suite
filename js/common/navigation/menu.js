@@ -4,7 +4,7 @@ import * as Fyn from '../../../../component/fyn.js';
 export default class Menu extends Component
 {
     static localName = 'fyn-common-navigation-menu';
-    static styles = [ 'fyn.suite.base' ];
+    static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     async ready()
     {
