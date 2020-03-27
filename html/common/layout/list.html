@@ -2,8 +2,12 @@
     :host {
         position: relative;
         display: grid;
-        grid-gap: var(--gap);
+        gap: var(--gap);
         /* overflow: hidden; */
+    }
+
+    :host ::slotted(:last-child) {
+        padding-bottom: inherit;
     }
 
     :host([horizontal]) {
@@ -18,10 +22,6 @@
         overflow-y: auto;
     }
 
-    inner {
-        display: contents;
-    }
-
     :host > [preview] {
         position: absolute;
         height: 100%;
@@ -32,6 +32,4 @@
     }
 </style>
 
-<inner>
-    <slot></slot>
-</inner>
+<slot></slot>

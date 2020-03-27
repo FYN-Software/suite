@@ -87,6 +87,8 @@ export default class Sparkline extends Fyn.Component
             }
         });
 
+        await Promise.delay(0);
+
         chart.render();
     }
 }
