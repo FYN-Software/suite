@@ -21,6 +21,7 @@ export default class Tabs extends Fyn.Component
             index: Types.Number.min(-1).default(-1),
             tabs: Types.List.type(Types.String),
             delimiter: Types.String,
+            closable: Types.Boolean,
         };
     }
 
@@ -51,7 +52,15 @@ export default class Tabs extends Fyn.Component
         });
 
         this.shadow.on('#bar > tab', {
-            click: (_, t) => this.index = t.index,
+            click: (e, t) => {
+                this.index = t.index;
+            },
+            auxclick: (e, t) => {
+                if(e.button === 1 && this.closable)
+                {
+                    this.pages[t.index].remove();
+                }
+            },
         });
 
         this.#detect();
@@ -67,27 +76,26 @@ export default class Tabs extends Fyn.Component
         this.tabs.forEach(t => t.removeAttribute('active'));
         this.appendChild(tab);
 
-        if(tab instanceof HTMLSlotElement)
-        {
-            for(let c of tab.assignedElements({ flatten: true }))
-            {
-                c.setAttribute('active', '');
-
-                if(c.hasAttribute('tab-title') !== true)
-                {
-                    c.setAttribute('tab-title', title);
-                }
-            }
-        }
-        else
-        {
+        const activate = tab => {
             tab.setAttribute('active', '');
 
             if(tab.hasAttribute('tab-title') !== true)
             {
                 tab.setAttribute('tab-title', title);
             }
+        };
+
+        if(tab instanceof HTMLSlotElement)
+        {
+            for(let c of tab.assignedElements({ flatten: true }))
+            {
+                activate(c);
+            }
+
+            return;
         }
+
+        activate(tab);
     }
 
     get pages()

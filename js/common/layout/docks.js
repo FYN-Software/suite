@@ -19,6 +19,7 @@ export default class Docks extends Fyn.Component
         return {
             grid: Types.String,
             cells: Types.List.type(Types.String),
+            closable: Types.Boolean,
         };
     }
 
@@ -28,5 +29,23 @@ export default class Docks extends Fyn.Component
 
     async ready()
     {
+    }
+
+    async add(cell, title, element)
+    {
+        if(cell < 0 || cell >= this.cells.length)
+        {
+            throw new Error(`The cell given is not within a valid range`);
+        }
+
+        element.setAttribute('slot', cell);
+        element.setAttribute('tab-title', title);
+
+        this.appendChild(element);
+
+        await Promise.delay(10);
+
+        const tabs = this.shadow.querySelector(`fyn-common-layout-tabs[slot="${cell}"]`);
+        tabs.index = tabs.tabs.length - 1;
     }
 }

@@ -18,7 +18,7 @@
 </style>
 
 <fyn-common-layout-grid grid="{{ grid }}" cells="{{ cells }}" :for="{{ i, cell of cells }}" part="content">
-    <fyn-common-layout-tabs slot="{{ i }}">
+    <fyn-common-layout-tabs slot="{{ i }}" closable="{{ this.closable }}">
         <slot name="{{ i }}"></slot>
     </fyn-common-layout-tabs>
 </fyn-common-layout-grid>
