@@ -50,7 +50,7 @@
         <fyn-common-graphics-icon icons="{{ command.icon }}">
             <span>{{ command.name }}</span>
 
-            <span>{{ command.keys[0].ctrl ? 'Ctrl+' : '' }}{{ command.keys[0].shift ? 'Shift+' : '' }}{{ command.keys[0].key }}</span>
+            <span>{{ command.keys[0]?.ctrl ? 'Ctrl+' : '' }}{{ command.keys[0]?.shift ? 'Shift+' : '' }}{{ command.keys[0]?.key ?? '' }}</span>
         </fyn-common-graphics-icon>
     </fyn-common-form-group>
 </fyn-common-layout-list>
