@@ -12,7 +12,7 @@ export default class Tabs extends Fyn.Component
         const pages = this.pages;
 
         this.tabs = pages.map(p => p.getAttribute('tab-title') || '');
-        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
+        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), this.docked ? -1 : 0));
     };
 
     static get properties()
@@ -22,6 +22,7 @@ export default class Tabs extends Fyn.Component
             tabs: Types.List.type(Types.String),
             delimiter: Types.String,
             closable: Types.Boolean,
+            docked: Types.Boolean,
         };
     }
 
@@ -29,14 +30,15 @@ export default class Tabs extends Fyn.Component
     {
         this.observe({
             index: async (o, n) => {
-                if(this.index < 0 || this.index >= this.pages.length)
+                const pages = this.pages;
+                pages.forEach(t => t.removeAttribute('active'));
+
+                if(this.index >= 0 && this.index < this.pages.length)
                 {
-                    return;
+                    pages[this.index].setAttribute('active', '');
                 }
 
-                const content = this.pages;
-                content.forEach(t => t.removeAttribute('active'));
-                content[this.index].setAttribute('active', '');
+                this.emit('switched', { index: this.index })
             },
         });
 
@@ -53,7 +55,7 @@ export default class Tabs extends Fyn.Component
 
         this.shadow.on('#bar > tab', {
             click: (e, t) => {
-                this.index = t.index;
+                this.index = this.docked && this.index === t.index ? -1 : t.index;
             },
             auxclick: (e, t) => {
                 if(e.button === 1 && this.closable)

@@ -3,10 +3,16 @@ import * as Types from '../../../../data/types.js';
 import { default as Resizable, Direction } from './resizable.js';
 import Tabs from './tabs.js';
 
-export const Layout = Types.Object.define({
-    mode: Direction.default(Direction.vertical),
-    children: Types.List,
-    sizes: Types.List,
+export const Position = Types.Enum.define({
+    none: {  },
+    top: {  },
+    left: {  },
+    right: {  },
+    bottom: {  },
+});
+export const Cell = Types.Object.define({
+    area: Types.String,
+    docked: Position.default(Position.none),
 });
 
 export default class Docks extends Fyn.Component
@@ -18,7 +24,7 @@ export default class Docks extends Fyn.Component
     {
         return {
             grid: Types.String,
-            cells: Types.List.type(Types.String),
+            cells: Types.List.type(Cell),
             closable: Types.Boolean,
         };
     }
@@ -29,6 +35,11 @@ export default class Docks extends Fyn.Component
 
     async ready()
     {
+        this.shadow.on('fyn-common-layout-tabs.docked', {
+            switched: ({ index }, t) => {
+                t.attributes.setOnAssert(index > -1, 'open');
+            },
+        })
     }
 
     async add(cell, title, element)
@@ -47,5 +58,10 @@ export default class Docks extends Fyn.Component
 
         const tabs = this.shadow.querySelector(`fyn-common-layout-tabs[slot="${cell}"]`);
         tabs.index = tabs.tabs.length - 1;
+    }
+
+    get Position()
+    {
+        return Position;
     }
 }

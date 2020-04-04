@@ -15,10 +15,65 @@
         height: 100%;
         /*border: 3px solid coral;*/
     }
+
+    :host fyn-common-layout-tabs.docked {
+        position: relative;
+        z-index: 2;
+    }
+
+    :host fyn-common-layout-tabs.docked::part(bar) {
+        position: absolute;
+        background-color: transparent;
+        z-index: 1;
+    }
+    :host fyn-common-layout-tabs.docked::part(content) {
+        --f: 0;
+        position: absolute;
+        background-color: var(--plain-bg);
+        box-shadow: 0.5em 0 1em #0003;
+        transition: transform .3s ease-in-out, opacity .3s ease-in-out;
+        z-index: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+    :host fyn-common-layout-tabs.docked[open]::part(content) {
+        --f: 1;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+
+    :host fyn-common-layout-tabs.docked.left::part(bar),
+    :host fyn-common-layout-tabs.docked.right::part(bar) {
+        width: 100vh;
+        height: 2.25em;
+        transform-origin: 0 0;
+    }
+
+
+    :host fyn-common-layout-tabs.docked.left::part(bar) {
+        transform: rotate(90deg) translateY(-100%);
+    }
+    :host fyn-common-layout-tabs.docked.left::part(content) {
+        width: 15em;
+        height: 100%;
+        transform: translateX(calc((var(--f) * 2.25em) + ((1 - var(--f)) * -100%)));
+    }
+
+
+    :host fyn-common-layout-tabs.docked.right::part(bar) {
+        justify-content: end;
+        transform: rotate(-90deg) translate(-100%, -100%);
+    }
+    :host fyn-common-layout-tabs.docked.right::part(content) {
+        width: 15em;
+        height: 100%;
+        transform: translateX(calc((var(--f) * -2.25em) + ((var(--f)) * -100%)));
+    }
 </style>
 
-<fyn-common-layout-grid grid="{{ grid }}" cells="{{ cells }}" :for="{{ i, cell of cells }}" part="content">
-    <fyn-common-layout-tabs slot="{{ i }}" closable="{{ this.closable }}">
+<fyn-common-layout-grid grid="{{ grid }}" cells="{{ cells.map(c => c.area) }}" :for="{{ i, cell of cells }}" part="content">
+    <fyn-common-layout-tabs slot="{{ i }}" closable="{{ this.closable }}" docked="{{ cell.docked !== this.Position.none }}" class="{{ cell.docked !== this.Position.none ? 'docked' : '' }} {{ this.Position.nameOf(cell.docked) }}">
         <slot name="{{ i }}"></slot>
     </fyn-common-layout-tabs>
 </fyn-common-layout-grid>

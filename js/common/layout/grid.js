@@ -18,7 +18,6 @@ export default class Grid extends Fyn.Component
     {
         this.observe({
             grid: () => this.style.setProperty('--grid', this.grid),
-            // cells: () => console.log(this.cells),
         });
     }
 }
