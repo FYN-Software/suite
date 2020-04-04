@@ -25,6 +25,7 @@ export default class Image extends Fyn.Component
     initialize()
     {
         let img = document.createElement('img');
+        img.crossOrigin = 'anonymous';
 
         this.observe({
             src: (o, n) => {
@@ -33,6 +34,7 @@ export default class Image extends Fyn.Component
                 this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));
 
                 img = document.createElement('img');
+                img.crossOrigin = 'anonymous';
                 img.onload = () => {
                     this.shadow.appendChild(img);
                     this.loading = false;

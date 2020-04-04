@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300|Space+Mono&subset=latin-ext&display=swap');
-@import url('https://use.fontawesome.com/releases/v5.11.2/css/all.css');
-@import url('https://ep-cdn.fyn.nl/css/flag-icon/css/flag-icon.min.css');
+@import url('https://use.fontawesome.com/releases/v5.13.0/css/all.css?preloading');
+@import url('https://ep-cdn.fyn.nl/css/flag-icon/css/flag-icon.min.css?preloading');
 
 [loading] {
     display: none;
