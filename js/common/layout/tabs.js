@@ -1,6 +1,12 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
+export const Tab = Types.Object.define({
+    title: Types.String,
+    closable: Types.Boolean,
+    element: Types.Any,
+});
+
 export default class Tabs extends Fyn.Component
 {
     static localName = 'fyn-common-layout-tabs';
@@ -11,7 +17,11 @@ export default class Tabs extends Fyn.Component
 
         const pages = this.pages;
 
-        this.tabs = pages.map(p => p.getAttribute('tab-title') || '');
+        this.tabs = pages.map(p => ({
+            title: p.getAttribute('tab-title') || '',
+            closable: p.hasAttribute('tab-closable') ?? false,
+            element: p,
+        }));
         await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), this.docked ? -1 : 0));
     };
 
@@ -19,7 +29,7 @@ export default class Tabs extends Fyn.Component
     {
         return {
             index: Types.Number.min(-1).default(-1),
-            tabs: Types.List.type(Types.String),
+            tabs: Types.List.type(Tab),
             delimiter: Types.String,
             closable: Types.Boolean,
             docked: Types.Boolean,
@@ -58,17 +68,46 @@ export default class Tabs extends Fyn.Component
                 this.index = this.docked && this.index === t.index ? -1 : t.index;
             },
             auxclick: (e, t) => {
-                if(e.button === 1 && this.closable)
+                const tab = this.tabs[t.index];
+
+                if(e.button === 1 && tab.closable)
                 {
-                    this.pages[t.index].remove();
+                    tab.element.remove();
                 }
+            },
+        });
+
+        this.shadow.on('#bar > tab > fyn-common-form-button', {
+            click: (_, t) => {
+                const tab = this.tabs[t.parentElement.index];
+
+                if(tab.closable)
+                {
+                    tab.element.remove();
+                }
+            },
+        });
+
+        globalThis.on({
+            blur: (e, t) => {
+                if(this.docked === true)
+                {
+                    this.removeAttribute('open');
+                    this.index = -1;
+                }
+            },
+        });
+
+        document.on('fyn-common-layout-tabs', {
+            click: (e, t) => {
+                console.log(e, t, t === this)
             },
         });
 
         this.#detect();
     }
 
-    add(tab, title = '')
+    add(tab, title = '', closable = false)
     {
         if((tab instanceof HTMLElement) !== true)
         {
@@ -84,6 +123,11 @@ export default class Tabs extends Fyn.Component
             if(tab.hasAttribute('tab-title') !== true)
             {
                 tab.setAttribute('tab-title', title);
+            }
+
+            if(tab.hasAttribute('tab-closable') !== true)
+            {
+                tab.setAttribute('tab-closable', closable);
             }
         };
 

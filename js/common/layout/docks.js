@@ -42,7 +42,7 @@ export default class Docks extends Fyn.Component
         })
     }
 
-    async add(cell, title, element)
+    async add(cell, element, title, closable)
     {
         if(cell < 0 || cell >= this.cells.length)
         {
@@ -51,6 +51,7 @@ export default class Docks extends Fyn.Component
 
         element.setAttribute('slot', cell);
         element.setAttribute('tab-title', title);
+        element.setAttribute('tab-closable', closable);
 
         this.appendChild(element);
 

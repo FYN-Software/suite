@@ -10,6 +10,7 @@
 
     #bar > tab {
         position: relative;
+        display: grid;
         grid-auto-flow: column;
         gap: .5em;
         background-color: transparent;
@@ -24,6 +25,15 @@
         max-width: 20em;
     }
 
+    #bar > tab > fyn-common-form-button {
+        padding: 0;
+        line-height: 1em;
+    }
+
+    #bar > tab > fyn-common-form-button::part(icon) {
+        line-height: 1em;
+    }
+
     #bar > delimiter {
         padding: .5em 1em;
     }
@@ -33,11 +43,11 @@
         display: none;
     }
 
-    #bar > tab:empty {
+    #bar > tab[has-content="false"] {
         display: none;
     }
 
-    #bar > tab:only-child {
+    #bar > tab:only-of-type {
         width: 100%;
     }
 
@@ -61,6 +71,7 @@
         width: 100%;
         height: 100%;
         padding: 1em;
+        overflow: auto;
         opacity: 0;
         pointer-events: none;
     }
@@ -72,7 +83,11 @@
 </style>
 
 <fyn-common-layout-list horizontal sortable id="bar" part="bar" :for="{{ i, tab of tabs }}">
-    <tab part="tab {{ i === this.index ? 'tab-active' : '' }}" index="{{ i }}">{{ tab }}</tab>
+    <tab part="tab {{ i === this.index ? 'tab-active' : '' }}" index="{{ i }}" has-content="{{ tab.title.length > 0 }}">
+        <span>{{ tab.title }}</span>
+        
+        <fyn-common-form-button :if="{{ tab.closable }}" icons="times" flat></fyn-common-form-button>
+    </tab>
     <delimiter part="delimiter {{ i === this.index ? 'delimiter-active' : '' }}">{{ this.delimiter }}</delimiter>
 </fyn-common-layout-list>
 

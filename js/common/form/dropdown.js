@@ -7,6 +7,7 @@ export default class Dropdown extends Fyn.Component
     static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     #options;
+    #container = new Fyn.Container();
 
     static get properties()
     {
@@ -117,10 +118,11 @@ export default class Dropdown extends Fyn.Component
 
     async ready()
     {
+        this.#container.shadow.appendChild(this.shadow.querySelector('style').cloneNode(true));
+        document.body.appendChild(this.#container);
+
         this.#options = this.shadow.querySelector('options');
-        const container = new Fyn.Container();
-        container.shadow.appendChild(this.shadow.querySelector('style').cloneNode(true));
-        container.shadow.appendChild(this.#options);
+        this.#container.shadow.appendChild(this.#options);
 
         this.#options.on(':scope > *', {
             click: (_, t) => {
@@ -134,12 +136,12 @@ export default class Dropdown extends Fyn.Component
             click: (_, t) => {
                 const rect = this.getBoundingClientRect();
 
-                container.style.setProperty('--x', `${rect.x}px`);
-                container.style.setProperty('--y', `${rect.bottom}px`);
-                container.style.setProperty('--w', `${rect.width}px`);
-                container.style.setProperty('--h', `${Math.clamp(50, 500, window.innerHeight - rect.bottom)}px`);
+                this.#container.style.setProperty('--x', `${rect.x}px`);
+                this.#container.style.setProperty('--y', `${rect.bottom}px`);
+                this.#container.style.setProperty('--w', `${rect.width}px`);
+                this.#container.style.setProperty('--h', `${Math.clamp(50, 500, globalThis.innerHeight - rect.bottom)}px`);
 
-                container.attributes.toggle('open');
+                this.#container.attributes.toggle('open');
                 this.attributes.toggle('open');
 
                 if(this.filterable === true)
@@ -155,10 +157,9 @@ export default class Dropdown extends Fyn.Component
             },
         });
 
-        document.body.appendChild(container);
         document.body.on({
             click: (e, t) => {
-                container.removeAttribute('open');
+                this.#container.removeAttribute('open');
                 this.removeAttribute('open');
             },
         });

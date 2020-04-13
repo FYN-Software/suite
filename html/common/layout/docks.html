@@ -13,24 +13,26 @@
     :host fyn-common-layout-tabs {
         width: 100%;
         height: 100%;
-        /*border: 3px solid coral;*/
     }
 
     :host fyn-common-layout-tabs.docked {
         position: relative;
+        pointer-events: none;
         z-index: 2;
     }
-
     :host fyn-common-layout-tabs.docked::part(bar) {
         position: absolute;
-        background-color: transparent;
+        height: 2.25em;
+        background-color: var(--plain-bg);
+        border-bottom: none;
+        transform-origin: 0 0;
+        pointer-events: all;
         z-index: 1;
     }
     :host fyn-common-layout-tabs.docked::part(content) {
         --f: 0;
         position: absolute;
         background-color: var(--plain-bg);
-        box-shadow: 0.5em 0 1em #0003;
         transition: transform .3s ease-in-out, opacity .3s ease-in-out;
         z-index: 0;
         opacity: 0;
@@ -43,32 +45,80 @@
     }
 
 
+    :host fyn-common-layout-tabs.docked.left,
+    :host fyn-common-layout-tabs.docked.right {
+        width: 2.25em;
+        height: 100%;
+    }
     :host fyn-common-layout-tabs.docked.left::part(bar),
     :host fyn-common-layout-tabs.docked.right::part(bar) {
         width: 100vh;
-        height: 2.25em;
-        transform-origin: 0 0;
+    }
+    :host fyn-common-layout-tabs.docked.left::part(content),
+    :host fyn-common-layout-tabs.docked.right::part(content) {
+        width: 15em;
+        height: 100%;
     }
 
-
     :host fyn-common-layout-tabs.docked.left::part(bar) {
+        left: 0;
+        top: 0;
         transform: rotate(90deg) translateY(-100%);
     }
     :host fyn-common-layout-tabs.docked.left::part(content) {
-        width: 15em;
-        height: 100%;
+        left: 0;
+        top: 0;
+        box-shadow: .5em 0 1em #0003;
         transform: translateX(calc((var(--f) * 2.25em) + ((1 - var(--f)) * -100%)));
     }
 
-
     :host fyn-common-layout-tabs.docked.right::part(bar) {
+        left: 100%;
+        top: 0;
         justify-content: end;
         transform: rotate(-90deg) translate(-100%, -100%);
     }
     :host fyn-common-layout-tabs.docked.right::part(content) {
-        width: 15em;
-        height: 100%;
+        left: 100%;
+        top: 0;
+        box-shadow: -.5em 0 1em #0003;
         transform: translateX(calc((var(--f) * -2.25em) + ((var(--f)) * -100%)));
+    }
+
+
+    :host fyn-common-layout-tabs.docked.top,
+    :host fyn-common-layout-tabs.docked.bottom {
+        width: 100%;
+        height: 2.25em;
+    }
+    :host fyn-common-layout-tabs.docked.top::part(bar),
+    :host fyn-common-layout-tabs.docked.bottom::part(bar) {
+        width: 100%;
+    }
+    :host fyn-common-layout-tabs.docked.top::part(content),
+    :host fyn-common-layout-tabs.docked.bottom::part(content) {
+        width: 100%;
+        height: 15em;
+    }
+
+    :host fyn-common-layout-tabs.docked.top::part(bar) {
+        left: 0;
+        top: 0;
+    }
+    :host fyn-common-layout-tabs.docked.top::part(content) {
+        box-shadow: 0 .5em 1em #0003;
+        transform: translateY(calc((var(--f) * 2.25em) + ((1 - var(--f)) * -100%)));
+    }
+
+    :host fyn-common-layout-tabs.docked.bottom::part(bar) {
+        left: 0;
+        bottom: 0;
+    }
+    :host fyn-common-layout-tabs.docked.bottom::part(content) {
+        left: 0;
+        bottom: 0;
+        box-shadow: 0 -.5em 1em #0003;
+        transform: translateY(calc((var(--f) * -2.25em) + ((1 - var(--f)) * 100%)));
     }
 </style>
 

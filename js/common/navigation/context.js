@@ -30,6 +30,12 @@ export default class Context extends Component
     async ready()
     {
         globalThis.on({ 'click|blur': this.close.bind(this) });
+
+        globalThis.on({
+            blur: e => {
+                console.log(e)
+            },
+        });
     }
 
     close()
