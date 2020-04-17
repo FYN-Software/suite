@@ -1,4 +1,6 @@
 :root {
+    color-scheme: dark light;
+
     --info-bg-rgb: 91, 192, 222;
     --info-bg: rgb(var(--info-bg-rgb));
 
