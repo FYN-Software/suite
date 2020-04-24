@@ -29,13 +29,13 @@ export default class Context extends Component
 
     async ready()
     {
-        globalThis.on({ 'click|blur': this.close.bind(this) });
-
-        globalThis.on({
-            blur: e => {
-                console.log(e)
+        this.shadow.on('fyn-common-graphics-icon', {
+            click: (e, t) => {
+                this.commands.reduce((t, g) => ({ ...t, ...g}), {})[t.id]?.action?.invoke();
             },
         });
+
+        globalThis.on({ 'click|blur': this.close.bind(this) });
     }
 
     close()

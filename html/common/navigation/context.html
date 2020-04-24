@@ -5,12 +5,13 @@
         left: var(--x);
         top: var(--y);
         width: 15em;
-        /*height: 20em;*/
+        font-size: .8rem;
         background-color: var(--plain-bg);
         color: var(--plain-fg);
         box-shadow: 0 0 1em #0007;
         opacity: 0;
         pointer-events: none;
+        z-index: 100;
     }
 
     :host([open]) {
@@ -46,8 +47,8 @@
 </style>
 
 <fyn-common-layout-list :for="{{ group of commands }}">
-    <fyn-common-form-group :for="{{ command of group }}">
-        <fyn-common-graphics-icon icons="{{ command.icon }}">
+    <fyn-common-form-group :for="{{ id, command of group }}">
+        <fyn-common-graphics-icon id="{{ id }}" icons="{{ command.icon }}">
             <span>{{ command.name }}</span>
 
             <span>{{ command.keys[0]?.ctrl ? 'Ctrl+' : '' }}{{ command.keys[0]?.shift ? 'Shift+' : '' }}{{ command.keys[0]?.key ?? '' }}</span>

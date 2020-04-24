@@ -13,6 +13,7 @@ export const Position = Types.Enum.define({
 export const Cell = Types.Object.define({
     area: Types.String,
     docked: Position.default(Position.none),
+    static: Types.Boolean.default(false),
 });
 
 export default class Docks extends Fyn.Component

@@ -4,6 +4,14 @@
         grid-template-rows: auto 1fr;
     }
 
+    :host([static="true"]) {
+        grid-template-rows: 1fr;
+    }
+
+    :host([static="true"]) #bar {
+        display: none;
+    }
+
     #bar {
         border-bottom: 1px solid rgba(var(--plain-fg-rgb), .15);
     }
@@ -16,6 +24,7 @@
         background-color: transparent;
         border-radius: var(--radius) var(--radius) 0 0;
         padding: .5em 1em;
+        height: 2.2em;
         user-select: none;
         cursor: pointer;
         transition: .3s background-color ease-in-out;
@@ -85,7 +94,7 @@
 <fyn-common-layout-list horizontal sortable id="bar" part="bar" :for="{{ i, tab of tabs }}">
     <tab part="tab {{ i === this.index ? 'tab-active' : '' }}" index="{{ i }}" has-content="{{ tab.title.length > 0 }}">
         <span>{{ tab.title }}</span>
-        
+
         <fyn-common-form-button :if="{{ tab.closable }}" icons="times" flat></fyn-common-form-button>
     </tab>
     <delimiter part="delimiter {{ i === this.index ? 'delimiter-active' : '' }}">{{ this.delimiter }}</delimiter>

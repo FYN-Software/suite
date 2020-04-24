@@ -99,19 +99,22 @@ export default class Dropdown extends Fyn.Component
 
             this.style.setProperty('--min-width', `${width}px`);
         };
+        const findIndex = value => this.options.findIndex(o => Fyn.Extends.equals(o, value) || o?.value === value);
 
         this.observe({
             options: (o, n) => {
-                this.index = this.options.findIndex(o => Fyn.Extends.equals(o, this.value));
+                this.index = findIndex(this.value);
 
                 update();
             },
-            index: (o, n) => {
-                renderValue();
-
+            index: async (o, n) => {
                 this.emit('change', {old: this.options[o], new: this.options[n]});
+
+                await Promise.delay(10);
+
+                renderValue();
             },
-            value: (o, n) => this.index = this.options.findIndex(o => Fyn.Extends.equals(o, n) || (o.hasOwnProperty('value') && o.value === n)),
+            value: (o, n) => this.index = findIndex(n),
             filter: update,
         });
     }
