@@ -96,6 +96,15 @@ export default class Tabs extends Fyn.Component
                     this.index = -1;
                 }
             },
+            click: (e, t) => {
+                // console.log(e.target, e.composedPath(), e);
+            },
+        });
+
+        this.on({
+            click: (e, t) => {
+                console.log(e.composedPath(), e.composedPath().includes(this));
+            },
         });
 
         document.on('fyn-common-layout-tabs', {

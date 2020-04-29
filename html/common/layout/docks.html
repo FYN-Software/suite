@@ -122,8 +122,20 @@
     }
 </style>
 
-<fyn-common-layout-grid grid="{{ grid }}" cells="{{ cells.map(c => c.area) }}" :for="{{ i, cell of cells }}" part="content">
-    <fyn-common-layout-tabs slot="{{ i }}" closable="{{ this.closable }}" docked="{{ cell.docked !== this.Position.none }}" static="{{ cell.static }}" class="{{ cell.docked !== this.Position.none ? 'docked' : '' }} {{ this.Position.nameOf(cell.docked) }}">
+<fyn-common-layout-grid
+    grid="{{ grid }}"
+    cells="{{ cells.map(c => c.area) }}"
+    :for="{{ i, cell of cells }}"
+    part="content"
+>
+    <fyn-common-layout-tabs
+        slot="{{ i }}"
+        closable="{{ this.closable }}"
+        docked="{{ cell.docked !== this.Position.none }}"
+        static="{{ cell.static }}"
+        class="{{ cell.docked !== this.Position.none ? 'docked' : '' }}
+        {{ this.Position.nameOf(cell.docked) }}"
+    >
         <slot name="{{ i }}"></slot>
     </fyn-common-layout-tabs>
 </fyn-common-layout-grid>
