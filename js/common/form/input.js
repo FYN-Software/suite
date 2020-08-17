@@ -1,7 +1,7 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Input extends Fyn.Component
+export default class Input extends Fyn.FormAssociated(Fyn.Component)
 {
     static localName = 'fyn-common-form-input';
     static styles = [ 'fyn.suite.base', 'global.theme' ];
@@ -12,7 +12,6 @@ export default class Input extends Fyn.Component
             type: Types.String,
             label: Types.String,
             name: Types.String,
-            value: Types.String,
             placeholder: Types.String,
             multiline: Types.Boolean,
             regex: Types.String.default('[^\\n]+'),
@@ -21,14 +20,7 @@ export default class Input extends Fyn.Component
 
     async initialize()
     {
-        this.modify({
-            value: {
-                get: () => this.shadow.querySelector('value').textContent,
-                set: v => this.shadow.querySelector('value').textContent = v,
-            }
-        });
-
-        this.shadow.on('value', {
+        this.shadow.on('input', {
             options: {
                 passive: false,
             },
@@ -38,7 +30,7 @@ export default class Input extends Fyn.Component
                     return;
                 }
 
-                // FUCK ES SOMETHIMES!! cant just read the character about to be inserted...
+                // FUCK ES SOMETIMES!! cant just read the character about to be inserted...
                 let char;
                 switch (e.key)
                 {
@@ -57,11 +49,11 @@ export default class Input extends Fyn.Component
                 }
             },
             keyup: _ => {
-                // this.value = this.shadow.querySelector('value').textContent;
+                this.value = this.shadow.querySelector('input').value;
             },
         });
 
-        this.shadow.on('value', {
+        this.shadow.on('input', {
             options: {
                 capture: true,
             },
@@ -93,6 +85,6 @@ export default class Input extends Fyn.Component
 
     focus()
     {
-        this.shadow.querySelector('value').focus();
+        this.shadow.querySelector('input').focus();
     }
 }

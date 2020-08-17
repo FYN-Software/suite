@@ -33,7 +33,7 @@
         overflow: visible;
     }
 
-    :host > content {
+    :host > main {
         position: relative;
         display: grid;
         grid-auto-flow: column;
@@ -45,11 +45,11 @@
         -ms-overflow-style: none;
     }
 
-    :host > content::-webkit-scrollbar {
+    :host > main::-webkit-scrollbar {
         display: none;
     }
 
-    :host > content > slot::slotted(*) {
+    :host > main > slot::slotted(*) {
         scroll-snap-align: center;
         /*position: absolute;*/
         /*width: 100%;*/
@@ -58,7 +58,7 @@
         /*pointer-events: none;*/
     }
 
-    :host > content > slot::slotted(*[active]) {
+    :host > main > slot::slotted(*[active]) {
         /*opacity: 1;*/
         /*pointer-events: all;*/
     }
@@ -76,9 +76,9 @@
     <delimiter index="{{ i }}" part="delimiter {{ i <= this.index ? 'active' : '' }} {{ i === this.index ? 'current' : '' }}">/</delimiter>
 </fyn-common-layout-list>
 
-<content part="content">
+<main part="content">
     <slot></slot>
-</content>
+</main>
 
 <footer>
     <fyn-common-form-button action="cancel" :if="{{ index === 0 }}">Cancel</fyn-common-form-button>

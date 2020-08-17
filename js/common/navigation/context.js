@@ -29,6 +29,16 @@ export default class Context extends Component
 
     async ready()
     {
+        this.shadow.on({
+            options: {
+                passive: false,
+            },
+            contextmenu: e => {
+                e.preventDefault();
+                e.stopPropagation();
+            },
+        });
+
         this.shadow.on('fyn-common-graphics-icon', {
             click: (e, t) => {
                 this.commands.reduce((t, g) => ({ ...t, ...g}), {})[t.id]?.action?.invoke();
@@ -60,6 +70,7 @@ export default class Context extends Component
                 inst.style.setProperty('--y', `${e.y}px`);
 
                 inst.setAttribute('open', '');
+                inst.focus();
             },
         });
 

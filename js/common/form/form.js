@@ -9,6 +9,7 @@ export default class Form extends Fyn.Component
     static get properties()
     {
         return {
+            title: Types.String,
             action: Types.String,
             messages: Types.List.type(Types.String),
         };
@@ -16,7 +17,7 @@ export default class Form extends Fyn.Component
 
     async ready()
     {
-        this.shadow.on('fields > *', {
+        this.shadow.on('form > *', {
             options: {
                 passive: false,
             },
@@ -32,7 +33,7 @@ export default class Form extends Fyn.Component
         });
 
         this.on('[slot="buttons"][action]', {
-            click: ({ action }) => {
+            click: ({ action }, e, t) => {
                 switch(action)
                 {
                     case 'submit':
@@ -47,23 +48,30 @@ export default class Form extends Fyn.Component
 
     submit()
     {
-        // TODO(Chris Kruining)
-        // Implement form validation
+        if(this.elements.filter(e => e.constructor.formAssociated === true).some(e => e.validity.valid === false))
+        {
+            return;
+        }
 
-        const f = this.shadow.querySelector('fields > slot').assignedElements()
-            .filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined)
+        const f = this.elements
+            .filter(c => typeof c?.name === 'string' && c?.value !== undefined)
             .reduce((t, c) => Object.assign(t, { [c.name]: c.value }), {});
 
-        // console.log(f, this.shadow.querySelector('fields > slot').assignedElements().filter(c => c !== null && typeof c.name === 'string' && c.value !== undefined));
-
         this.emit('success', { success: true, ...f });
+
+        return f;
     }
 
     clear()
     {
-        for(const field of this.shadow.querySelector('fields > slot').assignedElements())
+        for(const field of this.elements)
         {
             field.clear();
         }
+    }
+
+    get elements()
+    {
+        return this.shadow.querySelector('fields > slot').assignedElements();
     }
 }

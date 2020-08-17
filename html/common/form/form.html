@@ -6,13 +6,22 @@
         width: 100%;
     }
 
+    :host > h1 {
+        color: var(--teriary-bg);
+        text-align: center;
+    }
+
+    :host > h1:empty {
+        display: none;
+    }
+
     :host > messages:empty {
         display: none;
     }
 
     :host > fields {
         display: grid;
-        grid-gap: 1.25em;
+        grid-gap: .75em;
         align-content: start;
     }
 
@@ -53,6 +62,8 @@
         color: var(--failure-bg);
     }
 </style>
+
+<h1>{{ title }}</h1>
 
 <messages :for="{{ item of messages }}" part="messages">
     <message type="{{ item.type }}">{{ item.message }}</message>

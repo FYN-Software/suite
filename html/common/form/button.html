@@ -21,21 +21,25 @@
         grid-template-areas: '. icon';
     }
 
+    :host(.primary),
     :host([primary]) {
         background-color: var(--primary-bg);
         color: var(--primary-fg);
     }
 
+    :host(.flat),
     :host([flat]) {
         background-color: transparent;
     }
 
+    :host(.open),
     :host([open]) {
         background-color: transparent;
         border-color: var(--primary-bg);
         color: var(--primary-bg);
     }
 
+    :host(.fab),
     :host([fab]) {
         --radius: 50%;
         justify-content: center;
@@ -45,14 +49,17 @@
         color: var(--primary-fg);
     }
 
+    :host(.start),
     :host([start]) {
         justify-self: start;
     }
 
+    :host(.center),
     :host([center]) {
         justify-self: center;
     }
 
+    :host(.end),
     :host([end]) {
         justify-self: end;
     }
@@ -146,7 +153,7 @@
         transform-origin: center center;
     }
 
-    :host([click]) > ripple > inner {
+    :host > ripple > inner[click] {
         animation: ripple 1s ease-out forwards;
     }
 

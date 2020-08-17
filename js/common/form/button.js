@@ -55,15 +55,16 @@ export default class Button extends Fyn.Component
                 e.stopPropagation();
                 e.stopImmediatePropagation();
 
-                this.removeAttribute('click');
+                const ripple = this.shadow.querySelector('ripple > inner');
+                ripple.removeAttribute('click');
 
                 (async () => {
                     const { x, y } = target.getBoundingClientRect();
 
-                    this.shadow.querySelector('ripple > inner').style.left = `calc(${e.pageX - x}px - var(--size) / 2)`;
-                    this.shadow.querySelector('ripple > inner').style.top = `calc(${e.pageY - y}px - var(--size) / 2)`;
+                    ripple.style.left = `calc(${e.pageX - x}px - var(--size) / 2)`;
+                    ripple.style.top = `calc(${e.pageY - y}px - var(--size) / 2)`;
 
-                    this.setAttribute('click', '');
+                    ripple.setAttribute('click', '');
                 })();
 
                 if(this.multi === true)

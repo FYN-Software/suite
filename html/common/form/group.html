@@ -40,6 +40,11 @@
     :host([combined]) slot::slotted(*:last-child) {
         border-radius: 0 var(--radius) var(--radius) 0;
     }
+    
+    :host(.vertical) > main {
+        grid-auto-flow: row;
+        gap: .5em .25em;
+    }
 </style>
 
 <label :if="{{ label.length > 0 }}">{{ label }}</label>

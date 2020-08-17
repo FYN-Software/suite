@@ -29,6 +29,11 @@ export default class Image extends Fyn.Component
 
         this.observe({
             src: (o, n) => {
+                if(n.includes('{{') || n.includes('}}'))
+                {
+                    return;
+                }
+
                 this.loading = true;
                 this.setAttribute('loading', '');
                 this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));

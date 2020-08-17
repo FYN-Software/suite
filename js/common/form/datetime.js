@@ -1,7 +1,7 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Datetime extends Fyn.Component
+export default class Datetime extends Fyn.FormAssociated(Fyn.Component)
 {
     static localName = 'fyn-common-form-button';
     static styles = [ 'fyn.suite.base', 'global.theme' ];

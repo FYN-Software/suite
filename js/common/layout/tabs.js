@@ -38,6 +38,8 @@ export default class Tabs extends Fyn.Component
 
     async initialize()
     {
+        this.setAttribute('tabindex', 0);
+
         this.observe({
             index: async (o, n) => {
                 const pages = this.pages;
@@ -48,7 +50,7 @@ export default class Tabs extends Fyn.Component
                     pages[this.index].setAttribute('active', '');
                 }
 
-                this.emit('switched', { index: this.index })
+                this.emit('switched', { index: this.index });
             },
         });
 
@@ -88,8 +90,20 @@ export default class Tabs extends Fyn.Component
             },
         });
 
+        // this.on({
+        //     blur: (e, t) => {
+        //         if(this.docked === true)
+        //         {
+        //             this.removeAttribute('open');
+        //             this.index = -1;
+        //         }
+        //     },
+        // });
+
         globalThis.on({
             blur: (e, t) => {
+                // console.log(e, t);
+
                 if(this.docked === true)
                 {
                     this.removeAttribute('open');
@@ -98,12 +112,6 @@ export default class Tabs extends Fyn.Component
             },
             click: (e, t) => {
                 // console.log(e.target, e.composedPath(), e);
-            },
-        });
-
-        this.on({
-            click: (e, t) => {
-                console.log(e.composedPath(), e.composedPath().includes(this));
             },
         });
 

@@ -8,8 +8,10 @@ export default class Menu extends Component
 
     async ready()
     {
-        this.on(':scope > :not([slot])', {
+        this.on('fyn-common-navigation-item', {
             click: (e, t) => {
+                console.log(t);
+
                 this.emit('select', t);
             },
         })

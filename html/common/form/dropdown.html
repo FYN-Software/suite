@@ -1,8 +1,10 @@
 <style>
     :host {
+        --padding: 1em;
         display: grid;
         grid-gap: .25em;
         position: relative;
+        /*margin-top: .8em;*/
         color: inherit;
         font-size: 1rem;
         border-radius: var(--radius);
@@ -15,7 +17,7 @@
 
     :host > label {
         position: absolute;
-        top: -.8em;
+        top: calc(-1em * (.8 / .6)); /* calculation is to compensate for the .6 font-size */
         left: 0;
         font-size: .6em;
         line-height: 1em;
@@ -24,7 +26,7 @@
 
     :host > fyn-common-form-button {
         min-width: var(--min-width, 0);
-        padding: var(--padding);
+        padding: 0 var(--padding);
         border-radius: inherit;
     }
 
@@ -41,6 +43,7 @@
     :host > fyn-common-form-button > fyn-common-form-input {
         --bg: transparent;
         position: absolute;
+        margin: 0;
     }
 
     :host > fyn-common-form-button > span {
@@ -121,5 +124,7 @@
 </fyn-common-form-button>
 
 <options :for="{{ option of _options }}" part="options">
-    <slot>{{ option.text || option.value || '' }}</slot>
+    <slot passthrough>
+        <span>{{ option.text || option.value || '' }}</span>
+    </slot>
 </options>

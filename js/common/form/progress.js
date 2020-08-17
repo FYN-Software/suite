@@ -11,6 +11,7 @@ export default class Progress extends Fyn.Component
         return {
             steps: Types.List.type(Types.String),
             index: Types.Number.min(-1).default(0),
+            verification: Types.Any,
         };
     }
 
@@ -27,15 +28,15 @@ export default class Progress extends Fyn.Component
                 pages.forEach(t => t.removeAttribute('active'));
                 pages[this.index].setAttribute('active', '');
 
-                const content = this.shadow.querySelector('content');
-                content.scrollTo({
-                    left: Math.floor(content.scrollWidth * (this.index / this.steps.length)),
+                const main = this.shadow.querySelector('main');
+                main.scrollTo({
+                    left: Math.floor(main.scrollWidth * (this.index / this.steps.length)),
                     behavior: 'smooth',
                 })
             },
         });
 
-        this.shadow.on('content > slot', {
+        this.shadow.on('main > slot', {
             slotchange: async () => {
                 await (this.index = -1);
 
@@ -59,18 +60,17 @@ export default class Progress extends Fyn.Component
                     e.preventDefault()
                 }
             },
-            // touchmove: e => {
-            //     console.log(e);
-            //
-            //     e.preventDefault();
-            //     e.stopPropagation ();
-            //
-            //     return false;
-            // },
         });
 
         this.shadow.on('footer > [action]', {
-            click: ({ action }) => {
+            click: async ({ action }) => {
+                const a = action === 'next' || action === 'submit' ? 'submit' : 'cancel'
+
+                if(await this.verification?.invoke(a, this.pages[this.index], this.index) !== true)
+                {
+                    return;
+                }
+
                 switch (action)
                 {
                     case 'next':
@@ -96,7 +96,7 @@ export default class Progress extends Fyn.Component
 
     get pages()
     {
-        const slot = this.shadow.querySelector('content > slot');
+        const slot = this.shadow.querySelector('main > slot');
 
         if(slot === null)
         {

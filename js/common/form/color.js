@@ -8,7 +8,7 @@ const color = Types.Object.define({
     alpha: Types.Number.min(0).max(1).default(1),
 });
 
-export default class Color extends Fyn.Component
+export default class Color extends Fyn.FormAssociated(Fyn.Component)
 {
     static localName = 'fyn-common-form-color';
     static styles = [ 'fyn.suite.base', 'global.theme' ];
@@ -60,8 +60,7 @@ export default class Color extends Fyn.Component
         });
 
         this.shadow.on('box [action]', {
-            click: (e, t) =>
-            {
+            click: (e, t) => {
                 switch(t.action)
                 {
                     case 'submit':
@@ -75,8 +74,7 @@ export default class Color extends Fyn.Component
         });
 
         this.shadow.on('fyn-common-form-slider[vertical]', {
-            change: (_, t) =>
-            {
+            change: (_, t) => {
                 editedValue.hue = t.value;
 
                 this.style.setProperty('--hue', t.value);
@@ -84,8 +82,7 @@ export default class Color extends Fyn.Component
         });
 
         this.shadow.on('fyn-common-form-slider[horizontal]', {
-            change: (_, t) =>
-            {
+            change: (_, t) => {
                 editedValue.alpha = 1 - t.value;
 
                 this.style.setProperty('--alpha', 1 - t.value);
