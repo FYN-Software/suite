@@ -1,7 +1,7 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Font extends Fyn.FormAssociated(Fyn.Component)
+export default class Font extends Fyn.FormAssociated
 {
     static localName = 'fyn-common-form-font';
     static styles = [ 'fyn.suite.base', 'global.theme' ];

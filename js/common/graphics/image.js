@@ -52,7 +52,10 @@ export default class Image extends Fyn.Component
                 img.src = String(this.src);
                 img.alt = this.alt || this.src;
                 img.draggable = false;
-                img.part = 'img'
+                img.part = 'img';
+                // img.width = 1;
+                // img.height = 1;
+                // img.loading = 'lazy';
             },
             fit: (o, n) => {
                 if(img === undefined)

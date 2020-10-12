@@ -1,7 +1,7 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Checkbox extends Fyn.FormAssociated(Fyn.Component)
+export default class Checkbox extends Fyn.FormAssociated
 {
     static localName = 'fyn-common-form-checkbox';
     static styles = [ 'fyn.suite.base', 'global.theme' ];
@@ -23,7 +23,7 @@ export default class Checkbox extends Fyn.FormAssociated(Fyn.Component)
             checked: (o, n) => {
                 this.shadow.querySelector('box').attributes.setOnAssert(n, 'checked');
 
-                this.value = n === true;
+                this.$.value = n === true;
 
                 this.emit('change', { old: o, new: n });
             },

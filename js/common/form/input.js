@@ -1,7 +1,7 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Input extends Fyn.FormAssociated(Fyn.Component)
+export default class Input extends Fyn.FormAssociated
 {
     static localName = 'fyn-common-form-input';
     static styles = [ 'fyn.suite.base', 'global.theme' ];

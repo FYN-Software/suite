@@ -8,7 +8,7 @@ const color = Types.Object.define({
     alpha: Types.Number.min(0).max(1).default(1),
 });
 
-export default class Color extends Fyn.FormAssociated(Fyn.Component)
+export default class Color extends Fyn.FormAssociated
 {
     static localName = 'fyn-common-form-color';
     static styles = [ 'fyn.suite.base', 'global.theme' ];

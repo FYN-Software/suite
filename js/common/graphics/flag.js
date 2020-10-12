@@ -18,7 +18,7 @@ export default class Flag extends Fyn.Component
         this.classList.add('flag-icon');
 
         const style = document.createElement('style');
-        style.innerText = '@import url(\'/node_modules/@fyn-software/suite/css/vendor/flag-icon/css/flag-icon.min.css\');';
+        // style.innerText = '@import url(\'/node_modules/@fyn-software/suite/css/vendor/flag-icon/css/flag-icon.min.css\');';
 
         const flag = document.createElement('i');
         flag.classList.add('flag-icon');

@@ -1,0 +1,54 @@
+<style>
+    :host {
+        display: contents;
+    }
+
+    table {
+        /*border-collapse: separate !important;*/
+        /*border-spacing: 0 1em;*/
+    }
+
+    table > thead th {
+        padding: 1em 1.5em;
+    }
+
+    table > tbody > tr {
+        /*background-color: rgba(var(--plain-fg-rgb), .1);*/
+        transition: background-color .3s ease-in-out;
+    }
+
+    table > tbody > tr:hover {
+        background-color: rgba(var(--plain-fg-rgb), .15);
+        cursor: pointer;
+    }
+
+    table > tbody td {
+        padding: 1em 1.5em;
+    }
+
+    table fyn-common-graphics-icon {
+        justify-content: start;
+    }
+</style>
+
+<slot name="head-template"></slot>
+
+<slot name="row-template"></slot>
+
+<table>
+    <thead>
+        <tr :for="{{ header of headers }}">
+            <th>
+                <fyn-common-form-checkbox></fyn-common-form-checkbox>
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody :for="{{ row of rows }}">
+        <tr>
+            <td>
+                <fyn-common-form-checkbox></fyn-common-form-checkbox>
+            </td>
+        </tr>
+    </tbody>
+</table>

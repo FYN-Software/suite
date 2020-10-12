@@ -1,7 +1,7 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
 
-export default class Slider extends Fyn.FormAssociated(Fyn.Component)
+export default class Slider extends Fyn.FormAssociated
 {
     static localName = 'fyn-common-form-slider';
     static styles = [ 'fyn.suite.base', 'global.theme' ];
