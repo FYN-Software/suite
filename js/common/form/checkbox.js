@@ -23,7 +23,7 @@ export default class Checkbox extends Fyn.FormAssociated
             checked: (o, n) => {
                 this.shadow.querySelector('box').attributes.setOnAssert(n, 'checked');
 
-                this.$.value = n === true;
+                this.value = n === true;
 
                 this.emit('change', { old: o, new: n });
             },

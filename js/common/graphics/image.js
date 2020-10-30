@@ -29,7 +29,7 @@ export default class Image extends Fyn.Component
 
         this.observe({
             src: (o, n) => {
-                if(n.includes('{{') || n.includes('}}'))
+                if(n.includes('{{') || n.includes('}}') || n.includes('{#'))
                 {
                     return;
                 }
@@ -50,7 +50,7 @@ export default class Image extends Fyn.Component
                     this.removeAttribute('loading');
                 };
                 img.src = String(this.src);
-                img.alt = this.alt || this.src;
+                img.alt = this.alt ?? this.src;
                 img.draggable = false;
                 img.part = 'img';
                 // img.width = 1;

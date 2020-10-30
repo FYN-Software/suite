@@ -38,17 +38,21 @@
 <table>
     <thead>
         <tr :for="{{ header of headers }}">
-            <th>
-                <fyn-common-form-checkbox></fyn-common-form-checkbox>
+            <th for-static>
+                <fyn-common-form-checkbox :if="{{ this.select !== this.Select.none }}"></fyn-common-form-checkbox>
             </th>
+    
+            <th>{{ header }}</th>
         </tr>
     </thead>
     
     <tbody :for="{{ row of rows }}">
-        <tr>
-            <td>
-                <fyn-common-form-checkbox></fyn-common-form-checkbox>
+        <tr :for="{{ cell of row }}">
+            <td for-static>
+                <fyn-common-form-checkbox :if="{{ this.select !== this.Select.none }}"></fyn-common-form-checkbox>
             </td>
+            
+            <td>{{ cell }}</td>
         </tr>
     </tbody>
 </table>

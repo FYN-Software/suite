@@ -16,6 +16,6 @@
 
 <slot></slot>
 
-<main part="content" :for="{{ i, cell of cells }}">
+<main part="content" :for="{{ i: cell of cells }}">
     <slot name="{{ i }}" style="grid-area: {{ cell }}"></slot>
 </main>

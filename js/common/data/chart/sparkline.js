@@ -1,10 +1,10 @@
-import * as Fyn from '../../../../component/fyn.js';
-import * as Types from '../../../../data/types.js';
+import * as Fyn from '../../../../../component/fyn.js';
+import * as Types from '../../../../../data/types.js';
 import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.esm.js';
 
 export default class Sparkline extends Fyn.Component
 {
-    static localName = 'fyn-data-chart-sparkline';
+    static localName = 'fyn-common-data-chart-sparkline';
     static styles = [ 'fyn.suite.base', 'fyn.suite.apexcharts', 'global.theme' ];
 
     static get properties()

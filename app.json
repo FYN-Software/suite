@@ -7,11 +7,6 @@
             "js": "js/common/"
         },
         {
-            "namespace": "fyn-data",
-            "html": "html/data/",
-            "js": "js/data/"
-        },
-        {
             "namespace": "fyn-yarte",
             "html": "html/yarte/",
             "js": "js/yarte/"

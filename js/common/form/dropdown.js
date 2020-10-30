@@ -76,24 +76,27 @@ export default class Dropdown extends Fyn.FormAssociated
         };
 
         this.shadow.on('options', {
-            templatechange: async () => {
-                await Promise.delay(1000);
-
-                renderValue();
-            },
+            // templatechange: async () => {
+            //     await Promise.delay(1000);
+            //
+            //     renderValue();
+            // },
             rendered: () => {
-                this.#options?.remove();
-                this.#options = this.shadow.querySelector('options').cloneNode(true);
-                this.#options.querySelector(':scope > slot').remove();
-                this.#options.on(':scope > *', {
-                    click: (_, t) => {
-                        this.index = t.index;
-
-                        this.removeAttribute('open');
-                    },
-                });
-
-                this.#container.shadow.appendChild(this.#options);
+                // TODO(Chris Kruining)
+                //  This broke during refactoring in
+                //  the lib, fix this scheisse
+                // this.#options?.remove();
+                // this.#options = this.shadow.querySelector('options').cloneNode(true);
+                // this.#options.querySelector(':scope > slot')?.remove();
+                // this.#options.on(':scope > *', {
+                //     click: (_, t) => {
+                //         this.index = t.index;
+                //
+                //         this.removeAttribute('open');
+                //     },
+                // });
+                //
+                // this.#container.shadow.appendChild(this.#options);
             },
         });
 
