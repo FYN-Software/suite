@@ -11,8 +11,8 @@
     :host > inner {
         position: relative;
         display: block;
-        width: 20em;
-        height: 20em;
+        inline-size: 20em;
+        block-size: 20em;
     }
 
     :host > inner span {
@@ -26,8 +26,8 @@
     :host > inner span > p {
         transform: rotate(calc(var(--angle, 0deg) * -1));
         text-align: center;
-        width: 2.5em;
-        height: 2.5em;
+        inline-size: 2.5em;
+        block-size: 2.5em;
         padding: .5em;
         border-radius: 50%;
     }

@@ -69,6 +69,8 @@ export default class Dropdown extends Fyn.FormAssociated
 
             for(const i of this.shadow.querySelectorAll(`options > [index="${this.index}"]`) ?? [])
             {
+                console.log(i);
+
                 c.appendChild(i.cloneNode(true))
             }
 
@@ -76,27 +78,20 @@ export default class Dropdown extends Fyn.FormAssociated
         };
 
         this.shadow.on('options', {
-            // templatechange: async () => {
-            //     await Promise.delay(1000);
-            //
-            //     renderValue();
-            // },
+            templatechange: async () => renderValue(),
             rendered: () => {
-                // TODO(Chris Kruining)
-                //  This broke during refactoring in
-                //  the lib, fix this scheisse
-                // this.#options?.remove();
-                // this.#options = this.shadow.querySelector('options').cloneNode(true);
-                // this.#options.querySelector(':scope > slot')?.remove();
-                // this.#options.on(':scope > *', {
-                //     click: (_, t) => {
-                //         this.index = t.index;
-                //
-                //         this.removeAttribute('open');
-                //     },
-                // });
-                //
-                // this.#container.shadow.appendChild(this.#options);
+                this.#options?.remove();
+                this.#options = this.shadow.querySelector('options').cloneNode(true);
+                this.#options.querySelector(':scope > slot')?.remove();
+                this.#options.on(':scope > *', {
+                    click: (_, t) => {
+                        this.index = t.index;
+
+                        this.removeAttribute('open');
+                    },
+                });
+
+                this.#container.shadow.appendChild(this.#options);
             },
         });
 
@@ -105,15 +100,13 @@ export default class Dropdown extends Fyn.FormAssociated
                 o => this.filter.length === 0 || Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(this.filter))
             );
 
-            await Promise.delay(100);
-
             setWidth();
         };
 
         const setWidth = () => {
             const placeholder = this.shadow.querySelector('fyn-common-form-button > value');
             const width = Math.max(
-                placeholder && placeholder.clientWidth || 0,
+                placeholder?.clientWidth ?? 0,
                 ...this.optionElements.map(o => o.clientWidth)
             );
 
@@ -122,13 +115,13 @@ export default class Dropdown extends Fyn.FormAssociated
         const findIndex = value => this.options.findIndex(o => Fyn.Extends.equals(o, value) || o?.value === value);
 
         this.observe({
-            options: (o, n) => {
+            options: async (o, n) => {
                 this.index = findIndex(this.value);
 
-                update();
+                await update();
             },
             index: (o, n) => {
-                this.emit('change', {old: this.options[o], new: this.options[n]});
+                this.emit('change', { old: this.options[o], new: this.options[n] });
 
                 renderValue();
             },

@@ -9,8 +9,8 @@
         display: grid;
         position: relative;
         overflow: hidden;
-        width: 100%;
-        height: 100%;
+        inline-size: 100%;
+        block-size: 100%;
     }
 
     :host > handle {
@@ -29,7 +29,7 @@
     }
 
     :host([resizing]) > handle {
-        width: .5em;
+        inline-size: .5em;
         background-color: #0007;
         box-shadow: 0 0 .25em #0007;
     }
@@ -37,35 +37,35 @@
     :host > handle[mode="Symbol(vertical)"] {
         right: 0;
         top: 0;
-        width: 2px;
-        height: 100%;
+        inline-size: 2px;
+        block-size: 100%;
         transform: translateX(50%);
         cursor: ew-resize;
     }
 
     :host > handle[mode="Symbol(vertical)"]:hover {
-        width: .5em;
+        inline-size: .5em;
     }
 
     :host([resizing]) > handle[mode="Symbol(vertical)"] {
-        width: .5em;
+        inline-size: .5em;
     }
 
     :host > handle[mode="Symbol(horizontal)"] {
         left: 0;
         bottom: 0;
-        width: 100%;
-        height: 2px;
+        inline-size: 100%;
+        block-size: 2px;
         transform: translateY(50%);
         cursor: ns-resize;
     }
 
     :host > handle[mode="Symbol(horizontal)"]:hover {
-        height: .5em;
+        block-size: .5em;
     }
 
     :host([resizing]) > handle[mode="Symbol(horizontal)"] {
-        height: .5em;
+        block-size: .5em;
     }
 </style>
 

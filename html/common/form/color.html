@@ -24,8 +24,8 @@
             ),
             var(--checkers) repeat
         ;
-        width: 3em;
-        height: 2em;
+        inline-size: 3em;
+        block-size: 2em;
         margin: 3px;
         box-shadow: 0 0 0 3px rgba(var(--plain-fg-rgb), .2);
         border-radius: var(--radius);
@@ -56,8 +56,8 @@
         grid-area: sat-light;
         position: relative;
         display: block;
-        width: 7.5em;
-        height: 7.5em;
+        inline-size: 7.5em;
+        block-size: 7.5em;
         background-color: hsla(var(--hue), 100%, 50%, 1);
         background-image:
             linear-gradient(180deg, #fff, #fff0 50%),
@@ -71,8 +71,8 @@
         position: absolute;
         top: calc(100% - var(--light));
         left: var(--sat);
-        width: 1em;
-        height: 1em;
+        inline-size: 1em;
+        block-size: 1em;
         background-color: var(--plain-fg);
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -113,8 +113,8 @@
 
     :host > box > block {
         display: grid;
-        width: 3em;
-        height: 2em;
+        inline-size: 3em;
+        block-size: 2em;
         margin: 3px;
         box-shadow: 0 0 0 3px rgba(var(--plain-fg-rgb), .2);
         border-radius: var(--radius);

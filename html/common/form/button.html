@@ -43,8 +43,8 @@
     :host([fab]) {
         --radius: 50%;
         justify-content: center;
-        width: 3em;
-        height: 3em;
+        inline-size: 3em;
+        block-size: 3em;
         background-color: var(--primary-bg);
         color: var(--primary-fg);
     }
@@ -69,7 +69,7 @@
     }
 
     :host > fyn-common-graphics-icon {
-        width: 1em !important;
+        inline-size: 1em !important;
     }
 
     :host > fyn-common-graphics-icon[main] {
@@ -132,8 +132,8 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        inline-size: 100%;
+        block-size: 100%;
         border-radius: inherit;
         pointer-events: none;
         z-index: 0;
@@ -144,8 +144,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: var(--size);
-        height: var(--size);
+        inline-size: var(--size);
+        block-size: var(--size);
         border-radius: 50%;
         opacity: 0;
         pointer-events: none;

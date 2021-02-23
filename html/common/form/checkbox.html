@@ -12,8 +12,8 @@
         --size: 1.4em;
         position: relative;
         display: block;
-        width: var(--size);
-        height: var(--size);
+        inline-size: var(--size);
+        block-size: var(--size);
         border: 3px solid rgba(var(--plain-fg-rgb), .2);
         border-radius: var(--radius);
         transition: background-color .3s ease-in-out;
@@ -41,7 +41,7 @@
     }
 
     :host([toggle]) > box {
-        width: calc(2 * var(--size));
+        inline-size: calc(2 * var(--size));
         border-radius: var(--size);
     }
 
@@ -51,8 +51,8 @@
         position: absolute;
         top: 50%;
         left: 1px;
-        width: calc(var(--size) - 8px);
-        height: calc(var(--size) - 8px);
+        inline-size: calc(var(--size) - 8px);
+        block-size: calc(var(--size) - 8px);
         background-color: var(--plain-fg);
         border-radius: 50%;
         transform: translate(0, -50%);

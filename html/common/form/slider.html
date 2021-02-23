@@ -20,8 +20,8 @@
         grid-column: span 2;
         display: block;
         position: relative;
-        width: 100%;
-        height: .5em;
+        inline-size: 100%;
+        block-size: .5em;
         align-self: center;
         background: var(--bg);
         border-radius: var(--radius);
@@ -31,8 +31,8 @@
     :host > box > value {
         display: block;
         position: absolute;
-        width: var(--w);
-        height: 100%;
+        inline-size: var(--w);
+        block-size: 100%;
         background: var(--vc);
         border-radius: inherit;
     }
@@ -42,8 +42,8 @@
         position: absolute;
         top: 50%;
         left: var(--w);
-        width: 1em;
-        height: 1em;
+        inline-size: 1em;
+        block-size: 1em;
         background-color: var(--plain-fg);
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -66,13 +66,13 @@
     }
 
     :host([vertical]) > box {
-        width: .5em;
-        height: 100%;
+        inline-size: .5em;
+        block-size: 100%;
     }
 
     :host([vertical]) > box > value {
-        width: 100%;
-        height: var(--w);
+        inline-size: 100%;
+        block-size: var(--w);
     }
 
     :host([vertical]) > box > handle {

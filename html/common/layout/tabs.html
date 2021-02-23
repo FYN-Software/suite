@@ -24,7 +24,7 @@
         background-color: transparent;
         border-radius: var(--radius) var(--radius) 0 0;
         padding: .5em 1em;
-        height: 2.2em;
+        block-size: 2.2em;
         user-select: none;
         cursor: pointer;
         transition: .3s background-color ease-in-out;
@@ -57,7 +57,7 @@
     }
 
     #bar > tab:only-of-type {
-        width: 100%;
+        inline-size: 100%;
     }
 
     #bar > tab:not(:only-child):hover {
@@ -77,8 +77,8 @@
 
     :host > main > slot::slotted(*) {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        inline-size: 100%;
+        block-size: 100%;
         padding: 1em;
         overflow: auto;
         opacity: 0;

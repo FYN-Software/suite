@@ -12,8 +12,8 @@
         color: var(--plain-fg);
         opacity: 0;
         pointer-events: none;
-        width: var(--w, 60vw);
-        height: var(--h, auto);
+        inline-size: var(--w, 60vw);
+        block-size: var(--h, auto);
         top: var(--y);
         left: var(--x);
         transform-origin: center;
@@ -37,21 +37,21 @@
         position: absolute;
         top: -2px;
         left: -2px;
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
+        inline-size: calc(100% + 4px);
+        block-size: calc(100% + 4px);
         background: transparent;
     }
 
     :host > handlers > handler                 { display: block; position: absolute; background: inherit; }
-    :host > handlers > handler:nth-child(odd)  {                       width: 5px;                 height: 5px; }
+    :host > handlers > handler:nth-child(odd)  {                       inline-size: 5px;                 block-size: 5px; }
     :host > handlers > handler:nth-child(3)    { top: 0;    left: 0;                                                           cursor: nwse-resize; }
     :host > handlers > handler:nth-child(5)    { top: 0;    right: 0;                                                          cursor: nesw-resize; }
     :host > handlers > handler:nth-child(7)    { bottom: 0; right: 0;                                                          cursor: nwse-resize; }
     :host > handlers > handler:nth-child(1)    { bottom: 0; left: 0;                                                           cursor: nesw-resize; }
-    :host > handlers > handler:nth-child(4)    { top: 0;    left: 5px; width: calc(100% - 10px);   height: 5px;                cursor: ns-resize; }
-    :host > handlers > handler:nth-child(6)    { top: 5px;  right: 0;  width: 5px;                 height: calc(100% - 10px);  cursor: ew-resize; }
-    :host > handlers > handler:nth-child(8)    { bottom: 0; left: 5px; width: calc(100% - 10px);   height: 5px;                cursor: ns-resize; }
-    :host > handlers > handler:nth-child(2)    { top: 5px;  left: 0;   width: 5px;                 height: calc(100% - 10px);  cursor: ew-resize; }
+    :host > handlers > handler:nth-child(4)    { top: 0;    left: 5px; inline-size: calc(100% - 10px);   block-size: 5px;                cursor: ns-resize; }
+    :host > handlers > handler:nth-child(6)    { top: 5px;  right: 0;  inline-size: 5px;                 block-size: calc(100% - 10px);  cursor: ew-resize; }
+    :host > handlers > handler:nth-child(8)    { bottom: 0; left: 5px; inline-size: calc(100% - 10px);   block-size: 5px;                cursor: ns-resize; }
+    :host > handlers > handler:nth-child(2)    { top: 5px;  left: 0;   inline-size: 5px;                 block-size: calc(100% - 10px);  cursor: ew-resize; }
 
     :host > header,
     :host > article,
@@ -60,7 +60,7 @@
     }
 
     :host > header {
-        width: 100%;
+        inline-size: 100%;
         position: relative;
     }
 
@@ -85,7 +85,7 @@
         --img-radius: var(--radius) var(--radius) 0 0;
         --fit: cover;
         margin: -1em;
-        height: 200px;
+        block-size: 200px;
     }
 
     :host > header > fyn-common-graphics-image::before {
@@ -94,8 +94,8 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        inline-size: 100%;
+        block-size: 100%;
         background-color: #0007;
         mix-blend-mode: multiply;
         border-radius: var(--img-radius);
