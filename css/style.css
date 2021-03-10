@@ -13,20 +13,32 @@
     --success-bg-rgb: 92, 184, 92;
     --success-bg: rgb(var(--success-bg-rgb));
 
-    --primary-bg-rgb: var(--info-bg-rgb);
-    --primary-bg-light-rgb: var(--info-bg-rgb);
-    --primary-bg-dark-rgb: var(--info-bg-rgb);
-    --primary-fg-rgb: 238, 238, 238;
+    /*============== PRIMARY ================*/
+    --light-primary-fg-rgb: 30, 30, 30;
+    --light-primary-bg-rgb: var(--info-bg-rgb);
+    --light-primary-fg: rgb(var(--light-primary-fg-rgb));
+    --light-primary-bg: rgb(var(--light-primary-bg-rgb));
+
+    --dark-primary-fg-rgb: 255, 255, 255;
+    --dark-primary-bg-rgb: var(--info-bg-rgb);
+    --dark-primary-fg: rgb(var(--dark-primary-fg-rgb));
+    --dark-primary-bg: rgb(var(--dark-primary-bg-rgb));
+
+    --primary-bg-rgb: var(--light-primary-bg-rgb);
     --primary-bg: rgb(var(--primary-bg-rgb));
-    --primary-light-bg: rgb(var(--primary-bg-light-rgb));
-    --primary-dark-bg: rgb(var(--primary-bg-dark-rgb));
+    --primary-fg-rgb: var(--light-primary-fg-rgb);
     --primary-fg: rgb(var(--primary-fg-rgb));
 
+
+    /*=============== SECONDARY ===============*/
     --secondary-bg-rgb: var(--info-bg-rgb);
     --secondary-fg-rgb: 255, 255, 255;
     --secondary-bg: rgb(var(--secondary-bg-rgb));
     --secondary-fg: rgb(var(--secondary-fg-rgb));
 
+
+
+    /*================= PLAIN =================*/
     --light-plain-fg-rgb: 80, 80, 80;
     --light-plain-bg-rgb: 238, 238, 238;
     --light-plain-fg: rgb(var(--light-plain-fg-rgb));
@@ -52,6 +64,8 @@
         --inversion: 0;
         --plain-fg-rgb: var(--light-plain-fg-rgb);
         --plain-bg-rgb: var(--light-plain-bg-rgb);
+        --primary-fg-rgb: var(--light-primary-fg-rgb);
+        --primary-bg-rgb: var(--light-primary-bg-rgb);
     }
 }
 
@@ -60,6 +74,8 @@
         --inversion: 1;
         --plain-fg-rgb: var(--dark-plain-fg-rgb);
         --plain-bg-rgb: var(--dark-plain-bg-rgb);
+        --primary-fg-rgb: var(--dark-primary-fg-rgb);
+        --primary-bg-rgb: var(--dark-primary-bg-rgb);
     }
 }
 
@@ -122,7 +138,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 [tooltip]::before {
     content: '';
-    border-top: .75em solid rgba(var(--plain-fg-rgb), .25);
+    border-top: .75em solid var(--plain-bg);
     border-left: 1em solid transparent;
     border-right: 1em solid transparent;
     transform: translate(-50%, 0);
@@ -132,7 +148,7 @@ h1, h2, h3, h4, h5, h6, p {
     content: attr(tooltip);
     padding: .5em 1em;
     line-height: 1em;
-    background-color: rgba(var(--plain-fg-rgb), .25);
+    background-color: var(--plain-bg);
     color: var(--plain-fg);
     white-space: nowrap;
     overflow: hidden;

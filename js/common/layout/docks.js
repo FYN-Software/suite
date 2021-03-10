@@ -1,7 +1,5 @@
 import * as Fyn from '../../../../component/fyn.js';
 import * as Types from '../../../../data/types.js';
-import { default as Resizable, Direction } from './resizable.js';
-import Tabs from './tabs.js';
 
 export const Position = Types.Enum.define({
     none: {  },
@@ -10,10 +8,16 @@ export const Position = Types.Enum.define({
     right: {  },
     bottom: {  },
 });
+export const Resize = Types.Enum.define({
+    none: {  },
+    inline: {  },
+    block: {  },
+});
 export const Cell = Types.Object.define({
     area: Types.String,
     docked: Position.default(Position.none),
     static: Types.Boolean.default(false),
+    resize: Resize.default(Resize.none),
 });
 
 export default class Docks extends Fyn.Component
@@ -56,14 +60,20 @@ export default class Docks extends Fyn.Component
 
         this.appendChild(element);
 
-        await Promise.delay(10);
+        await Promise.delay(1000);
 
         const tabs = this.shadow.querySelector(`fyn-common-layout-tabs[slot="${cell}"]`);
+
         tabs.index = tabs.tabs.length - 1;
     }
 
     get Position()
     {
         return Position;
+    }
+
+    get Resize()
+    {
+        return Resize;
     }
 }

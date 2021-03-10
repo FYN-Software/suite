@@ -13,7 +13,7 @@ export default class Flag extends Fyn.Component
         };
     }
 
-    initialize()
+    async ready()
     {
         this.classList.add('flag-icon');
 

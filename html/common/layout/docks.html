@@ -13,6 +13,9 @@
     :host fyn-common-layout-tabs {
         inline-size: 100%;
         block-size: 100%;
+        /*min-inline-size: 5em;*/
+        /*min-block-size: 5em;*/
+        /*overflow: auto;*/
     }
 
     :host fyn-common-layout-tabs.docked {
@@ -135,6 +138,7 @@
         static="{{ cell.static }}"
         class="{{ cell.docked !== this.Position.none ? 'docked' : '' }}
         {{ this.Position.nameOf(cell.docked) }}"
+        style="--resize: {{ this.Resize.nameOf(cell.resize) }};"
     >
         <slot name="{{ i }}"></slot>
     </fyn-common-layout-tabs>

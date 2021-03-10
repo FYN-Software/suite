@@ -42,7 +42,7 @@ export default class Progress extends Fyn.Component
 
                 const pages = this.pages;
 
-                this.steps = pages.map(s => s.getAttribute('step') || '-');
+                this.steps = pages.map(s => s.getAttribute('step') ?? '-');
                 await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
             },
         });
@@ -64,7 +64,9 @@ export default class Progress extends Fyn.Component
 
         this.shadow.on('footer > [action]', {
             click: async ({ action }) => {
-                const a = action === 'next' || action === 'submit' ? 'submit' : 'cancel'
+                const a = action === 'next' || action === 'submit'
+                    ? 'submit'
+                    : 'cancel'
 
                 if(await this.verification?.invoke(a, this.pages[this.index], this.index) !== true)
                 {
@@ -74,20 +76,28 @@ export default class Progress extends Fyn.Component
                 switch (action)
                 {
                     case 'next':
+                    {
                         this.index = Math.min(this.steps.length - 1, this.index + 1);
                         break;
+                    }
 
                     case 'previous':
+                    {
                         this.index = Math.max(0, this.index - 1);
                         break;
+                    }
 
                     case 'submit':
+                    {
                         this.emit('submit');
                         break;
+                    }
 
                     case 'cancel':
+                    {
                         this.emit('cancel');
                         break;
+                    }
                 }
 
             },

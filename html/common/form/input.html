@@ -12,6 +12,7 @@
     }
 
     :host > input {
+        grid-area: 1 / 1;
         display: grid;
         align-content: center;
         inline-size: 100%;
@@ -33,11 +34,13 @@
     }
 
     :host > label {
-        position: absolute;
-        left: var(--padding);
-        top: 0;
-        z-index: 1;
+        grid-area: 1 / 1;
+        align-self: center;
+        justify-self: start;
+        block-size: 2em;
         inline-size: calc(100% - var(--padding));
+        padding: 0 var(--padding);
+        z-index: 1;
         font-size: 1em;
         transition: .3s;
         pointer-events: none;
@@ -50,17 +53,18 @@
     }
 
     :host > slot[name="placeholder"] {
-        display: grid;
-        position: absolute;
-        left: var(--padding);
-        top: 0;
-        z-index: 1;
-        font-size: 1em;
-        transition: .3s;
-        pointer-events: none;
+        grid-area: 1 / 1;
+        align-self: center;
+        justify-self: start;
+        display: none;
+        block-size: 2em;
+        padding: 0 var(--padding);
         color: rgba(var(--plain-fg-rgb), .75);
         line-height: 2em;
-        block-size: 2em;
+        font-size: 1em;
+        z-index: 1;
+        transition: .3s;
+        pointer-events: none;
         user-select: none;
     }
 
@@ -82,11 +86,15 @@
 
     :host([has-value]) > label,
     :host(:focus-within) > label {
-        top: calc(-1em * (.8 / .6)); /* calculation is to compensate for the .6 font-size */
-        left: 0;
+        /*!* calculation is to compensate for the .6 font-size *!*/
+        transform: translate(calc(-1 * var(--padding)), calc(-1.5em * (.8 / .6)));
         font-size: .6em;
         line-height: 1em;
         color: var(--plain-fg);
+    }
+    
+    :host(:focus-within) > input:placeholder-shown + slot[name="placeholder"] {
+        display: grid;
     }
 
     :host([area]) {
@@ -104,7 +112,14 @@
 
 <label if="{{ label.length > 0 }}" part="label">{{ label }}</label>
 
-<input part="value" type="{{ type }}" value="{{ value }}" inputmode="{{ inputmode }}" pattern="{{ pattern }}">
+<input
+    part="value"
+    type="{{ type }}"
+    value="{{ value }}"
+    inputmode="{{ inputmode }}"
+    pattern="{{ pattern }}"
+    placeholder=" "
+>
 
 <slot name="placeholder" if="{{ value.length === 0 }}" part="placeholder">{{ placeholder }}</slot>
 

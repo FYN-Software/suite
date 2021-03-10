@@ -14,7 +14,7 @@ export default class Input extends Fyn.FormAssociated
             name: Types.String,
             placeholder: Types.String,
             multiline: Types.Boolean,
-            regex: Types.String.default('[^\\n]+'),
+            regex: Types.String.default('(?!\\n).'),
         };
     }
 
@@ -24,8 +24,8 @@ export default class Input extends Fyn.FormAssociated
             options: {
                 passive: false,
             },
-            keydown: e => {
-                if([ 8, 16, 17, 37, 38, 39, 40].includes(e.keyCode))
+            keydown: async e => {
+                if([ 8, 16, 17, 37, 38, 39, 40 ].includes(e.keyCode))
                 {
                     return;
                 }
@@ -43,7 +43,7 @@ export default class Input extends Fyn.FormAssociated
                         break;
                 }
 
-                if((this.value + char).match(new RegExp(`^(${this.regex})*$`, 'g')) === null)
+                if(new RegExp(`^(${this.regex})*$`, 'g').test(this.value + char) === false)
                 {
                     e.preventDefault();
                 }
@@ -71,6 +71,7 @@ export default class Input extends Fyn.FormAssociated
 
         this.observe({
             value: (o, n) => {
+                this.shadow.querySelector('input').value = this.value;
                 this.attributes.setOnAssert(this.value.length > 0, 'has-value');
 
                 this.emit('change', { old: o, new: n });
@@ -80,7 +81,6 @@ export default class Input extends Fyn.FormAssociated
 
     async ready()
     {
-        // this.shadow.querySelector('value').textContent = this.value;
     }
 
     focus()
