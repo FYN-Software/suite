@@ -1,5 +1,5 @@
-import * as Fyn from '../../../../component/fyn.js';
-import * as Types from '../../../../data/types.js';
+import * as Fyn from '@fyn-software/component/fyn.js';
+import * as Types from '@fyn-software/data/types.js';
 
 export const Fit = Types.Enum.define({
     auto: 'auto',
@@ -29,7 +29,7 @@ export default class Image extends Fyn.Component
 
         this.observe({
             src: (o, n) => {
-                if(n.includes('{{') || n.includes('}}') || n.includes('{#'))
+                if(n.includes('{{') || n.includes('}}') || n.includes('{#') || this.src === '')
                 {
                     return;
                 }

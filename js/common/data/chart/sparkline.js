@@ -1,5 +1,5 @@
-import * as Fyn from '../../../../../component/fyn.js';
-import * as Types from '../../../../../data/types.js';
+import * as Fyn from '@fyn-software/component/fyn.js';
+import * as Types from '@fyn-software/data/types.js';
 import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.esm.js';
 
 export default class Sparkline extends Fyn.Component

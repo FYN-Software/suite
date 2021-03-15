@@ -139,7 +139,9 @@ export default class Dropdown extends Fyn.FormAssociated
         });
         document.body.appendChild(this.#container);
 
-        const positionContainer = () => {
+        const positionContainer = async () => {
+            await Promise.delay(0);
+
             const rect = this.getBoundingClientRect();
 
             this.#container.style.setProperty('--x', `${rect.x}px`);

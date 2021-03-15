@@ -1,6 +1,5 @@
-import * as Fyn from '../../../../component/fyn.js';
-import * as Types from '../../../../data/types.js';
-import Drag from '../../../../core/drag.js';
+import * as Fyn from '@fyn-software/component/fyn.js';
+import * as Types from '@fyn-software/data/types.js';
 
 export default class List extends Fyn.Component
 {
@@ -29,6 +28,7 @@ export default class List extends Fyn.Component
         let position;
         let animating = false;
 
+        // const Drag = (await import('../../../../core/drag.js')).default;
         // Drag.on(this.shadow, 'fyn-tab', {
         //     start: e => {
         //         if(this.sortable !== true)

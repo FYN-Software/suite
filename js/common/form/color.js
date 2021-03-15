@@ -1,5 +1,5 @@
-import * as Fyn from '../../../../component/fyn.js';
-import * as Types from '../../../../data/types.js';
+import * as Fyn from '@fyn-software/component/fyn.js';
+import * as Types from '@fyn-software/data/types.js';
 
 const color = Types.Object.define({
     hue: Types.Number.min(0).max(360).default(180),

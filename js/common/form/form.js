@@ -1,5 +1,5 @@
-import * as Fyn from '../../../../component/fyn.js';
-import * as Types from '../../../../data/types.js';
+import * as Fyn from '@fyn-software/component/fyn.js';
+import * as Types from '@fyn-software/data/types.js';
 
 export default class Form extends Fyn.Component
 {
