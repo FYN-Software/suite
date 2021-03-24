@@ -58,12 +58,7 @@ export default class Image extends Fyn.Component
                 // img.loading = 'lazy';
             },
             fit: (o, n) => {
-                if(img === undefined)
-                {
-                    return;
-                }
-
-                img.style.setProperty('--fit', Fit.valueOf(n));
+                this.style.setProperty('--fit', Fit.valueOf(n));
             },
         });
     }
