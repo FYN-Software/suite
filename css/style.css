@@ -21,7 +21,7 @@
 
 
     /*============== SUCCESS ================*/
-    --light-success-fg-rgb: 30, 30, 30;
+    --light-success-fg-rgb: 26, 26, 26;
     --light-success-bg-rgb: 92, 184, 92;
     --light-success-fg: rgb(var(--light-success-fg-rgb));
     --light-success-bg: rgb(var(--light-success-bg-rgb));
@@ -57,7 +57,7 @@
 
 
     /*============== FAILURE ================*/
-    --light-failure-fg-rgb: 30, 30, 30;
+    --light-failure-fg-rgb: 23, 23, 23;
     --light-failure-bg-rgb: 217, 83, 79;
     --light-failure-fg: rgb(var(--light-failure-fg-rgb));
     --light-failure-bg: rgb(var(--light-failure-bg-rgb));
@@ -91,10 +91,21 @@
     --primary-fg: rgb(var(--primary-fg-rgb));
 
 
-    /*=============== SECONDARY ===============*/
-    --secondary-bg-rgb: var(--info-bg-rgb);
-    --secondary-fg-rgb: 255, 255, 255;
+
+    /*============== SECONDARY ================*/
+    --light-secondary-fg-rgb: 30, 30, 30;
+    --light-secondary-bg-rgb: var(--light-info-bg-rgb);
+    --light-secondary-fg: rgb(var(--light-secondary-fg-rgb));
+    --light-secondary-bg: rgb(var(--light-secondary-bg-rgb));
+
+    --dark-secondary-fg-rgb: 255, 255, 255;
+    --dark-secondary-bg-rgb: var(--dark-info-bg-rgb);
+    --dark-secondary-fg: rgb(var(--dark-secondary-fg-rgb));
+    --dark-secondary-bg: rgb(var(--dark-secondary-bg-rgb));
+
+    --secondary-bg-rgb: var(--light-secondary-bg-rgb);
     --secondary-bg: rgb(var(--secondary-bg-rgb));
+    --secondary-fg-rgb: var(--light-secondary-fg-rgb);
     --secondary-fg: rgb(var(--secondary-fg-rgb));
 
 
@@ -124,9 +135,6 @@
     :root {
         --inversion: 0;
 
-        --plain-fg-rgb: var(--light-plain-fg-rgb);
-        --plain-bg-rgb: var(--light-plain-bg-rgb);
-
         --info-fg-rgb: var(--light-info-fg-rgb);
         --info-bg-rgb: var(--light-info-bg-rgb);
 
@@ -144,14 +152,15 @@
 
         --secondary-fg-rgb: var(--light-primary-fg-rgb);
         --secondary-bg-rgb: var(--light-primary-bg-rgb);
+
+        --plain-fg-rgb: var(--light-plain-fg-rgb);
+        --plain-bg-rgb: var(--light-plain-bg-rgb);
     }
 }
 
 @media screen and (prefers-color-scheme: dark) {
     :root {
         --inversion: 1;
-        --plain-fg-rgb: var(--dark-plain-fg-rgb);
-        --plain-bg-rgb: var(--dark-plain-bg-rgb);
 
         --info-fg-rgb: var(--dark-info-fg-rgb);
         --info-bg-rgb: var(--dark-info-bg-rgb);
@@ -168,8 +177,11 @@
         --primary-fg-rgb: var(--dark-primary-fg-rgb);
         --primary-bg-rgb: var(--dark-primary-bg-rgb);
 
-        --secondary-fg-rgb: var(--dark-primary-fg-rgb);
-        --secondary-bg-rgb: var(--dark-primary-bg-rgb);
+        --secondary-fg-rgb: var(--dark-secondary-fg-rgb);
+        --secondary-bg-rgb: var(--dark-secondary-bg-rgb);
+
+        --plain-fg-rgb: var(--dark-plain-fg-rgb);
+        --plain-bg-rgb: var(--dark-plain-bg-rgb);
     }
 }
 
