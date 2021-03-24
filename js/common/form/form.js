@@ -6,6 +6,11 @@ export default class Form extends Fyn.Component
     static localName = 'fyn-common-form-form';
     static styles = [ 'fyn.suite.base', 'global.theme' ];
 
+    static get extends()
+    {
+        return HTMLFormElement;
+    }
+
     static get properties()
     {
         return {
@@ -48,6 +53,8 @@ export default class Form extends Fyn.Component
 
     submit()
     {
+        console.log(this);
+
         if(this.elements.filter(e => e.constructor.formAssociated === true).some(e => e.validity.valid === false))
         {
             return;
