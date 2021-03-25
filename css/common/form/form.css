@@ -1,0 +1,62 @@
+:host {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-gap: 1em;
+    inline-size: 100%;
+}
+
+:host > h1 {
+    color: var(--teriary-bg);
+    text-align: center;
+}
+
+:host > h1:empty {
+    display: none;
+}
+
+:host > messages:empty {
+    display: none;
+}
+
+:host > fields {
+    display: grid;
+    grid-gap: .75em;
+    align-content: start;
+}
+
+:host > fields ::slotted(*) {
+    max-width: 100%;
+}
+
+:host > footer {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 1em;
+    align-self: end;
+    justify-content: end;
+}
+
+:host > footer:empty {
+    display: none;
+}
+
+:host > footer > [action="submit"] {
+    background-color: #5cb85c;
+}
+
+:host > footer > [action="cancel"] {
+    background-color: #d9534f;
+}
+
+:host > messages {
+    display: grid;
+    grid-gap: 1em;
+}
+
+:host > messages message {
+    display: block;
+}
+
+:host > messages message[type="error"] {
+    color: var(--failure-bg);
+}

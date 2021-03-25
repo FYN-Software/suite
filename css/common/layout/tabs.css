@@ -1,0 +1,90 @@
+:host {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+:host([static="true"]) {
+    grid-template-rows: 1fr;
+}
+
+:host([static="true"]) #bar {
+    display: none;
+}
+
+#bar {
+    border-bottom: 1px solid rgba(var(--plain-fg-rgb), .15);
+}
+
+#bar > tab {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    gap: .5em;
+    background-color: transparent;
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: .5em 1em;
+    block-size: 2.2em;
+    user-select: none;
+    cursor: pointer;
+    transition: .3s background-color ease-in-out;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 20em;
+}
+
+#bar > tab > fyn-common-form-button {
+    padding: 0;
+    line-height: 1em;
+}
+
+#bar > tab > fyn-common-form-button::part(icon) {
+    line-height: 1em;
+}
+
+#bar > delimiter {
+    padding: .5em 1em;
+}
+
+#bar > delimiter:empty,
+#bar > tab:last-of-type + delimiter {
+    display: none;
+}
+
+#bar > tab[has-content="false"] {
+    display: none;
+}
+
+#bar > tab:only-of-type {
+    inline-size: 100%;
+}
+
+#bar > tab:not(:only-child):hover {
+    background-color: rgba(var(--plain-fg-rgb), .1);
+}
+
+#bar > tab:not(:only-child)[part~="tab-active"] {
+    background-color: rgba(var(--plain-fg-rgb), .15);
+}
+
+:host > main {
+    position: relative;
+    display: grid;
+    grid-auto-rows: 100%;
+    grid-auto-columns: 100%;
+}
+
+:host > main > slot::slotted(*) {
+    position: absolute;
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 1em;
+    overflow: auto;
+    opacity: 0;
+    pointer-events: none;
+}
+
+:host > main > slot::slotted(*[active]) {
+    opacity: 1;
+    pointer-events: all;
+}

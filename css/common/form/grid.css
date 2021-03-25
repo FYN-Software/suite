@@ -1,0 +1,6 @@
+:host {
+    display: grid;
+    grid: 1fr / 1fr;
+    grid-gap: 1em;
+    border-radius: var(--radius);
+}

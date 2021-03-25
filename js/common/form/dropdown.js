@@ -129,7 +129,7 @@ export default class Dropdown extends Fyn.FormAssociated
 
     async ready()
     {
-        this.#container.shadow.appendChild(this.shadow.querySelector('style').cloneNode(true));
+        this.#container.shadow.adoptedStyleSheets = [ ...this.#container.shadow.adoptedStyleSheets, this.shadow.style ];
         this.#container.shadow.on('options > *', {
             click: (_, t) => {
                 this.index = t.index;

@@ -1,0 +1,70 @@
+:host {
+    display: grid;
+    grid: auto 1fr auto / 1fr;
+    padding: .5em;
+}
+
+:host > fyn-common-layout-list > span {
+    position: relative;
+    grid-auto-flow: column;
+    gap: .5em;
+    background-color: transparent;
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: .5em 1em;
+    user-select: none;
+    transition: .3s background-color ease-in-out;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 20em;
+}
+
+:host > fyn-common-layout-list > delimiter {
+    padding: .5em 1em;
+}
+
+:host > fyn-common-layout-list > span:last-of-type + delimiter {
+    display: none;
+}
+
+:host > block > fyn-common-form-progress::part(step) {
+    scroll-snap-align: center;
+    overflow: visible;
+}
+
+:host > main {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 100%;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+:host > main::-webkit-scrollbar {
+    display: none;
+}
+
+:host > main > slot::slotted(*) {
+    scroll-snap-align: center;
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*opacity: 0;*/
+    /*pointer-events: none;*/
+}
+
+:host > main > slot::slotted(*[active]) {
+    /*opacity: 1;*/
+    /*pointer-events: all;*/
+}
+
+:host > footer {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 1em;
+    justify-content: end;
+}

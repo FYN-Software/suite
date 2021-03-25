@@ -1,0 +1,30 @@
+:host {
+    display: contents;
+}
+
+table {
+    /*border-collapse: separate !important;*/
+    /*border-spacing: 0 1em;*/
+}
+
+table > thead th {
+    padding: 1em 1.5em;
+}
+
+table > tbody > tr {
+    /*background-color: rgba(var(--plain-fg-rgb), .1);*/
+    transition: background-color .3s ease-in-out;
+}
+
+table > tbody > tr:hover {
+    background-color: rgba(var(--plain-fg-rgb), .15);
+    cursor: pointer;
+}
+
+table > tbody td {
+    padding: 1em 1.5em;
+}
+
+table fyn-common-graphics-icon {
+    justify-content: start;
+}

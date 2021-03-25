@@ -1,27 +1,3 @@
-<style>
-    :host {
-        display: grid;
-        grid-auto-flow: row;
-        background-color: rgba(var(--plain-fg-rgb), .1);
-        border-radius: var(--radius);
-    }
-
-    :host > toolbar {
-        display: grid;
-        grid-auto-flow: column;
-        grid-gap: 1em;
-        justify-content: start;
-        border-bottom: 1px solid var(--plain-fg);
-        z-index: 2;
-    }
-
-    :host > article {
-        white-space: pre;
-        min-height: 10em;
-        padding: 1em;
-    }
-</style>
-
 <toolbar>
     <fyn-common-form-group combined flat>
         <fyn-common-form-button icons="save" flat></fyn-common-form-button>

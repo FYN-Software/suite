@@ -1,0 +1,15 @@
+:host {
+    display: grid;
+    grid: var(--grid, auto / auto);
+    /*grid-auto-rows: max-content;*/
+    /*grid-auto-columns: max-content;*/
+    gap: 1em;
+}
+
+:host main {
+    display: contents;
+}
+
+:host main > slot {
+    display: block;
+}

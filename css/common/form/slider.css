@@ -1,0 +1,80 @@
+:host {
+    --bg: rgba(var(--plain-fg-rgb), .1);
+    --vc: var(--primary-bg);
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 1em .5em;
+    justify-content: space-between;
+    contain: content;
+    padding: .5em;
+}
+
+:host > label {
+    grid-column: span 2;
+    font-size: .75em;
+}
+
+:host > box {
+    --w: 0%;
+    grid-column: span 2;
+    display: block;
+    position: relative;
+    inline-size: 100%;
+    block-size: .5em;
+    align-self: center;
+    background: var(--bg);
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+:host > box > value {
+    display: block;
+    position: absolute;
+    inline-size: var(--w);
+    block-size: 100%;
+    background: var(--vc);
+    border-radius: inherit;
+}
+
+:host > box > handle {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: var(--w);
+    inline-size: 1em;
+    block-size: 1em;
+    background-color: var(--plain-fg);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+:host > span:last-of-type {
+    text-align: right;
+}
+
+:host([vertical]) {
+    grid-template-columns: unset;
+    grid-template-rows: auto 1fr auto;
+    grid-gap: .5em 1em;
+    align-content: space-between;
+    justify-content: unset;
+}
+
+:host([vertical]) > label {
+    grid-column: unset;
+}
+
+:host([vertical]) > box {
+    inline-size: .5em;
+    block-size: 100%;
+}
+
+:host([vertical]) > box > value {
+    inline-size: 100%;
+    block-size: var(--w);
+}
+
+:host([vertical]) > box > handle {
+    top: var(--w);
+    left: 50%;
+}
