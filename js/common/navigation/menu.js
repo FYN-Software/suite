@@ -1,5 +1,4 @@
-import Component from '../../../../component/component.js';
-import * as Fyn from '../../../../component/fyn.js';
+import Component from '@fyn-software/component/component.js';
 
 export default class Menu extends Component
 {
@@ -9,11 +8,7 @@ export default class Menu extends Component
     async ready()
     {
         this.on('fyn-common-navigation-item', {
-            click: (e, t) => {
-                console.log(t);
-
-                this.emit('select', t);
-            },
+            click: (e, t) => this.emit('select', t),
         })
     }
 }

@@ -22,7 +22,7 @@ export default class Image extends Fyn.Component
         };
     }
 
-    initialize()
+    async initialize()
     {
         let img = document.createElement('img');
         img.crossOrigin = 'anonymous';
@@ -36,7 +36,8 @@ export default class Image extends Fyn.Component
 
                 this.loading = true;
                 this.setAttribute('loading', '');
-                this.shadow.querySelectorAll('img').forEach(i => this.shadow.removeChild(i));
+
+                this.$.img?.remove();
 
                 img = document.createElement('img');
                 img.crossOrigin = 'anonymous';
@@ -53,9 +54,7 @@ export default class Image extends Fyn.Component
                 img.alt = this.alt ?? this.src;
                 img.draggable = false;
                 img.part = 'img';
-                // img.width = 1;
-                // img.height = 1;
-                // img.loading = 'lazy';
+                img.id = 'img';
             },
             fit: (o, n) => {
                 // this.style.setProperty('--fit', Fit.valueOf(n));

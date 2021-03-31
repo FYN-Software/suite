@@ -14,11 +14,7 @@ export default class Slider extends Fyn.FormAssociated
                 .max(1)
                 .set(v => Number.isNaN(v) ? (this.value - this.min) / (this.max - this.min) : v),
             step: Types.Number.default(.1),
-            value: Types.Number,//.set(v => {
-            //     console.log(v, this.min, this.max, Number.isNaN(v) ? 0 : v, Math.clamp(this.min, this.max, Number.isNaN(v) ? 0 : v) || 0);
-            //
-            //     return Math.clamp(this.min, this.max, Number.isNaN(v) ? 0 : v) || 0
-            // }),
+            value: Types.Number,
             min: Types.Number.set(v => Math.min(Number.isNaN(v) ? this.min : v, this.max || Infinity)).default(0),
             max: Types.Number.set(v => Math.max(Number.isNaN(v) ? this.max : v, this.min || -Infinity)).default(360),
             label: Types.String,

@@ -38,8 +38,6 @@ export default class Tabs extends Fyn.Component
 
     async initialize()
     {
-        this.setAttribute('tabindex', 0);
-
         this.observe({
             index: async (o, n) => {
                 const pages = this.pages;
@@ -67,7 +65,9 @@ export default class Tabs extends Fyn.Component
 
         this.shadow.on('#bar > tab', {
             click: (e, t) => {
-                this.index = this.docked && this.index === t.index ? -1 : t.index;
+                this.index = this.docked && this.index === t.index
+                    ? -1
+                    : t.index;
             },
             auxclick: (e, t) => {
                 const tab = this.tabs[t.index];
@@ -90,38 +90,15 @@ export default class Tabs extends Fyn.Component
             },
         });
 
-        // this.on({
-        //     blur: (e, t) => {
-        //         if(this.docked === true)
-        //         {
-        //             this.removeAttribute('open');
-        //             this.index = -1;
-        //         }
-        //     },
-        // });
-
         globalThis.on({
             blur: (e, t) => {
-                // console.log(e, t);
-
                 if(this.docked === true)
                 {
                     this.removeAttribute('open');
                     this.index = -1;
                 }
             },
-            click: (e, t) => {
-                // console.log(e.target, e.composedPath(), e);
-            },
         });
-
-        document.on('fyn-common-layout-tabs', {
-            click: (e, t) => {
-                console.log(e, t, t === this)
-            },
-        });
-
-        this.#detect();
     }
 
     add(tab, title = '', closable = false)
@@ -150,7 +127,7 @@ export default class Tabs extends Fyn.Component
 
         if(tab instanceof HTMLSlotElement)
         {
-            for(let c of tab.assignedElements({ flatten: true }))
+            for(const c of tab.assignedElements({ flatten: true }))
             {
                 activate(c);
             }

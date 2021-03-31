@@ -27,7 +27,6 @@
 
 :host > img {
     inline-size: 100%;
-    /*height: 100%;*/
     object-fit: var(--fit, contain);
     border-radius: inherit;
     transition: opacity .3s linear;
