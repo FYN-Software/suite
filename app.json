@@ -5,19 +5,19 @@
             "namespace": "fyn-common",
             "html": "html/common/",
             "css": "css/common/",
-            "js": "js/common/"
+            "js": "dist/common/"
         },
         {
             "namespace": "fyn-wow",
             "html": "html/wow/",
             "css": "css/wow/",
-            "js": "js/wow/"
+            "js": "dist/wow/"
         },
         {
             "namespace": "fyn-yarte",
             "html": "html/yarte/",
             "css": "css/yarte/",
-            "js": "js/yarte/"
+            "js": "dist/yarte/"
         }
     ],
     "stylesheets": [

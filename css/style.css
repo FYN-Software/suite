@@ -39,7 +39,7 @@
 
 
     /*============== WARNING ================*/
-    --light-warning-fg-rgb: 30, 30, 30;
+    --light-warning-fg-rgb: 46, 46, 46;
     --light-warning-bg-rgb: 240, 173, 78;
     --light-warning-fg: rgb(var(--light-warning-fg-rgb));
     --light-warning-bg: rgb(var(--light-warning-bg-rgb));
@@ -150,8 +150,8 @@
         --primary-fg-rgb: var(--light-primary-fg-rgb);
         --primary-bg-rgb: var(--light-primary-bg-rgb);
 
-        --secondary-fg-rgb: var(--light-primary-fg-rgb);
-        --secondary-bg-rgb: var(--light-primary-bg-rgb);
+        --secondary-fg-rgb: var(--light-secondary-fg-rgb);
+        --secondary-bg-rgb: var(--light-secondary-bg-rgb);
 
         --plain-fg-rgb: var(--light-plain-fg-rgb);
         --plain-bg-rgb: var(--light-plain-bg-rgb);

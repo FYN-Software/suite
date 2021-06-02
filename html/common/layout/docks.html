@@ -5,12 +5,15 @@
     part="content"
 >
     <fyn-common-layout-tabs
+        id="{{ i }}"
         slot="{{ i }}"
         closable="{{ this.closable }}"
-        docked="{{ cell.docked !== this.Position.none }}"
+        position="{{ cell.docked }}"
         static="{{ cell.static }}"
-        class="{{ cell.docked !== this.Position.none ? 'docked' : '' }}
-        {{ this.Position.nameOf(cell.docked) }}"
+        class="
+            {{ cell.docked !== this.Position.none ? 'docked' : '' }}
+            {{ this.Position.nameOf(cell.docked) }}
+        "
         style="--resize: {{ this.Resize.nameOf(cell.resize) }};"
     >
         <slot name="{{ i }}"></slot>

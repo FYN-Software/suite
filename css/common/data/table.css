@@ -1,30 +1,48 @@
 :host {
+    display: grid;
+    grid-template-columns: [full-start] var(--columns) [full-end];
+}
+
+:host > :is(header, main) {
     display: contents;
 }
 
-table {
-    /*border-collapse: separate !important;*/
-    /*border-spacing: 0 1em;*/
+:host > :is(header, main) > row {
+    grid-column: full;
+    display: grid;
+    grid-template-columns: var(--columns);
 }
 
-table > thead th {
+:host > :is(header, main) > row cell {
+    display: grid;
+    align-content: center;
     padding: 1em 1.5em;
 }
 
-table > tbody > tr {
-    /*background-color: rgba(var(--plain-fg-rgb), .1);*/
-    transition: background-color .3s ease-in-out;
+:host > header > row cell {
+    font-weight: 900;
 }
 
-table > tbody > tr:hover {
-    background-color: rgba(var(--plain-fg-rgb), .15);
+:host > main > row {
+    transition: background-color .3s ease-in-out;
     cursor: pointer;
 }
 
-table > tbody td {
-    padding: 1em 1.5em;
+:host > main > row:hover {
+    background-color: rgba(var(--plain-fg-rgb), .15);
 }
 
-table fyn-common-graphics-icon {
-    justify-content: start;
+:host > main > row.selected {
+    background-color: rgba(var(--info-bg-rgb), .15);
+}
+
+/* Disabled selection mode */
+:host > :is(header, main)[select="none"] > row > cell:first-of-type {
+    display: none;
+}
+
+/* Singular selection mode */
+:host > header[select="single"] > row > cell:first-of-type > fyn-common-form-checkbox {
+    opacity: 0;
+    pointer-events: none;
 }

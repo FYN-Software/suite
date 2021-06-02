@@ -22,7 +22,7 @@ export default class Dropdown extends Fyn.FormAssociated
 
                 if(typeof v === 'string')
                 {
-                    v = JSON.tryParse(v.replace(/'/g, '"'));
+                    v = JSON.tryParse(v.replace(/(?<!\\)'/g, '"').replace(/\\'/g, "'"));
                 }
 
                 if(v.hasOwnProperty(Symbol.iterator))
@@ -60,70 +60,28 @@ export default class Dropdown extends Fyn.FormAssociated
 
     async initialize()
     {
-        const renderValue = () => {
-            const c = this.shadow.querySelector('fyn-common-form-button > value');
-            c.childNodes.clear();
-
-            for(const i of this.#container.shadow.querySelectorAll(`options > [index="${this.index}"]`) ?? [])
-            {
-                c.appendChild(i.cloneNode(true))
-            }
-
-            setWidth();
-        };
-        const setWidth = () => {
-            const placeholder = this.shadow.querySelector('fyn-common-form-button > value');
-            const width = Math.max(
-                placeholder?.clientWidth ?? 0,
-                ...this.optionElements.map(o => o.clientWidth),
-            );
-
-            this.style.setProperty('--min-width', `${width}px`);
-        };
-
         this.shadow.on('#templateContainer', {
             slotchange: async (e, slot) => {
-                const node = this.shadow.querySelector('options');
-                const directive = Template.getDirectivesFor(node)[':for'];
-
-                directive.fragment = await Template.scanSlot(slot, ['option']);
+                this.#optionsForDirective.fragment = await Template.scanSlot(slot, ['option']);
             },
         });
-
-        this.shadow.on('options', {
-            rendered: async (_, t) => {
-                for(const child of Array.from(t.childNodes))
-                {
-                    this.#container.shadow.querySelector('options').appendChild(child);
-                }
-
-                renderValue();
-            },
-        });
-
-        const update = async () => {
-            this._options = this.options.filterAsync(
-                async o => this.search.length === 0 || await this.filter(this.search, o)
-            );
-        };
-        const findIndex = value => this.options.findIndex(o => Fyn.Extends.equals(o, value) || o?.value === value);
 
         this.observe({
             options: async (o, n) => {
-                await update();
+                await this.#update();
 
-                this.index = findIndex(this.value);
+                this.index = this.#findIndex(this.value);
             },
             index: (o, n) => {
                 this.emit('change', { old: this.options[o], new: this.options[n] });
 
-                renderValue();
+                this.#renderValue();
             },
             value: (o, n) => {
-                this.index = findIndex(n);
+                this.index = this.#findIndex(n);
             },
-            filter: update,
-            search: update,
+            filter: async () => await this.#update(),
+            search: async () => await this.#update(),
         });
     }
 
@@ -137,6 +95,17 @@ export default class Dropdown extends Fyn.FormAssociated
                 this.removeAttribute('open');
             },
         });
+
+        const node = this.#container.shadow.querySelector('options');
+        this.#optionsForDirective.transferTo(node);
+        node.on({
+            rendered: async (_, t) => {
+                await (this.index = this.#findIndex(this.value));
+
+                this.#renderValue();
+            },
+        })
+
         document.body.appendChild(this.#container);
 
         const positionContainer = async () => {
@@ -185,5 +154,46 @@ export default class Dropdown extends Fyn.FormAssociated
     get optionElements()
     {
         return Array.from(this.#container.shadow.querySelectorAll('options > *'));
+    }
+
+    get #optionsForDirective()
+    {
+        return Template.getDirectivesFor(this.shadow.querySelector('options'))[':for'];
+    }
+
+    #renderValue()
+    {
+        const c = this.shadow.querySelector('fyn-common-form-button > value');
+        c.childNodes.clear();
+
+        for(const i of Array.from(this.#container.shadow.querySelectorAll(`options > *`)).filter(i => i.index === this.index))
+        {
+            c.appendChild(i.cloneNode(true))
+        }
+
+        this.#setWidth();
+    }
+
+    #setWidth()
+    {
+        const placeholder = this.shadow.querySelector('fyn-common-form-button > value');
+        const width = Math.max(
+            placeholder?.clientWidth ?? 0,
+            ...this.optionElements.map(o => o.clientWidth),
+        );
+
+        this.shadow.setProperty('--min-width', `${width}px`);
+    }
+
+    async #update()
+    {
+        this._options = this.options.filterAsync(
+            async o => this.search.length === 0 || await this.filter(this.search, o)
+        );
+    }
+
+    #findIndex(value)
+    {
+        return this.options.findIndex(o => Fyn.Extends.equals(o, value) || o?.value === value);
     }
 }

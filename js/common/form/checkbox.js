@@ -10,10 +10,10 @@ export default class Checkbox extends Fyn.FormAssociated
     {
         return {
             toggle: Types.Boolean,
-            checked: Types.Boolean,
+            checked: Types.Boolean.nullable,
             locked: Types.Boolean,
             label: Types.String,
-            value: Types.Boolean,
+            value: Types.Boolean.nullable,
         };
     }
 
@@ -21,9 +21,9 @@ export default class Checkbox extends Fyn.FormAssociated
     {
         this.observe({
             checked: (o, n) => {
-                this.shadow.querySelector('box').attributes.setOnAssert(n, 'checked');
+                this.shadow.querySelector('box').setAttribute('checked', String(n));
 
-                this.value = n === true;
+                this.value = n;
 
                 this.emit('change', { old: o, new: n });
             },

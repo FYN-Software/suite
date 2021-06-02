@@ -75,10 +75,12 @@
 }
 
 :host fyn-common-layout-tabs.docked.right::part(bar) {
-    left: 100%;
+    left: 0;
     top: 0;
-    justify-content: end;
-    transform: rotate(-90deg) translate(-100%, -100%);
+    transform: rotate(90deg) translateY(-100%);
+}
+:host fyn-common-layout-tabs.docked.right::part(tab) {
+    transform: rotate(180deg);
 }
 :host fyn-common-layout-tabs.docked.right::part(content) {
     left: 100%;

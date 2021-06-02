@@ -7,7 +7,7 @@
     cursor: pointer;
 }
 
-:host > box {
+:host > #box {
     --size: 1.4em;
     position: relative;
     display: block;
@@ -18,13 +18,13 @@
     transition: background-color .3s ease-in-out;
 }
 
-:host > box[checked] {
+:host > #box:not([checked="false"]) {
     background-color: var(--primary-bg);
     border-color: transparent;
 }
 
-:host > box[checked]::after {
-    content: '\f00c';
+:host > #box::after {
+    content: '';
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     font-size: .9em;
@@ -35,16 +35,28 @@
     transform: translate(-50%, -50%);
 }
 
+:host > #box[checked="true"]::after {
+    content: '\f00c';
+}
+
+:host > #box[checked="null"]::after {
+    content: '\f068';
+}
+
 :host > label {
     cursor: pointer;
 }
 
-:host([toggle]) > box {
+:host > label:empty {
+    display: none;
+}
+
+:host([toggle]) > #box {
     inline-size: calc(2 * var(--size));
     border-radius: var(--size);
 }
 
-:host([toggle]) > box::after {
+:host([toggle]) > #box::after {
     content: '';
     display: block;
     position: absolute;
@@ -58,12 +70,12 @@
     transition: transform .3s ease-in-out;
 }
 
-:host([toggle]) > box[checked]::after {
+:host([toggle]) > #box[checked]::after {
     transform: translate(calc(var(--size) - 1px), -50%);
     font-size: 1em;
 }
 
-:host([locked]) > box {
+:host([locked]) > #box {
     filter: grayscale(.5);
     opacity: .5;
 }

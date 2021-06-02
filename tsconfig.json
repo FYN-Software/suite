@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "target": "esNext",
+        "strict": true,
+        "outDir": "dist",
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "paths": {
+            "@fyn-software/core/*": [ "../core/src/*" ],
+            "@fyn-software/data/*": [ "../data/src/*" ],
+            "@fyn-software/component/*": [ "../component/src/*" ]
+        },
+        "composite": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "experimentalDecorators": true
+    },
+    "references": [
+        { "path": "../core/tsconfig.json" },
+        { "path": "../data/tsconfig.json" },
+        { "path": "../component/tsconfig.json" }
+    ],
+    "include": [
+        "src",
+        "types",
+        "../core/types",
+        "../data/types",
+        "../component/types"
+    ],
+    "exclude": [
+        "dist",
+        "**/node_modules"
+    ]
+}

@@ -1,4 +1,4 @@
-<label if="{{ label.length > 0 }}" part="label">{{ label }}</label>
+<label if="{{ label.length > 0 }}" part="label">{{ label }}{{ required ? '*' : '' }}</label>
 
 <input
     part="value"
@@ -9,6 +9,6 @@
     placeholder=" "
 >
 
-<slot name="placeholder" if="{{ value.length === 0 }}" part="placeholder">{{ placeholder }}</slot>
+<slot name="placeholder" if="{{ value.length === 0 }}" part="placeholder" required="{{ required }}">{{ placeholder }}</slot>
 
 <span id="error">{{ error }}</span>

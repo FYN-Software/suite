@@ -1,25 +1,27 @@
-<slot name="head-template"></slot>
+<slot id="headTemplate" name="head-template"></slot>
 
-<slot name="row-template"></slot>
+<slot id="rowTemplate" name="row-template"></slot>
 
-<table>
-    <thead>
-        <tr :for="{{ header of headers }}">
-            <th for-static>
-                <fyn-common-form-checkbox :if="{{ this.select !== this.Select.none }}"></fyn-common-form-checkbox>
-            </th>
+<header select="{{ this.Select.nameOf(this.select) }}">
+    <row>
+        <cell>
+            <fyn-common-form-checkbox id="selectAll"></fyn-common-form-checkbox>
+        </cell>
     
-            <th>{{ header }}</th>
-        </tr>
-    </thead>
+        <inner :for="{{ header of headers }}" style="display: contents">
+            <cell>{{ header }}</cell>
+        </inner>
+    </row>
+</header>
+
+<main :for="{{ i, row of rows }}" select="{{ this.Select.nameOf(this.select) }}">
+    <row class="{{ this.selection.includes(i) ? 'selected' : '' }}">
+        <cell>
+            <fyn-common-form-checkbox id="row-{{ i }}" checked="{{ this.selection.includes(i) }}"></fyn-common-form-checkbox>
+        </cell>
     
-    <tbody :for="{{ row of rows }}">
-        <tr :for="{{ cell of row }}">
-            <td for-static>
-                <fyn-common-form-checkbox :if="{{ this.select !== this.Select.none }}"></fyn-common-form-checkbox>
-            </td>
-            
-            <td>{{ cell }}</td>
-        </tr>
-    </tbody>
-</table>
+        <inner :for="{{ k, cell of row }}" style="display: contents">
+            <cell :template="{{ [k, this.templates] }}">{{ cell }}</cell>
+        </inner>
+    </row>
+</main>

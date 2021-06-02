@@ -1,13 +1,7 @@
 import * as Fyn from '@fyn-software/component/fyn.js';
 import * as Types from '@fyn-software/data/types.js';
+import { Position } from '@fyn-software/suite/js/common/layout/tabs.js';
 
-export const Position = Types.Enum.define({
-    none: {  },
-    top: {  },
-    left: {  },
-    right: {  },
-    bottom: {  },
-});
 export const Resize = Types.Enum.define({
     none: {  },
     inline: {  },
@@ -59,10 +53,11 @@ export default class Docks extends Fyn.Component
         element.setAttribute('tab-closable', closable);
 
         this.appendChild(element);
+        const _ = element.getBoundingClientRect();
 
-        await Promise.delay(1000);
+        await this.isReady;
 
-        const tabs = this.shadow.querySelector(`fyn-common-layout-tabs[slot="${cell}"]`);
+        const tabs = this.$[cell];
 
         tabs.index = tabs.tabs.length - 1;
     }

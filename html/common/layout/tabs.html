@@ -1,5 +1,9 @@
 <fyn-common-layout-list horizontal sortable id="bar" part="bar" :for="{{ i, tab of tabs }}">
-    <tab part="tab {{ i === this.index ? 'tab-active' : '' }}" index="{{ i }}" has-content="{{ tab.title.length > 0 }}">
+    <tab
+        part="tab {{ i === this.index ? 'tab-active' : '' }}"
+        has-content="{{ tab.title.length > 0 }}"
+        title="{{ tab.title }}"
+    >
         <span>{{ tab.title }}</span>
 
         <fyn-common-form-button :if="{{ tab.closable }}" icons="times" flat></fyn-common-form-button>
@@ -8,6 +12,8 @@
     <delimiter part="delimiter {{ i === this.index ? 'delimiter-active' : '' }}">{{ this.delimiter }}</delimiter>
 </fyn-common-layout-list>
 
-<main part="content">
+<div id="indicator" class="snap-indicator"></div>
+
+<main id="content" part="content">
     <slot></slot>
 </main>

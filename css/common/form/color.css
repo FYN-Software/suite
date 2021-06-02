@@ -17,12 +17,12 @@
 
 :host > value {
     background:
-            linear-gradient(
-                    var(--value),
-                    var(--value)
-            ),
-            var(--checkers) repeat
-;
+        linear-gradient(
+            var(--value),
+            var(--value)
+        ),
+        var(--checkers) repeat
+    ;
     inline-size: 3em;
     block-size: 2em;
     margin: 3px;
@@ -37,12 +37,12 @@
     left: var(--x);
     display: none;
     grid-template-areas:
-            'sat-light hue preview1'
-            'sat-light hue preview2'
-            'sat-light hue .'
-            'opacity . .'
-            'buttons buttons buttons'
-;
+        'sat-light hue preview1'
+        'sat-light hue preview2'
+        'sat-light hue .'
+        'opacity . .'
+        'buttons buttons buttons'
+    ;
     grid-gap: 1em;
     background-color: var(--plain-bg);
     box-shadow: 0 .25em .5em #000;
@@ -57,12 +57,12 @@
     display: block;
     inline-size: 7.5em;
     block-size: 7.5em;
-    background-color: hsla(var(--hue), 100%, 50%, 1);
-    background-image:
-            linear-gradient(180deg, #fff, #fff0 50%),
-            linear-gradient(0deg, #000, #0000 50%),
-            linear-gradient(90deg, #808080, #80808000)
-;
+    background:
+        linear-gradient(180deg, #fff, #fff0 50%),
+        linear-gradient(0deg, #000, #0000 50%),
+        linear-gradient(90deg, #808080, #80808000),
+        hsla(var(--hue), 100%, 50%, 1)
+    ;
 }
 
 :host > box > gradient > handle {
@@ -85,29 +85,29 @@
 :host > box > fyn-common-form-slider[vertical] {
     grid-area: hue;
     --bg:
-            linear-gradient(
-                    to bottom,
-                    #ff0000 0%,
-                    #ffff00 17%,
-                    #00ff00 33%,
-                    #00ffff 50%,
-                    #0000ff 67%,
-                    #ff00ff 83%,
-                    #ff0000 100%
-            )
-;
+        linear-gradient(
+                to right,
+                #ff0000 0%,
+                #ffff00 17%,
+                #00ff00 33%,
+                #00ffff 50%,
+                #0000ff 67%,
+                #ff00ff 83%,
+                #ff0000 100%
+        )
+    ;
 }
 
 :host > box > fyn-common-form-slider[horizontal] {
     grid-area: opacity;
     --bg:
-            linear-gradient(
-                    to right,
-                    hsla(var(--hue), var(--sat), var(--light), 1),
-                    hsla(var(--hue), var(--sat), var(--light), 0)
-            ),
-            var(--checkers) repeat
-;
+        linear-gradient(
+                to right,
+                hsla(var(--hue), var(--sat), var(--light), 1),
+                hsla(var(--hue), var(--sat), var(--light), 0)
+        ),
+        var(--checkers) repeat
+    ;
 }
 
 :host > box > block {

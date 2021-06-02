@@ -26,6 +26,7 @@
 }
 
 :host > img {
+    block-size: 100%;
     inline-size: 100%;
     object-fit: var(--fit, contain);
     border-radius: inherit;

@@ -56,9 +56,13 @@ export default class Image extends Fyn.Component
                 img.part = 'img';
                 img.id = 'img';
             },
-            fit: (o, n) => {
-                // this.style.setProperty('--fit', Fit.valueOf(n));
+            fit: async (o, n) => {
+                this.shadow.setProperty('--fit', Fit.valueOf(this.fit));
             },
         });
+    }
+
+    async ready()
+    {
     }
 }

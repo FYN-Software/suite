@@ -16,32 +16,32 @@ export default class Sparkline extends Fyn.Component
         };
     }
 
+    #chart;
+    #data = [30, 40, 35, 50, 49, 60, 70, 91, 125].sort(() => 0.5 - Math.random()).map((it, i) => ({ x: i, y: it }));
+
     async ready()
     {
-        const randomizeArray = array => {
-            let currentIndex = array.length;
-            let out = [];
-            let randomIndex;
+        const _ = this.#render();
+    }
 
-            while (0 !== currentIndex)
-            {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                out[currentIndex] = array[randomIndex];
-            }
-
-            return out;
-        };
-
-        const chart = new ApexCharts(this.shadow.querySelector('#chart'), {
+    async #render()
+    {
+        this.#chart = new ApexCharts(this.shadow.querySelector('#chart'), {
             chart: {
                 type: 'line',
                 id: this.id,
                 group: this.group,
                 foreColor: 'var(--plain-fg)',
+                // width: 500,
                 sparkline: {
                     enabled: true,
+                },
+                animations: {
+                    enabled: true,
+                    easing: 'linear',
+                    dynamicAnimation: {
+                        speed: 1000
+                    }
                 },
                 toolbar: {
                     show: false
@@ -57,14 +57,18 @@ export default class Sparkline extends Fyn.Component
             series: [
                 {
                     name: 'sales',
-                    data: randomizeArray([30, 40, 35, 50, 49, 60, 70, 91, 125]),
-                },
+                    data: this.#data,
+                }
             ],
+            dataLabels: {
+                enabled: false
+            },
             xaxis: {
-                categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+                range: 10,
             },
             yaxis: {
                 min: 0,
+                max: 100,
                 labels: {
                     minWidth: 10,
                 },
@@ -87,8 +91,20 @@ export default class Sparkline extends Fyn.Component
             }
         });
 
-        await Promise.delay(0);
+        this.#chart.render();
 
-        chart.render();
+        setInterval(() => {
+            this.#data.push({
+                x: this.#data.length,
+                y: Math.floor(Math.random() * 100),
+            });
+
+            this.#chart.updateSeries([
+                {
+                    name: 'sales',
+                    data: this.#data,
+                },
+            ]);
+        }, 1000);
     }
 }

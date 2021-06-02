@@ -18,7 +18,7 @@ export default class Icon extends Fyn.Component
 
                 if(Array.isArray(v) !== true)
                 {
-                    v = JSON.tryParse(v.replace(/'/g, '"'));
+                    v = JSON.tryParse(v.replace(/(?<!\\)'/g, '"').replace(/\\'/g, "'"));
                 }
 
                 if(Array.isArray(v) !== true)

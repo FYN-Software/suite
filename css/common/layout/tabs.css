@@ -3,19 +3,11 @@
     grid-template-rows: auto 1fr;
 }
 
-:host([static="true"]) {
-    grid-template-rows: 1fr;
+:host > #bar {
+    grid-area: 1 / 1;
 }
 
-:host([static="true"]) #bar {
-    display: none;
-}
-
-#bar {
-    border-bottom: 1px solid rgba(var(--plain-fg-rgb), .15);
-}
-
-#bar > tab {
+:host > #bar > tab {
     position: relative;
     display: grid;
     grid-auto-flow: column;
@@ -33,38 +25,54 @@
     max-width: 20em;
 }
 
-#bar > tab > fyn-common-form-button {
+:host > #bar > tab > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+:host > #bar > tab > fyn-common-form-button {
     padding: 0;
     line-height: 1em;
 }
 
-#bar > tab > fyn-common-form-button::part(icon) {
+:host > #bar > tab > fyn-common-form-button::part(icon) {
     line-height: 1em;
 }
 
-#bar > delimiter {
+:host > #bar > delimiter {
     padding: .5em 1em;
 }
 
-#bar > delimiter:empty,
-#bar > tab:last-of-type + delimiter {
+:host > #bar > delimiter:empty,
+:host > #bar > tab:last-of-type + delimiter {
     display: none;
 }
 
-#bar > tab[has-content="false"] {
+:host > #bar > tab[has-content="false"] {
     display: none;
 }
 
-#bar > tab:only-of-type {
+:host > #bar > tab:only-of-type {
     inline-size: 100%;
 }
 
-#bar > tab:not(:only-child):hover {
+:host > #bar > tab:not(:only-child):hover {
     background-color: rgba(var(--plain-fg-rgb), .1);
 }
 
-#bar > tab:not(:only-child)[part~="tab-active"] {
+:host > #bar > tab:not(:only-child)[part~="tab-active"] {
     background-color: rgba(var(--plain-fg-rgb), .15);
+}
+
+:host > #indicator {
+    grid-area: 1 / 1;
+    inline-size: 0;
+    block-size: 2px;
+    margin-top: 2.1em;
+    border-radius: 2px;
+    background-color: var(--primary-bg);
+    bottom: 0;
+    transform: rotate(30deg);
 }
 
 :host > main {
@@ -72,19 +80,28 @@
     display: grid;
     grid-auto-rows: 100%;
     grid-auto-columns: 100%;
+    grid-auto-flow: column;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow-x: hidden;
 }
 
 :host > main > slot::slotted(*) {
-    position: absolute;
-    inline-size: 100%;
-    block-size: 100%;
     padding: 1em;
-    overflow: auto;
-    opacity: 0;
-    pointer-events: none;
 }
 
-:host > main > slot::slotted(*[active]) {
-    opacity: 1;
-    pointer-events: all;
+:host([static="true"]) {
+    grid-template-rows: 1fr;
+}
+
+:host([static="true"]) > :is(#bar, #indicator) {
+    display: none;
+}
+
+:host > #bar {
+    border-bottom: 1px solid rgba(var(--plain-fg-rgb), .15);
+}
+
+:host(.docked) > #indicator {
+    display: none;
 }

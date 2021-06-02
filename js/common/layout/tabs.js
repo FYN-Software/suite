@@ -1,9 +1,18 @@
 import * as Fyn from '@fyn-software/component/fyn.js';
 import * as Types from '@fyn-software/data/types.js';
+import Template from '../../../../component/template.js';
 
+export const Position = Types.Enum.define({
+    none: {  },
+    top: {  },
+    left: {  },
+    right: {  },
+    bottom: {  },
+});
 export const Tab = Types.Object.define({
     title: Types.String,
     closable: Types.Boolean,
+    active: Types.Boolean,
     element: Types.Any,
 });
 
@@ -12,19 +21,6 @@ export default class Tabs extends Fyn.Component
     static localName = 'fyn-common-layout-tabs';
     static styles = [ 'fyn.suite.base', 'global.theme' ];
 
-    #detect = async () => {
-        await (this.index = -1);
-
-        const pages = this.pages;
-
-        this.tabs = pages.map(p => ({
-            title: p.getAttribute('tab-title') || '',
-            closable: p.hasAttribute('tab-closable') ?? false,
-            element: p,
-        }));
-        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), this.docked ? -1 : 0));
-    };
-
     static get properties()
     {
         return {
@@ -32,28 +28,45 @@ export default class Tabs extends Fyn.Component
             tabs: Types.List.type(Tab),
             delimiter: Types.String,
             closable: Types.Boolean,
-            docked: Types.Boolean,
+            position: Position.default(Position.none),
         };
     }
+
+    #observer = new MutationObserver(mutations => {
+        for(const m of mutations.filter(m => m.attributeName === 'tab-title'))
+        {
+            const tab = this.tabs.find(t => t.element === m.target);
+
+            tab.title = m.target.getAttribute('tab-title');
+        }
+    });
+    #animation;
+    #timeline;
 
     async initialize()
     {
         this.observe({
             index: async (o, n) => {
-                const pages = this.pages;
-                pages.forEach(t => t.removeAttribute('active'));
+                this.$.content.scrollTo({
+                    left: this.$.content.getBoundingClientRect().width * n,
+                    top: 0,
+                    behavior: Tabs.#prefersReducedMotion() ? 'auto' : 'smooth',
+                });
 
-                if(this.index >= 0 && this.index < this.pages.length)
-                {
-                    pages[this.index].setAttribute('active', '');
-                }
+                this.emit('switched', { index: n });
+            },
+            tabs: async (o, n) => {
+                await this.$.bar.await('rendered');
 
-                this.emit('switched', { index: this.index });
+                this.#setIndicatorAnimation();
+            },
+            delimiter: () => {
+                this.#setIndicatorAnimation();
             },
         });
 
         this.shadow.on('main > slot', {
-            slotchange: () => this.#detect(),
+            slotchange: async () => this.#detect(),
         });
     }
 
@@ -140,13 +153,94 @@ export default class Tabs extends Fyn.Component
 
     get pages()
     {
-        const slot = this.shadow.querySelector('main > slot');
+        return (async () => {
+            await Promise.delay(0);
 
-        if(slot === null)
+            return this.shadow.querySelector('main > slot')?.assignedElements({ flatten: true }) ?? [];
+        })();
+    }
+
+    get docked()
+    {
+        return this.position !== Position.none;
+    }
+
+    async #detect()
+    {
+        const pages = await Array.fromAsync(this.#pageIterator());
+
+        await (this.tabs = pages.map((p, i) => ({
+            active: i === this.index,
+            title: p.getAttribute('tab-title') ?? '',
+            closable: p.hasAttribute('tab-closable') ?? false,
+            element: p,
+        })));
+
+        this.#observer.disconnect();
+        for(const tab of this.tabs)
         {
-            return [];
+            // tab.element.style.opacity = tab.active === true ? '1' : '0';
+            // tab.element.style.pointerEvents = tab.active === true ? 'all' : 'none';
+
+            if (tab.element.hasAttribute('tab-title'))
+            {
+                this.#observer.observe(tab.element, { attributes: true });
+            }
         }
 
-        return slot.assignedElements({ flatten: true });
+        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), this.docked ? -1 : 0));
+    };
+
+    async *#pageIterator()
+    {
+        await Promise.delay(0);
+
+        for(const element of this.shadow.querySelector('main > slot')?.assignedElements({ flatten: true }) ?? [])
+        {
+            if(globalThis.getComputedStyle(element).display === 'contents')
+            {
+                // TODO(Chris Kruining) HAAAAACKS...
+                if(element.hasAttribute(':for'))
+                {
+                    await element.await('rendered');
+                }
+
+                yield* element.children;
+
+                continue;
+            }
+
+            yield element;
+        }
+    }
+
+    #setIndicatorAnimation()
+    {
+        const tabs = Array.from(this.$.bar.querySelectorAll('tab'));
+
+        this.#timeline ??= new ScrollTimeline({
+            scrollSource: this.$.content,
+            orientation: 'inline',
+            fill: 'both',
+            timeRange: 1000,
+        });
+
+        this.#animation?.cancel();
+        this.#animation = this.$.indicator.animate(
+            {
+                transform: tabs.map(({ offsetLeft }) => `translateX(${offsetLeft}px)`),
+                inlineSize: tabs.map(({ offsetWidth }) => `${offsetWidth}px`),
+            },
+            {
+                duration: 1000,
+                fill: 'both',
+                timeline: this.#timeline,
+            }
+        );
+    }
+
+    static #prefersReducedMotion()
+    {
+        return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 }
