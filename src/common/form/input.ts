@@ -13,7 +13,7 @@ export default class Input extends FormAssociated<Input>
     public regex: string = '(?!\\n).';
 
     @property()
-    public multiline: boolean = false;
+    public inputmode: string = '';
 
     protected async initialize()
     {

@@ -1,6 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
-import Template from '@fyn-software/component/template.js';
+// import Template from '@fyn-software/component/template.js';
 
 declare enum Select
 {
@@ -55,14 +55,14 @@ export default class Table extends Component<Table>
             },
         });
 
-        this.shadow.on('_rowTemplate', {
-            slotchange: async (e, t) => {
-                this.templates = Object.fromEntries(await Array.fromAsync<HTMLTemplateElement, [ string, IFragment<any> ]>(
-                    (t as HTMLSlotElement).assignedElements({ flatten: true }) as Array<HTMLTemplateElement>,
-                    async t => [ t.getAttribute('for')!, await Template.scan(t.content, [ 'cell' ]) ],
-                ));
-            },
-        });
+        // this.shadow.on('_rowTemplate', {
+        //     slotchange: async (e, t) => {
+        //         this.templates = Object.fromEntries(await Array.fromAsync<HTMLTemplateElement, [ string, IFragment<any> ]>(
+        //             (t as HTMLSlotElement).assignedElements({ flatten: true }) as Array<HTMLTemplateElement>,
+        //             async t => [ t.getAttribute('for')!, await Template.scan(t.content, [ 'cell' ]) ],
+        //         ));
+        //     },
+        // });
     }
 
     protected async ready(): Promise<void>

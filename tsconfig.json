@@ -10,13 +10,14 @@
         "paths": {
             "@fyn-software/core/*": [ "../core/src/*" ],
             "@fyn-software/data/*": [ "../data/src/*" ],
-            "@fyn-software/component/*": [ "../component/src/*" ]
+            "@fyn-software/component/*": [ "../component/src/client/*" ]
         },
         "composite": true,
         "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "removeComments": true
     },
     "references": [
         { "path": "../core/tsconfig.json" },

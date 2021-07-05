@@ -8,7 +8,7 @@ export default class Form extends Component<Form> {
     messages: Array<string>;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
-    submit(): {} | undefined;
+    submit(): any;
     clear(): void;
     get elements(): Array<FormAssociated<any, any>>;
 }

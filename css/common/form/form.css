@@ -3,6 +3,7 @@
     grid-auto-columns: 100%;
     grid-gap: 1em;
     inline-size: 100%;
+    contain: layout paint style;
 }
 
 :host > h1 {

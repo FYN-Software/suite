@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import Media, { Preference } from '@fyn-software/core/media.js';
 export var Position;
 (function (Position) {
     Position[Position["none"] = 0] = "none";
@@ -35,7 +36,7 @@ export default class Tabs extends Component {
                 this.$.content?.scrollTo({
                     left: this.$.content.getBoundingClientRect().width * n,
                     top: 0,
-                    behavior: Tabs.prefersReducedMotion ? 'auto' : 'smooth',
+                    behavior: Media.prefers(Preference.reducedMotion) ? 'auto' : 'smooth',
                 });
                 this.emit('switched', { index: n });
             },
@@ -137,7 +138,6 @@ export default class Tabs extends Component {
         const slot = this.shadow.querySelector('main > slot');
         for (const element of slot?.assignedElements({ flatten: true }) ?? []) {
             if (globalThis.getComputedStyle(element).display === 'contents') {
-                // TODO(Chris Kruining) HAAAAACKS...
                 if (element.hasAttribute(':for')) {
                     await element.await('rendered');
                 }
@@ -149,12 +149,6 @@ export default class Tabs extends Component {
     }
     _setIndicatorAnimation() {
         const tabs = Array.from(this.$.bar.querySelectorAll('tab'));
-        // this._timeline ??= new ScrollTimeline({
-        //     scrollSource: this.$.content,
-        //     orientation: 'inline',
-        //     fill: 'both',
-        //     timeRange: 1000,
-        // });
         this._animation?.cancel();
         this._animation = this.$.indicator.animate({
             transform: tabs.map(({ offsetLeft }) => `translateX(${offsetLeft}px)`),
@@ -162,7 +156,6 @@ export default class Tabs extends Component {
         }, {
             duration: 1000,
             fill: 'both',
-            // timeline: this._timeline,
         });
     }
     static get prefersReducedMotion() {

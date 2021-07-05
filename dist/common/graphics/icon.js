@@ -15,12 +15,6 @@ export default class Icon extends Component {
     async initialize() {
         this.observe({
             icons: (o, n) => {
-                // console.log(o, n);
-                //
-                // if(o?.length > 0 && n.length === 0)
-                // {
-                //     console.trace('WHY?!');
-                // }
             },
         });
     }

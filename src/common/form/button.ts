@@ -31,6 +31,8 @@ export default class Button extends Component<Button>
 
     async initialize()
     {
+        this.setAttribute("tabindex", "0");
+
         this.observe({
             state: () => this.attributes.setOnAssert(this.state, 'active'),
         });

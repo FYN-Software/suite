@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import Media, { Preference } from '@fyn-software/core/media.js';
 export var Fit;
 (function (Fit) {
     Fit["auto"] = "auto";
@@ -15,43 +16,43 @@ export var Fit;
 export default class Image extends Component {
     constructor() {
         super(...arguments);
-        this.src = '';
+        this.loading = false;
+        this.insecure = false;
         this.alt = '';
-        this.fit = Fit.auto;
-        this.loading = true;
+        this.fit = Fit.contain;
+        this.src = '';
     }
     async initialize() {
-        let img = document.createElement('img');
-        img.crossOrigin = 'anonymous';
         this.observe({
-            src: (o, n) => {
-                if (n === undefined || n.includes('{{') || n.includes('}}') || n.includes('{#') || this.src === '') {
+            src: async (o, n) => {
+                if (n === undefined || n === '' || Media.prefers(Preference.reducedData)) {
                     return;
                 }
                 this.loading = true;
-                this.setAttribute('loading', '');
                 this.$.img?.remove();
-                img = document.createElement('img');
-                img.crossOrigin = 'anonymous';
+                await Promise.delay(0);
+                const img = document.createElement('img');
                 img.onload = () => {
                     this.shadow.appendChild(img);
                     this.loading = false;
-                    this.removeAttribute('loading');
                 };
                 img.onerror = () => {
                     this.loading = false;
-                    this.removeAttribute('loading');
                 };
-                img.src = String(this.src);
                 img.alt = this.alt ?? this.src;
                 img.draggable = false;
-                // TODO(Chris Kruining) change this back to property setter when typescript updates the API
-                // img.part = 'img';
-                this.setAttribute('part', 'img');
+                img.setAttribute('part', 'img');
                 img.id = 'img';
+                if (this.insecure !== true) {
+                    img.crossOrigin = 'anonymous';
+                }
+                img.src = String(this.src);
             },
-            fit: async () => {
-                this.shadow.setProperty('--fit', this.fit);
+            alt: () => {
+                if (Media.prefers(Preference.reducedData) === false) {
+                    return;
+                }
+                this.shadow.textContent = this.alt;
             },
         });
     }
@@ -62,14 +63,17 @@ Image.localName = 'fyn-common-graphics-image';
 Image.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
-], Image.prototype, "src", void 0);
+], Image.prototype, "loading", void 0);
+__decorate([
+    property()
+], Image.prototype, "insecure", void 0);
 __decorate([
     property()
 ], Image.prototype, "alt", void 0);
 __decorate([
-    property()
+    property({ bindToCSS: v => String(v) })
 ], Image.prototype, "fit", void 0);
 __decorate([
     property()
-], Image.prototype, "loading", void 0);
+], Image.prototype, "src", void 0);
 //# sourceMappingURL=image.js.map

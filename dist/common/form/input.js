@@ -11,7 +11,7 @@ export default class Input extends FormAssociated {
         super(...arguments);
         this.placeholder = '';
         this.regex = '(?!\\n).';
-        this.multiline = false;
+        this.inputmode = '';
     }
     async initialize() {
         this.shadow.on('input', {
@@ -22,7 +22,6 @@ export default class Input extends FormAssociated {
                 if ([8, 16, 17, 37, 38, 39, 40].includes(e.keyCode)) {
                     return;
                 }
-                // FUCK ES SOMETIMES!! cant just read the character about to be inserted...
                 let char;
                 switch (e.key) {
                     case 'Enter':
@@ -45,11 +44,9 @@ export default class Input extends FormAssociated {
                 capture: true,
             },
             focus: (e, t) => {
-                // t.focused = true;
                 this.setAttribute('focused', '');
             },
             blur: (e, t) => {
-                // t.focused = false;
                 this.removeAttribute('focused');
             },
         });
@@ -77,5 +74,5 @@ __decorate([
 ], Input.prototype, "regex", void 0);
 __decorate([
     property()
-], Input.prototype, "multiline", void 0);
+], Input.prototype, "inputmode", void 0);
 //# sourceMappingURL=input.js.map

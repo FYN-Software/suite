@@ -52,7 +52,6 @@ export default class Form extends Component {
     }
     clear() {
         for (const field of this.elements) {
-            // field.clear();
         }
     }
     get elements() {

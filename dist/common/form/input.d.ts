@@ -4,7 +4,7 @@ export default class Input extends FormAssociated<Input> {
     static styles: string[];
     placeholder: string;
     regex: string;
-    multiline: boolean;
+    inputmode: string;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
     focus(): void;

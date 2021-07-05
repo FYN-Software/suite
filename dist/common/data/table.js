@@ -6,7 +6,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
-import Template from '@fyn-software/component/template.js';
 export default class Table extends Component {
     constructor() {
         super(...arguments);
@@ -37,11 +36,6 @@ export default class Table extends Component {
                     [Array.from(this.rows.keys()).length]: true,
                     [0]: false,
                 }[n.length] ?? null;
-            },
-        });
-        this.shadow.on('_rowTemplate', {
-            slotchange: async (e, t) => {
-                this.templates = Object.fromEntries(await Array.fromAsync(t.assignedElements({ flatten: true }), async (t) => [t.getAttribute('for'), await Template.scan(t.content, ['cell'])]));
             },
         });
     }

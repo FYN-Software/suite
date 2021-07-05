@@ -27,7 +27,6 @@ export default class Sparkline extends Component {
                 id: this.id,
                 group: this.group,
                 foreColor: 'var(--plain-fg)',
-                // width: 500,
                 sparkline: {
                     enabled: true,
                 },

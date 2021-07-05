@@ -1,5 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import Media, { Preference } from '@fyn-software/core/media.js';
 
 export enum Fit
 {
@@ -14,60 +15,74 @@ export default class Image extends Component<Image>
     static styles = [ 'fyn.suite.base', 'global.theme' ];
 
     @property()
-    public src: string = '';
+    public loading: boolean = false;
+
+    @property()
+    public insecure: boolean = false;
 
     @property()
     public alt: string = '';
 
-    @property()
-    public fit: Fit = Fit.auto;
+    @property<Image>({ bindToCSS: v => String(v) })
+    public fit: Fit = Fit.contain;
 
     @property()
-    public loading: boolean = true;
+    public src: string = '';
 
     protected async initialize(): Promise<void>
     {
-        let img = document.createElement('img');
-        img.crossOrigin = 'anonymous';
-
         this.observe({
-            src: (o: string, n: string) => {
-                if(n === undefined || n.includes('{{') || n.includes('}}') || n.includes('{#') || this.src === '')
+            src: async (o: string, n: string) => {
+                if(n === undefined || n === '' || Media.prefers(Preference.reducedData))
                 {
                     return;
                 }
 
                 this.loading = true;
-                this.setAttribute('loading', '');
 
                 this.$.img?.remove();
 
-                img = document.createElement('img');
-                img.crossOrigin = 'anonymous';
+                // TODO(Chris Kruining)
+                //  There's a weird timing issue with
+                //  the `insecure` property the delay
+                //  0 fixes it, but no clue why
+                await Promise.delay(0);
+
+                const img = document.createElement('img');
                 img.onload = () => {
                     this.shadow.appendChild(img);
                     this.loading = false;
-                    this.removeAttribute('loading');
                 };
                 img.onerror = () => {
                     this.loading = false;
-                    this.removeAttribute('loading');
                 };
-                img.src = String(this.src);
                 img.alt = this.alt ?? this.src;
                 img.draggable = false;
                 // TODO(Chris Kruining) change this back to property setter when typescript updates the API
                 // img.part = 'img';
-                this.setAttribute('part', 'img');
+                img.setAttribute('part', 'img');
                 img.id = 'img';
+
+                if(this.insecure !== true)
+                {
+                    img.crossOrigin = 'anonymous';
+                }
+
+                img.src = String(this.src);
             },
-            fit: async () => {
-                this.shadow.setProperty('--fit', this.fit);
+            alt: () => {
+                if(Media.prefers(Preference.reducedData) === false)
+                {
+                    return;
+                }
+
+                this.shadow.textContent = this.alt;
             },
         });
     }
 
     protected async ready(): Promise<void>
     {
+
     }
 }

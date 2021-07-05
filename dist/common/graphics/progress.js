@@ -24,6 +24,6 @@ export default class Progress extends Component {
 Progress.localName = 'fyn-common-graphics-progress';
 Progress.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
-    property() //.min(0).max(1)
+    property()
 ], Progress.prototype, "value", void 0);
 //# sourceMappingURL=progress.js.map

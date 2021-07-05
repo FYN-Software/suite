@@ -15,6 +15,7 @@
     font-size: 1em;
     will-change: background-color;
     transition: background-color .3s ease-in-out;
+    user-select: none;
 }
 
 :host([icon-after]) {
@@ -157,17 +158,15 @@
     animation: ripple 1s ease-out forwards;
 }
 
-:host(:focus) {
-    outline: none;
-}
-
 :host(:disabled) {
     opacity: .25;
 }
 
-:host(:hover) {
+:host(:is(:hover, :focus)) {
     color: var(--info-fg);
     background-color: var(--info-bg);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--plain-fg);
 }
 
 :host([active]),

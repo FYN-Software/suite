@@ -1,7 +1,6 @@
 :root {
     color-scheme: dark light;
 
-
     /*============== SUCCESS ================*/
     --light-info-fg-rgb: 30, 30, 30;
     --light-info-bg-rgb: 91, 192, 222;
@@ -186,9 +185,9 @@
 }
 
 html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: clip;
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
 }
@@ -196,12 +195,13 @@ html {
 body {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     box-sizing: border-box;
-    overflow: hidden;
-    /*background-color: var(--plain-bg);*/
+    background-color: var(--plain-bg);
     color: var(--plain-fg);
+    overflow: clip scroll;
+    overscroll-behavior: contain;
 }
 
 * {
@@ -217,146 +217,12 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 0;
 }
 
-.skeleton {
-    background-repeat: no-repeat;
-    background-image:
-        /* layer 2: avatar */
-        /* white circle with 16px radius */
-            radial-gradient(circle 16px, white 99%, transparent 0),
-                /* layer 1: title */
-                /* white rectangle with 40px height */
-            linear-gradient(white 40px, transparent 0),
-                /* layer 0: card bg */
-                /* gray rectangle that covers whole element */
-            linear-gradient(gray 100%, transparent 0);
-}
-
 [hidden] {
     display: none !important;
 }
 
-[contenteditable] {
-    user-select: initial;
-}
-
-[tooltip] {
-    position: relative;
-}
-
-[tooltip]::before,
-[tooltip]::after {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: -.75em;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    pointer-events: none;
-    z-index: 1000;
-    font-size: 1em;
-}
-
-[tooltip]::before {
-    content: '';
-    border-top: .75em solid var(--plain-bg);
-    border-left: 1em solid transparent;
-    border-right: 1em solid transparent;
-    transform: translate(-50%, 0);
-}
-
-[tooltip]::after {
-    content: attr(tooltip);
-    padding: .5em 1em;
-    line-height: 1em;
-    background-color: var(--plain-bg);
-    color: var(--plain-fg);
-    white-space: nowrap;
-    overflow: hidden;
-    border-radius: var(--radius);
-    transform: translate(-50%, -100%);
-}
-
-[tooltip]:hover::before,
-[tooltip]:hover::after {
-    opacity: 1;
-}
-
-table {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table thead {
-    display: table-header-group;
-}
-
-table thead tr:last-child {
-    background-color: transparent;
-    border-bottom: 1px solid rgba(var(--plain-fg), .1);
-}
-
-table thead tr:last-child th,
-table thead tr:last-child td {
-    background-color: inherit;
-    color: inherit;
-}
-
-table tbody {
-    display: table-row-group;
-}
-
-table tfoot {
-    display: table-footer-group;
-}
-
-table tfoot tr:first-child th,
-table tfoot tr:first-child td {
-    border-top: 1px solid rgba(var(--plain-fg), .1);
-}
-
-table tr {
-    display: table-row;
-}
-
-table td,
-table th {
-    display: table-cell;
-    vertical-align: middle;
-    padding: .5em 1em;
-    text-align: left;
-}
-
-table td.text-right,
-table th.text-right {
-    text-align: right;
-}
-
-table[striped] tbody > :nth-child(odd) tr {
-    background-color: rgba(var(--plain-fg), .1);
-}
-
-table[sortable] th {
-    cursor: pointer;
-}
-
-table[focusable] tbody tr:hover td {
-    background-color: var(--info-bg-rgb, .1);
-    transition: background .3s;
-    cursor: pointer;
-}
-
-table[selectable] tbody tr:hover td,
-table[selectable] tbody tr:hover th {
-    background-color: rgba(var(--plain-bg), .1);
-}
-
-[scroller]::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 9;
-    width: 100%;
-    height: var(--scroller-height);
-    pointer-events: none;
+@media (max-width: 768px) {
+    html {
+        padding-block-end: 3em;
+    }
 }

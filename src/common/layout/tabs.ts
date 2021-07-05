@@ -1,5 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import Media, { Preference } from '@fyn-software/core/media.js';
 
 export enum Position
 {
@@ -55,7 +56,7 @@ export default class Tabs extends Component<Tabs>
                 this.$.content?.scrollTo({
                     left: this.$.content.getBoundingClientRect().width * n,
                     top: 0,
-                    behavior: Tabs.prefersReducedMotion ? 'auto' : 'smooth',
+                    behavior: Media.prefers(Preference.reducedMotion) ? 'auto' : 'smooth',
                 });
 
                 this.emit('switched', { index: n });

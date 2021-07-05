@@ -7,10 +7,11 @@ export declare enum Fit {
 export default class Image extends Component<Image> {
     static localName: string;
     static styles: string[];
-    src: string;
+    loading: boolean;
+    insecure: boolean;
     alt: string;
     fit: Fit;
-    loading: boolean;
+    src: string;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
 }

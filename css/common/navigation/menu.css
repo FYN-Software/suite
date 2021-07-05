@@ -3,6 +3,7 @@
     grid-auto-flow: column;
     gap: .5em;
     justify-content: start;
+    contain: size layout style;
 }
 
 :host([vertical]) {
