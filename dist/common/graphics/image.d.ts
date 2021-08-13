@@ -4,13 +4,19 @@ export declare enum Fit {
     cover = "cover",
     contain = "contain"
 }
-export default class Image extends Component<Image> {
+export declare enum Position {
+    start = "left",
+    center = "center",
+    end = "right"
+}
+export default class Image extends Component<Image, {}> {
     static localName: string;
     static styles: string[];
     loading: boolean;
     insecure: boolean;
     alt: string;
     fit: Fit;
+    position: Position;
     src: string;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;

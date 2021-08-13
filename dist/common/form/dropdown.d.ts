@@ -1,6 +1,5 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-import For from '@fyn-software/component/directive/for.js';
-export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, TValue> {
+export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, {}, TValue> {
     static localName: string;
     static styles: string[];
     private _options;
@@ -13,11 +12,10 @@ export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TVal
     filter: (filter: string, option: TValue) => Promise<boolean>;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
-    get optionElements(): unknown[];
-    get _optionsForDirective(): For<Dropdown<TValue>>;
-    _renderValue(): void;
-    _setWidth(): void;
-    _update(): Promise<void>;
-    _findIndex(value: TValue): number;
+    get optionElements(): Element[];
+    private _renderValue;
+    private _setWidth;
+    private _update;
+    private _findIndex;
 }
 //# sourceMappingURL=dropdown.d.ts.map

@@ -1,5 +1,10 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-export default class Slider extends FormAssociated<Slider, number> {
+declare type SliderEvents = {
+    input: {
+        value: number;
+    };
+};
+export default class Slider extends FormAssociated<Slider, SliderEvents, number> {
     static localName: string;
     static styles: string[];
     step: number;
@@ -13,4 +18,5 @@ export default class Slider extends FormAssociated<Slider, number> {
     protected ready(): Promise<void>;
     private valueToPercentage;
 }
+export {};
 //# sourceMappingURL=slider.d.ts.map

@@ -7,7 +7,7 @@ declare class Hlsa implements IColor {
     lightness: number;
     alpha: number;
 }
-export default class Color extends FormAssociated<Color, Hlsa> {
+export default class Color extends FormAssociated<Color, {}, Hlsa> {
     static localName: string;
     static styles: string[];
     constructor(...args: Array<any>);

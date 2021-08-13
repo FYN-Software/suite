@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Sparkline extends Component<Sparkline> {
+export default class Sparkline extends Component<Sparkline, {}> {
     static localName: string;
     static styles: string[];
     label: string;

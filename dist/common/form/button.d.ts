@@ -1,20 +1,20 @@
 import Component from '@fyn-software/component/component.js';
-export declare type ButtonEventsMap = {
+declare type ButtonEvents = {
     click: {
         action: string;
     };
 };
-export default class Button extends Component<Button> {
+export default class Button extends Component<Button, ButtonEvents> {
     static localName: string;
     static styles: string[];
     icons: Array<string>;
     iconType: string;
     action: string;
     tooltip: string;
-    multi: boolean;
     togglable: boolean;
     state: boolean;
     initialize(): Promise<void>;
     ready(): Promise<void>;
 }
+export {};
 //# sourceMappingURL=button.d.ts.map

@@ -1,17 +1,12 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property, range } from '@fyn-software/component/decorators.js';
 export default class Progress extends Component {
-    constructor() {
-        super(...arguments);
-        this.steps = [];
-        this.index = 0;
-    }
+    static localName = 'fyn-common-form-progress';
+    static styles = ['fyn.suite.base'];
+    steps = [];
+    index = 0;
+    verification;
     async initialize() {
         this.observe({
             index: async (o, n) => {
@@ -90,8 +85,6 @@ export default class Progress extends Component {
         return slot.assignedElements({ flatten: true });
     }
 }
-Progress.localName = 'fyn-common-form-progress';
-Progress.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Progress.prototype, "steps", void 0);

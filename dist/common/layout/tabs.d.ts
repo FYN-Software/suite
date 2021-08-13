@@ -12,7 +12,7 @@ export declare type Tab = {
     active: boolean;
     element: Element;
 };
-export default class Tabs extends Component<Tabs> {
+export default class Tabs extends Component<Tabs, {}> {
     static localName: string;
     static styles: string[];
     index: number;

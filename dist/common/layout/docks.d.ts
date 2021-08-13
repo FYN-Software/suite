@@ -11,7 +11,7 @@ export declare type Cell = {
     static: boolean;
     resize: Resize;
 };
-export default class Docks extends Component<Docks> {
+export default class Docks extends Component<Docks, {}> {
     static localName: string;
     static styles: string[];
     grid: string;

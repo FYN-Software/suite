@@ -1,20 +1,14 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 export default class Table extends Component {
-    constructor() {
-        super(...arguments);
-        this.headers = [];
-        this.rows = [];
-        this.select = Select.none;
-        this.templates = [];
-        this.selection = [1];
-    }
+    static localName = 'fyn-common-data-table';
+    static styles = ['fyn.suite.base'];
+    headers = [];
+    rows = [];
+    select = Select.none;
+    templates = [];
+    selection = [1];
     async initialize() {
         this.observe({
             select: (o, n) => {
@@ -89,8 +83,6 @@ export default class Table extends Component {
         this.shadow.setProperty('--columns', `${this.select === Select.none ? '' : 'auto'} repeat(${this.headers.length}, 1fr)`);
     }
 }
-Table.localName = 'fyn-common-data-table';
-Table.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Table.prototype, "headers", void 0);

@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Collapsible extends Component<Collapsible> {
+export default class Collapsible extends Component<Collapsible, {}> {
     static localName: string;
     static styles: string[];
     icons: string;

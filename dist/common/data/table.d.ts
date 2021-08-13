@@ -4,7 +4,7 @@ declare enum Select {
     single,
     multiple
 }
-export default class Table extends Component<Table> {
+export default class Table extends Component<Table, {}> {
     static localName: string;
     static styles: string[];
     headers: Array<string>;

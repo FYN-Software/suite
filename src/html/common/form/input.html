@@ -1,0 +1,14 @@
+<label :if="{{ label.length > 0 }}" part="label">{{ label }}{{ required ? '*' : '' }}</label>
+
+<input
+    id="value"
+    part="value"
+    type="{{ type }}"
+    value="{{ value }}"
+    inputmode="{{ inputmode }}"
+    placeholder=" "
+>
+
+<slot name="placeholder" :if="{{ value.length === 0 }}" part="placeholder" required="{{ required }}">{{ placeholder }}</slot>
+
+<span id="error">{{ error }}</span>

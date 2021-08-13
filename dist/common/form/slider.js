@@ -1,22 +1,16 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
 export default class Slider extends FormAssociated {
-    constructor() {
-        super(...arguments);
-        this.step = .1;
-        this.min = 0;
-        this.max = 360;
-        this.showPercentage = false;
-        this.showValue = false;
-        this.vertical = false;
-        this.snaps = [];
-    }
+    static localName = 'fyn-common-form-slider';
+    static styles = ['fyn.suite.base'];
+    step = .1;
+    min = 0;
+    max = 360;
+    showPercentage = false;
+    showValue = false;
+    vertical = false;
+    snaps = [];
     async initialize() {
         this.observe({
             value: (o, n) => {
@@ -55,8 +49,6 @@ export default class Slider extends FormAssociated {
         return (value - this.min) / (this.max - this.min);
     }
 }
-Slider.localName = 'fyn-common-form-slider';
-Slider.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Slider.prototype, "step", void 0);

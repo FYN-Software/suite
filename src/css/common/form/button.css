@@ -1,0 +1,128 @@
+:host {
+    position: relative;
+    display: grid;
+    grid-template-areas: 'icon';
+    grid-auto-flow: column;
+    grid-gap: .5em;
+    padding: .25em 1em;
+    background-color: var(--bg, rgba(var(--plain-fg-rgb), .1));
+    color: inherit;
+    border: .1em solid transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    line-height: 2em;
+    font-family: inherit;
+    font-size: 1em;
+    will-change: background-color;
+    transition: background-color .3s ease-in-out;
+    user-select: none;
+}
+
+:host([icon-after]) {
+    grid-template-areas: '. icon';
+}
+
+:host(:is(.primary, [primary])) {
+    background-color: var(--primary-bg);
+    color: var(--primary-fg);
+}
+
+:host(:is(.flat, [flat])) {
+    background-color: transparent;
+}
+
+:host(:is(.open, [open])) {
+    background-color: transparent;
+    border-color: var(--primary-bg);
+    color: var(--primary-bg);
+}
+
+:host(:is(.fab, [fab])) {
+    --radius: 50%;
+    justify-content: center;
+    inline-size: 3em;
+    block-size: 3em;
+    background-color: var(--primary-bg);
+    color: var(--primary-fg);
+}
+
+:host(:is(.start, [start])) {
+    justify-self: start;
+}
+
+:host(:is(.center, [center])) {
+    justify-self: center;
+}
+
+:host(:is(.end, [end])) {
+    justify-self: end;
+}
+
+:host > * {
+    pointer-events: none;
+}
+
+:host > fyn-common-graphics-icon {
+    inline-size: 1em;
+    grid-area: icon;
+}
+
+:host > ripple {
+    --size: 10em;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+:host > ripple > inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    inline-size: var(--size);
+    block-size: var(--size);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    background-color: #0003;
+    transform-origin: center center;
+}
+
+:host > ripple > inner[click] {
+    animation: ripple 1s ease-out forwards;
+}
+
+:host(:disabled) {
+    opacity: .25;
+}
+
+:host(:is(:hover, :focus)) {
+    color: var(--info-fg);
+    background-color: var(--info-bg);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--plain-fg);
+}
+
+:host(:is([active], :active)) {
+    color: var(--primary-fg);
+    background-color: var(--primary-bg);
+}
+
+@keyframes ripple {
+    0% {
+        opacity: 1;
+        transform: scale(0.1);
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        transform: scale(5);
+    }
+}

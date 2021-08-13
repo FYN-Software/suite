@@ -1,5 +1,11 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-export default class Input extends FormAssociated<Input> {
+export declare type InputEvents = {
+    change: {
+        old: string;
+        new: string;
+    };
+};
+export default class Input extends FormAssociated<Input, InputEvents> {
     static localName: string;
     static styles: string[];
     placeholder: string;

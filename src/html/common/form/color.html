@@ -1,0 +1,24 @@
+<label :if="{{ label.length > 0 }}">{{ label }}</label>
+
+<value>
+</value>
+
+<box>
+    <gradient>
+        <handle></handle>
+    </gradient>
+
+    <fyn-common-form-slider vertical></fyn-common-form-slider>
+
+    <fyn-common-form-slider horizontal min="0" max="1"></fyn-common-form-slider>
+
+    <block area="1"></block>
+
+    <block area="2"></block>
+
+    <fyn-common-form-group end>
+        <fyn-common-form-button action="submit" primary>t_apply</fyn-common-form-button>
+
+        <fyn-common-form-button action="cancel" flat>t_cancel</fyn-common-form-button>
+    </fyn-common-form-group>
+</box>

@@ -1,20 +1,14 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.esm.js';
 export default class Donut extends Component {
-    constructor() {
-        super(...arguments);
-        this.label = '';
-        this.group = '';
-        this.legend = false;
-        this.data = [];
-    }
+    static localName = 'fyn-common-data-chart-donut';
+    static styles = ['fyn.suite.base', 'fyn.suite.apexcharts'];
+    label = '';
+    group = '';
+    legend = false;
+    data = [];
     async initialize() {
         return Promise.resolve(undefined);
     }
@@ -67,8 +61,6 @@ export default class Donut extends Component {
         });
     }
 }
-Donut.localName = 'fyn-common-data-chart-donut';
-Donut.styles = ['fyn.suite.base', 'fyn.suite.apexcharts', 'global.theme'];
 __decorate([
     property()
 ], Donut.prototype, "label", void 0);

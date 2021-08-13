@@ -1,9 +1,4 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Media, { Preference } from '@fyn-software/core/media.js';
@@ -16,20 +11,21 @@ export var Position;
     Position[Position["bottom"] = 4] = "bottom";
 })(Position || (Position = {}));
 export default class Tabs extends Component {
-    constructor() {
-        super(...arguments);
-        this.index = -1;
-        this.tabs = [];
-        this.delimiter = '';
-        this.closable = false;
-        this.position = Position.none;
-        this._observer = new MutationObserver(mutations => {
-            for (const m of mutations.filter(m => m.attributeName === 'tab-title')) {
-                const tab = this.tabs.find(t => t.element === m.target);
-                tab.title = m.target.getAttribute('tab-title') ?? '';
-            }
-        });
-    }
+    static localName = 'fyn-common-layout-tabs';
+    static styles = ['fyn.suite.base'];
+    index = -1;
+    tabs = [];
+    delimiter = '';
+    closable = false;
+    position = Position.none;
+    _observer = new MutationObserver(mutations => {
+        for (const m of mutations.filter(m => m.attributeName === 'tab-title')) {
+            const tab = this.tabs.find(t => t.element === m.target);
+            tab.title = m.target.getAttribute('tab-title') ?? '';
+        }
+    });
+    _animation;
+    _timeline;
     async initialize() {
         this.observe({
             index: async (o, n) => {
@@ -162,8 +158,6 @@ export default class Tabs extends Component {
         return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 }
-Tabs.localName = 'fyn-common-layout-tabs';
-Tabs.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Tabs.prototype, "index", void 0);

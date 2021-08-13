@@ -2,7 +2,10 @@
     "name": "@fyn-software/suite",
     "description": "FYN Component Suite",
     "version": "0.0.4",
-    "main": "grammer.js",
+    "type": "module",
+    "exports": {
+        "./*": "./dist/*"
+    },
     "scripts": {},
     "repository": {
         "type": "git",
@@ -19,7 +22,6 @@
         "access": "public"
     },
     "dependencies": {
-        "@fyn-software/component": "^0.1.0",
-        "@fyn-software/suite": "^0.1.0"
+        "tslib": "^2.3.0"
     }
 }

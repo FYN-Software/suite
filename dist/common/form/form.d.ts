@@ -1,6 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-export default class Form extends Component<Form> {
+export default class Form extends Component<Form, {}> {
     static localName: string;
     static styles: string[];
     title: string;
@@ -8,7 +8,7 @@ export default class Form extends Component<Form> {
     messages: Array<string>;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
-    submit(): any;
+    submit(): {} | undefined;
     clear(): void;
     get elements(): Array<FormAssociated<any, any>>;
 }

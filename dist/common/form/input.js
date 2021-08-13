@@ -1,18 +1,12 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
 export default class Input extends FormAssociated {
-    constructor() {
-        super(...arguments);
-        this.placeholder = '';
-        this.regex = '(?!\\n).';
-        this.inputmode = '';
-    }
+    static localName = 'fyn-common-form-input';
+    static styles = ['fyn.suite.base'];
+    placeholder = '';
+    regex = '(?!\\n).';
+    inputmode = '';
     async initialize() {
         this.shadow.on('input', {
             options: {
@@ -64,8 +58,6 @@ export default class Input extends FormAssociated {
         this.shadow.querySelector('input').focus();
     }
 }
-Input.localName = 'fyn-common-form-input';
-Input.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Input.prototype, "placeholder", void 0);

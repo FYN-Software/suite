@@ -1,9 +1,4 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 export var Mode;
@@ -12,17 +7,16 @@ export var Mode;
     Mode[Mode["grow"] = 1] = "grow";
 })(Mode || (Mode = {}));
 export default class Dialog extends Component {
-    constructor() {
-        super(...arguments);
-        this.title = '';
-        this.img = '';
-        this.width = 0;
-        this.height = 0;
-        this.left = 0;
-        this.top = 0;
-        this.mode = Mode.grow;
-        this.resizable = false;
-    }
+    static localName = 'fyn-common-overlay-dialog';
+    static styles = ['fyn.suite.base'];
+    title = '';
+    img = '';
+    width = 0;
+    height = 0;
+    left = 0;
+    top = 0;
+    mode = Mode.grow;
+    resizable = false;
     static get animations() {
         return {
             open: [
@@ -100,8 +94,6 @@ export default class Dialog extends Component {
         return res;
     }
 }
-Dialog.localName = 'fyn-common-overlay-dialog';
-Dialog.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Dialog.prototype, "title", void 0);

@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Flag extends Component<Flag> {
+export default class Flag extends Component<Flag, {}> {
     static localName: string;
     static styles: string[];
     iso: string;

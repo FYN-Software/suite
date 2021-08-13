@@ -1,5 +1,7 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 export default class Datetime extends FormAssociated {
+    static localName = 'fyn-common-form-button';
+    static styles = ['fyn.suite.base'];
     async initialize() {
     }
     async ready() {
@@ -20,6 +22,4 @@ export default class Datetime extends FormAssociated {
         });
     }
 }
-Datetime.localName = 'fyn-common-form-button';
-Datetime.styles = ['fyn.suite.base', 'global.theme'];
 //# sourceMappingURL=datetime.js.map

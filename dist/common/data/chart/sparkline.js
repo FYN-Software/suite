@@ -1,20 +1,15 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 import ApexCharts from 'https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.esm.js';
 export default class Sparkline extends Component {
-    constructor() {
-        super(...arguments);
-        this.label = '';
-        this.value = '';
-        this.group = '';
-        this._data = [30, 40, 35, 50, 49, 60, 70, 91, 125].sort(() => 0.5 - Math.random()).map((it, i) => ({ x: i, y: it }));
-    }
+    static localName = 'fyn-common-data-chart-sparkline';
+    static styles = ['fyn.suite.base', 'fyn.suite.apexcharts'];
+    label = '';
+    value = '';
+    group = '';
+    _chart;
+    _data = [30, 40, 35, 50, 49, 60, 70, 91, 125].sort(() => 0.5 - Math.random()).map((it, i) => ({ x: i, y: it }));
     async initialize() {
     }
     async ready() {
@@ -99,8 +94,6 @@ export default class Sparkline extends Component {
         }, 1000);
     }
 }
-Sparkline.localName = 'fyn-common-data-chart-sparkline';
-Sparkline.styles = ['fyn.suite.base', 'fyn.suite.apexcharts', 'global.theme'];
 __decorate([
     property()
 ], Sparkline.prototype, "label", void 0);

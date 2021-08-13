@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Donut extends Component<Donut> {
+export default class Donut extends Component<Donut, {}> {
     static localName: string;
     static styles: string[];
     label: string;

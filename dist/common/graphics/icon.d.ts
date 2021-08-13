@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Icon extends Component<Icon> {
+export default class Icon extends Component<Icon, {}> {
     static localName: string;
     static styles: string[];
     icons: Array<string>;

@@ -1,0 +1,45 @@
+:host {
+    --img-radius: 0;
+    display: grid;
+    grid: 100% / 100%;
+    place-items: center;
+    position: relative;
+    border-radius: var(--img-radius);
+    transition: opacity .3s ease-in-out;
+    contain: content;
+}
+
+:host::after {
+    content: '\f254';
+    display: block;
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    color: #fff;
+}
+
+:host > slot {
+    display: contents;
+    border: inherit;
+}
+
+:host > img {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: var(--fit, contain);
+    object-position: var(--position, center);
+    border-radius: inherit;
+    transition: opacity .3s linear;
+}
+
+:host([loading]) > img {
+    opacity: 0;
+}
+
+:host(:not([loading]))::after {
+    opacity: 0;
+}

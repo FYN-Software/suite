@@ -1,32 +1,20 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import { equals } from '@fyn-software/core/extends.js';
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
-import Template from '@fyn-software/component/template.js';
 import Container from '@fyn-software/component/container.js';
 export default class Dropdown extends FormAssociated {
-    constructor() {
-        super(...arguments);
-        this._options = [];
-        this._container = new Container('<options></options>');
-        this.options = [];
-        this.index = -1;
-        this.search = '';
-        this.placeholder = '';
-        this.filterable = false;
-        this.filter = async (f, o) => Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(f));
-    }
+    static localName = 'fyn-common-form-dropdown';
+    static styles = ['fyn.suite.base'];
+    _options = [];
+    _container = new Container(() => document.createElement('options'));
+    options = [];
+    index = -1;
+    search = '';
+    placeholder = '';
+    filterable = false;
+    filter = async (f, o) => Object.values(o).some(v => typeof v === 'string' && v.toLowerCase().includes(f));
     async initialize() {
-        this.shadow.on('#templateContainer', {
-            slotchange: async (e, slot) => {
-                this._optionsForDirective.fragment = await Template.scanSlot(slot, ['option']);
-            },
-        });
         this.observe({
             options: async () => {
                 await this._update();
@@ -44,7 +32,6 @@ export default class Dropdown extends FormAssociated {
         });
     }
     async ready() {
-        this._container.shadow.adoptedStyleSheets = [...this._container.shadow.adoptedStyleSheets, this.shadow.style];
         this._container.shadow.on('options > *', {
             click: (_, t) => {
                 this.index = t.index;
@@ -52,7 +39,6 @@ export default class Dropdown extends FormAssociated {
             },
         });
         const node = this._container.shadow.querySelector('options');
-        this._optionsForDirective.transferTo(node);
         node.on({
             rendered: async (_, t) => {
                 await (this.index = this._findIndex(this.value));
@@ -97,9 +83,6 @@ export default class Dropdown extends FormAssociated {
     get optionElements() {
         return Array.from(this._container.shadow.querySelectorAll('options > *'));
     }
-    get _optionsForDirective() {
-        return Template.getDirectivesFor(this.shadow.querySelector('options'))[':for'];
-    }
     _renderValue() {
         const c = this.shadow.querySelector('fyn-common-form-button > value');
         c.childNodes.clear();
@@ -120,8 +103,6 @@ export default class Dropdown extends FormAssociated {
         return this.options.findIndex(o => equals(o, value));
     }
 }
-Dropdown.localName = 'fyn-common-form-dropdown';
-Dropdown.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Dropdown.prototype, "options", void 0);

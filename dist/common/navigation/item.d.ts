@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Item extends Component<Item> {
+export default class Item extends Component<Item, {}> {
     static localName: string;
     static styles: string[];
     route: string;

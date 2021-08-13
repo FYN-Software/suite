@@ -1,9 +1,4 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Media, { Preference } from '@fyn-software/core/media.js';
@@ -13,15 +8,21 @@ export var Fit;
     Fit["cover"] = "cover";
     Fit["contain"] = "contain";
 })(Fit || (Fit = {}));
+export var Position;
+(function (Position) {
+    Position["start"] = "left";
+    Position["center"] = "center";
+    Position["end"] = "right";
+})(Position || (Position = {}));
 export default class Image extends Component {
-    constructor() {
-        super(...arguments);
-        this.loading = false;
-        this.insecure = false;
-        this.alt = '';
-        this.fit = Fit.contain;
-        this.src = '';
-    }
+    static localName = 'fyn-common-graphics-image';
+    static styles = ['fyn.suite.base'];
+    loading = false;
+    insecure = false;
+    alt = '';
+    fit = Fit.contain;
+    position = Position.center;
+    src = '';
     async initialize() {
         this.observe({
             src: async (o, n) => {
@@ -59,8 +60,6 @@ export default class Image extends Component {
     async ready() {
     }
 }
-Image.localName = 'fyn-common-graphics-image';
-Image.styles = ['fyn.suite.base', 'global.theme'];
 __decorate([
     property()
 ], Image.prototype, "loading", void 0);
@@ -73,6 +72,9 @@ __decorate([
 __decorate([
     property({ bindToCSS: v => String(v) })
 ], Image.prototype, "fit", void 0);
+__decorate([
+    property({ bindToCSS: v => String(v) })
+], Image.prototype, "position", void 0);
 __decorate([
     property()
 ], Image.prototype, "src", void 0);

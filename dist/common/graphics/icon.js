@@ -1,28 +1,21 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 export default class Icon extends Component {
-    constructor() {
-        super(...arguments);
-        this.icons = [];
-        this.type = 'fas';
-    }
+    static localName = 'fyn-common-graphics-icon';
+    static styles = ['fyn.suite.base'];
+    icons = [];
+    type = 'fas';
     async initialize() {
         this.observe({
-            icons: (o, n) => {
+            icons: () => {
+                this.attributes.setOnAssert(this.icons.length > 0, 'shown');
             },
         });
     }
     async ready() {
     }
 }
-Icon.localName = 'fyn-common-graphics-icon';
-Icon.styles = ['fyn.suite.base', 'fyn.suite.fontawesome', 'global.theme'];
 __decorate([
     property({
         set(v) {

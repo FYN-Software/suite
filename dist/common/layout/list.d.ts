@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class List extends Component<List> {
+export default class List extends Component<List, {}> {
     static localName: string;
     static styles: string[];
     sortable: boolean;

@@ -3,7 +3,7 @@ export declare enum Mode {
     static = 0,
     grow = 1
 }
-export default class Dialog extends Component<Dialog> {
+export default class Dialog extends Component<Dialog, {}> {
     static localName: string;
     static styles: string[];
     title: string;

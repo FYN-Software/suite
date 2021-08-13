@@ -14,7 +14,7 @@ export declare type Command = {
 export declare type GroupedCommandList = Array<{
     [key: string]: Command;
 }>;
-export default class Context extends Component<Context> {
+export default class Context extends Component<Context, {}> {
     static localName: string;
     static styles: string[];
     commands: GroupedCommandList;

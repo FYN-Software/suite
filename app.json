@@ -3,20 +3,16 @@
     "components": [
         {
             "namespace": "fyn-common",
-            "html": "html/common/",
-            "css": "css/common/",
-            "ts": "src/common/"
+            "html": "src/html/common/",
+            "css": "src/css/common/",
+            "ts": "src/ts/common/",
+            "import": "@fyn-software/suite/common/"
         }
     ],
-    "stylesheets": [
-        [ "fyn.suite.preload", "./css/preload.css" ],
-        [ "fyn.suite.base", "./css/style.css" ],
-        [ "fyn.suite.fontawesome", "https://use.fontawesome.com/releases/v5.13.0/css/all.css", {
-            "mode": "cors",
-            "credentials": "omit",
-            "referrerPolicy": "no-referrer",
-            "integrity": "sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
-        } ],
-        [ "fyn.suite.apexcharts", "https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.css" ]
-    ]
+    "stylesheets": {
+        "fyn.suite.preload": "./src/css/preload.css",
+        "fyn.suite.base": "./src/css/style.css",
+        "fyn.suite.fontawesome": "https://use.fontawesome.com/releases/v5.15.3/css/all.css",
+        "fyn.suite.apexcharts": "https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.css"
+    }
 }
