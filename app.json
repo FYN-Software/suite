@@ -11,7 +11,8 @@
     ],
     "stylesheets": {
         "fyn.suite.preload": "./src/css/preload.css",
-        "fyn.suite.base": "./src/css/style.css",
+        "fyn.suite.global": "./src/css/style.css",
+        "fyn.suite.base": "./src/css/base.css",
         "fyn.suite.fontawesome": "https://use.fontawesome.com/releases/v5.15.3/css/all.css",
         "fyn.suite.apexcharts": "https://cdn.jsdelivr.net/npm/apexcharts@3.11.1/dist/apexcharts.css"
     }

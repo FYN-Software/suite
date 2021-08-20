@@ -18,7 +18,11 @@ export type Tab = {
     element: Element,
 };
 
-export default class Tabs extends Component<Tabs, {}>
+type TabsEvents = {
+    switched: { index: number };
+};
+
+export default class Tabs extends Component<Tabs, TabsEvents>
 {
     static localName = 'fyn-common-layout-tabs';
     static styles = [ 'fyn.suite.base' ];
@@ -239,10 +243,5 @@ export default class Tabs extends Component<Tabs, {}>
                 // timeline: this._timeline,
             }
         );
-    }
-
-    private static get prefersReducedMotion()
-    {
-        return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 }

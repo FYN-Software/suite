@@ -13,7 +13,5 @@
 </fyn-common-form-button>
 
 <options :for="{{ i, option of _options }}" part="options" style="display: none">
-    <template>
-        <span>{{ option.text ?? option.value ?? '' }}</span>
-    </template>
+    <span>{{ option.text ?? option.value ?? '' }}</span>
 </options>

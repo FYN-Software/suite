@@ -154,9 +154,6 @@ export default class Tabs extends Component {
             fill: 'both',
         });
     }
-    static get prefersReducedMotion() {
-        return globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
 }
 __decorate([
     property()

@@ -1,7 +1,6 @@
 import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
-import { Position } from './tabs.js';
 export var Resize;
 (function (Resize) {
     Resize[Resize["none"] = 0] = "none";
@@ -35,12 +34,6 @@ export default class Docks extends Component {
         await this.isReady;
         const tabs = this.$[cell];
         tabs.index = tabs.tabs.length - 1;
-    }
-    get Position() {
-        return Position;
-    }
-    get Resize() {
-        return Resize;
     }
 }
 __decorate([

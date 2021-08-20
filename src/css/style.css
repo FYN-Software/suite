@@ -16,10 +16,6 @@ body {
     overflow: clip visible;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 a {
     color: var(--info-bg);
 }

@@ -1,10 +1,15 @@
-import { equals } from '@fyn-software/core/extends.js';
+import { clamp, equals } from '@fyn-software/core/extends.js';
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Container from '@fyn-software/component/container.js';
 import Input  from './input.js';
+import Button from './button.js';
 
-export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, {}, TValue>
+type DropdownEvents<TValue> = {
+    change: { old: TValue, new: TValue };
+};
+
+export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, DropdownEvents<TValue>, TValue>
 {
     static localName = 'fyn-common-form-dropdown';
     static styles = [ 'fyn.suite.base' ];
@@ -54,7 +59,6 @@ export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TVal
 
     protected async ready(): Promise<void>
     {
-        // this._container.shadow.adoptedStyleSheets = [ ...this._container.shadow.adoptedStyleSheets, this.shadow.style ];
         this._container.shadow.on('options > *', {
             click: (_, t) => {
                 this.index = t.index;
@@ -66,10 +70,12 @@ export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TVal
         const node = this._container.shadow.querySelector('options')!;
         // this._optionsForDirective.transferTo(node);
         node.on({
-            rendered: async (_, t) => {
-                await (this.index = this._findIndex(this.value));
+            rendered: async (e, t) => {
+                console.log(e, t);
 
-                this._renderValue();
+                // await (this.index = this._findIndex(this.value));
+                //
+                // this._renderValue();
             },
         })
 
@@ -81,10 +87,10 @@ export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TVal
             this._container.style.setProperty('--x', `${rect.x}px`);
             this._container.style.setProperty('--y', `${rect.bottom}px`);
             this._container.style.setProperty('--w', `${rect.width}px`);
-            this._container.style.setProperty('--h', `${Math.clamp(50, 500, globalThis.innerHeight - rect.bottom)}px`);
+            this._container.style.setProperty('--h', `${clamp(50, 500, globalThis.innerHeight - rect.bottom)}px`);
         };
 
-        this.shadow.on('fyn-common-form-button', {
+        this.shadow.on<Button>('fyn-common-form-button', {
             click: (_, t) => {
                 positionContainer();
 

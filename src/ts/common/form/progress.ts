@@ -2,7 +2,7 @@ import Component from '@fyn-software/component/component.js';
 import { property, range } from '@fyn-software/component/decorators.js';
 import Button from './button.js';
 
-export default class Progress extends Component<Progress, {}>
+export default class Progress extends Component<Progress, { submit: never, cancel: never }>
 {
     static localName = 'fyn-common-form-progress';
     static styles = [ 'fyn.suite.base' ];
@@ -64,7 +64,7 @@ export default class Progress extends Component<Progress, {}>
             },
         });
 
-        this.shadow.on<Button, { click: { action: string } }>('footer > [action]', {
+        this.shadow.on<Button>('footer > [action]', {
             click: async ({ action }) => {
                 const a = action === 'next' || action === 'submit'
                     ? 'submit'

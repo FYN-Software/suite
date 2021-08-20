@@ -12,7 +12,12 @@ export declare type Tab = {
     active: boolean;
     element: Element;
 };
-export default class Tabs extends Component<Tabs, {}> {
+declare type TabsEvents = {
+    switched: {
+        index: number;
+    };
+};
+export default class Tabs extends Component<Tabs, TabsEvents> {
     static localName: string;
     static styles: string[];
     index: number;
@@ -31,6 +36,6 @@ export default class Tabs extends Component<Tabs, {}> {
     private _detect;
     private _pageIterator;
     private _setIndicatorAnimation;
-    private static get prefersReducedMotion();
 }
+export {};
 //# sourceMappingURL=tabs.d.ts.map

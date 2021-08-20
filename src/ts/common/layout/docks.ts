@@ -15,7 +15,7 @@ export type Cell = {
     resize: Resize;
 }
 
-export default class Docks extends Component<Docks, {}>
+export default class Docks extends Component<Docks>
 {
     static localName = 'fyn-common-layout-docks';
     static styles = [ 'fyn.suite.base' ];
@@ -35,7 +35,7 @@ export default class Docks extends Component<Docks, {}>
 
     protected async ready(): Promise<void>
     {
-        this.shadow.on('fyn-common-layout-tabs.docked', {
+        this.shadow.on<Tabs>('fyn-common-layout-tabs.docked', {
             switched: ({ index }, t) => {
                 t.attributes.setOnAssert(index > -1, 'open');
             },
@@ -61,15 +61,5 @@ export default class Docks extends Component<Docks, {}>
         const tabs = this.$[cell] as unknown as Tabs;
 
         tabs.index = tabs.tabs.length - 1;
-    }
-
-    get Position()
-    {
-        return Position;
-    }
-
-    get Resize()
-    {
-        return Resize;
     }
 }

@@ -1,5 +1,5 @@
 import { __decorate } from "tslib";
-import { equals } from '@fyn-software/core/extends.js';
+import { clamp, equals } from '@fyn-software/core/extends.js';
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Container from '@fyn-software/component/container.js';
@@ -40,9 +40,8 @@ export default class Dropdown extends FormAssociated {
         });
         const node = this._container.shadow.querySelector('options');
         node.on({
-            rendered: async (_, t) => {
-                await (this.index = this._findIndex(this.value));
-                this._renderValue();
+            rendered: async (e, t) => {
+                console.log(e, t);
             },
         });
         document.body.appendChild(this._container);
@@ -51,7 +50,7 @@ export default class Dropdown extends FormAssociated {
             this._container.style.setProperty('--x', `${rect.x}px`);
             this._container.style.setProperty('--y', `${rect.bottom}px`);
             this._container.style.setProperty('--w', `${rect.width}px`);
-            this._container.style.setProperty('--h', `${Math.clamp(50, 500, globalThis.innerHeight - rect.bottom)}px`);
+            this._container.style.setProperty('--h', `${clamp(50, 500, globalThis.innerHeight - rect.bottom)}px`);
         };
         this.shadow.on('fyn-common-form-button', {
             click: (_, t) => {

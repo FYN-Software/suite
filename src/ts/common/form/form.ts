@@ -3,7 +3,17 @@ import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Button from './button.js';
 
-export default class Form extends Component<Form, {}>
+type FormEvents = {
+    success: {
+        success: true;
+        [key: string]: any;
+    };
+    cancel: {
+        success: false;
+    };
+};
+
+export default class Form extends Component<Form, FormEvents>
 {
     static localName = 'fyn-common-form-form';
     static styles = [ 'fyn.suite.base' ];
@@ -38,7 +48,7 @@ export default class Form extends Component<Form, {}>
             },
         });
 
-        this.on<Button, { click: { action: string } }>('[slot="buttons"][action]', {
+        this.on<Button>('[slot="buttons"][action]', {
             click: ({ action }) => {
                 switch(action)
                 {
@@ -63,7 +73,7 @@ export default class Form extends Component<Form, {}>
 
         const f = elements
             .filter(c => typeof c?.name === 'string' && c?.value !== undefined)
-            .reduce((t, c) => Object.assign(t, { [c.name]: c.value }), {});
+            .reduce((t: {}, c: FormAssociated<any, any>) => ({ ...t, [c.name]: c.value }), {});
 
         this.emit('success', { success: true, ...f });
 

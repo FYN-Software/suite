@@ -1,5 +1,11 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, {}, TValue> {
+declare type DropdownEvents<TValue> = {
+    change: {
+        old: TValue;
+        new: TValue;
+    };
+};
+export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, DropdownEvents<TValue>, TValue> {
     static localName: string;
     static styles: string[];
     private _options;
@@ -18,4 +24,5 @@ export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TVal
     private _update;
     private _findIndex;
 }
+export {};
 //# sourceMappingURL=dropdown.d.ts.map

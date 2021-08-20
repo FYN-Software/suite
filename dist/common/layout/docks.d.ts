@@ -11,7 +11,7 @@ export declare type Cell = {
     static: boolean;
     resize: Resize;
 };
-export default class Docks extends Component<Docks, {}> {
+export default class Docks extends Component<Docks> {
     static localName: string;
     static styles: string[];
     grid: string;
@@ -20,7 +20,5 @@ export default class Docks extends Component<Docks, {}> {
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
     add(cell: number, element: Element, title: string, closable: boolean): Promise<void>;
-    get Position(): typeof Position;
-    get Resize(): typeof Resize;
 }
 //# sourceMappingURL=docks.d.ts.map

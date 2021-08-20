@@ -1,6 +1,15 @@
 import Component from '@fyn-software/component/component.js';
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-export default class Form extends Component<Form, {}> {
+declare type FormEvents = {
+    success: {
+        success: true;
+        [key: string]: any;
+    };
+    cancel: {
+        success: false;
+    };
+};
+export default class Form extends Component<Form, FormEvents> {
     static localName: string;
     static styles: string[];
     title: string;
@@ -12,4 +21,5 @@ export default class Form extends Component<Form, {}> {
     clear(): void;
     get elements(): Array<FormAssociated<any, any>>;
 }
+export {};
 //# sourceMappingURL=form.d.ts.map

@@ -1,5 +1,5 @@
 import Component from '@fyn-software/component/component.js';
-export default class Grid extends Component<Grid, {}> {
+export default class Grid extends Component<Grid> {
     static localName: string;
     static styles: string[];
     grid: string;

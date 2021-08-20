@@ -1,7 +1,7 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 
-export default class Grid extends Component<Grid, {}>
+export default class Grid extends Component<Grid>
 {
     static localName = 'fyn-common-layout-grid';
     static styles = [ 'fyn.suite.base' ];

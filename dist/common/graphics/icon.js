@@ -3,7 +3,7 @@ import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 export default class Icon extends Component {
     static localName = 'fyn-common-graphics-icon';
-    static styles = ['fyn.suite.base'];
+    static styles = ['fyn.suite.base', 'fyn.suite.fontawesome'];
     icons = [];
     type = 'fas';
     async initialize() {

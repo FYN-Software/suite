@@ -1,5 +1,8 @@
 import Component from '@fyn-software/component/component.js';
-export default class Progress extends Component<Progress, {}> {
+export default class Progress extends Component<Progress, {
+    submit: never;
+    cancel: never;
+}> {
     static localName: string;
     static styles: string[];
     steps: Array<string>;

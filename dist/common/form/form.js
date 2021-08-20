@@ -40,7 +40,7 @@ export default class Form extends Component {
         }
         const f = elements
             .filter(c => typeof c?.name === 'string' && c?.value !== undefined)
-            .reduce((t, c) => Object.assign(t, { [c.name]: c.value }), {});
+            .reduce((t, c) => ({ ...t, [c.name]: c.value }), {});
         this.emit('success', { success: true, ...f });
         return f;
     }
