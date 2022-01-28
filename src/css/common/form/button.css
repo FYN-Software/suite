@@ -5,7 +5,7 @@
     grid-auto-flow: column;
     grid-gap: .5em;
     padding: .25em 1em;
-    background-color: var(--bg, rgba(var(--plain-fg-rgb), .1));
+    background-color: var(--plain-bg);
     color: inherit;
     border: .1em solid transparent;
     border-radius: var(--radius);
@@ -25,6 +25,26 @@
 :host(:is(.primary, [primary])) {
     background-color: var(--primary-bg);
     color: var(--primary-fg);
+}
+
+:host(.positive) {
+    background-color: var(--positive-bg);
+    color: var(--positive-fg);
+}
+
+:host(.negative) {
+    background-color: var(--negative-bg);
+    color: var(--negative-fg);
+}
+
+:host(.warning) {
+    background-color: var(--warning-bg);
+    color: var(--warning-fg);
+}
+
+:host(.info) {
+    background-color: var(--info-bg);
+    color: var(--info-fg);
 }
 
 :host(:is(.flat, [flat])) {
@@ -98,10 +118,6 @@
     animation: ripple 1s ease-out forwards;
 }
 
-:host(:disabled) {
-    opacity: .25;
-}
-
 :host(:is(:hover, :focus)) {
     color: var(--info-fg);
     background-color: var(--info-bg);
@@ -112,6 +128,12 @@
 :host(:is([active], :active)) {
     color: var(--primary-fg);
     background-color: var(--primary-bg);
+}
+
+:host(:disabled),
+:host(.disabled) {
+    color: var(--plain-bg) !important;
+    background-color: var(--plain-fg) !important;
 }
 
 @keyframes ripple {

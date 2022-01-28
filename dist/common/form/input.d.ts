@@ -5,7 +5,7 @@ export declare type InputEvents = {
         new: string;
     };
 };
-export default class Input extends FormAssociated<Input, InputEvents> {
+export default class Input<TTYpe = string | number | Date> extends FormAssociated<Input<TTYpe>, InputEvents, TTYpe> {
     static localName: string;
     static styles: string[];
     placeholder: string;

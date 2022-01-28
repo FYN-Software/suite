@@ -84,10 +84,12 @@
     inline-size: 100%;
     block-size: 100%;
     overflow-x: hidden;
+    scroll-snap-type: x mandatory;
 }
 
 :host > main > slot::slotted(*) {
     padding: 1em;
+    scroll-snap-align: center;
 }
 
 :host([static="true"]) {

@@ -1,6 +1,7 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Tabs, { Position } from './tabs.js';
+import { setAttributeOnAssert } from '@fyn-software/core/function/dom.js';
 
 export enum Resize
 {
@@ -37,7 +38,7 @@ export default class Docks extends Component<Docks>
     {
         this.shadow.on<Tabs>('fyn-common-layout-tabs.docked', {
             switched: ({ index }, t) => {
-                t.attributes.setOnAssert(index > -1, 'open');
+                setAttributeOnAssert(t, index > -1, 'open');
             },
         })
     }

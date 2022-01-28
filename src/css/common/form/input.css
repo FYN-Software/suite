@@ -74,7 +74,7 @@
     inline-size: calc(100% - var(--padding));
     transition: .3s;
     pointer-events: none;
-    color: var(--failure-bg);
+    color: var(--negative-bg);
     font-size: .8em;
     line-height: 1em;
     user-select: none;
@@ -101,7 +101,7 @@
 }
 
 :host(:invalid) > input {
-    border-color: var(--failure-bg);
+    border-color: var(--negative-bg);
 }
 
 :host(:valid) > span {

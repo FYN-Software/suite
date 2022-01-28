@@ -6,7 +6,7 @@ export default class Progress extends Component {
     static styles = ['fyn.suite.base'];
     steps = [];
     index = 0;
-    verification;
+    verification = async () => true;
     async initialize() {
         this.observe({
             index: async (o, n) => {
@@ -24,13 +24,9 @@ export default class Progress extends Component {
             },
         });
         this.shadow.on('main > slot', {
-            slotchange: async () => {
-                await (this.index = -1);
-                const pages = this.pages;
-                this.steps = pages.map(s => s.getAttribute('step') ?? '-');
-                await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
-            },
+            slotchange: () => this.#detect(),
         });
+        await this.#detect();
     }
     async ready() {
         this.shadow.on({
@@ -48,7 +44,7 @@ export default class Progress extends Component {
                 const a = action === 'next' || action === 'submit'
                     ? 'submit'
                     : 'cancel';
-                if (await this.verification?.invoke(a, this.pages[this.index], this.index) !== true) {
+                if (await this.verification(a, this.pages[this.index], this.index) !== true) {
                     return;
                 }
                 switch (action) {
@@ -83,6 +79,12 @@ export default class Progress extends Component {
             return [];
         }
         return slot.assignedElements({ flatten: true });
+    }
+    async #detect() {
+        await (this.index = -1);
+        const pages = this.pages;
+        this.steps = pages.map(s => s.getAttribute('step') ?? '-');
+        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
     }
 }
 __decorate([

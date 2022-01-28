@@ -1,0 +1,32 @@
+<inner>
+    <handlers :if="{{ resizable }}">
+        <handler corner="bottom-left"></handler>
+        <handler side="left"></handler>
+        <handler corner="top-left"></handler>
+        <handler side="top"></handler>
+        <handler corner="top-right"></handler>
+        <handler side="right"></handler>
+        <handler corner="bottom-right"></handler>
+        <handler side="bottom"></handler>
+    </handlers>
+    
+    <header part="header">
+        <h1 :if="{{ title.length > 0 }}" part="title">{{ title }}</h1>
+        
+        <fyn-common-graphics-image src="{{ img }}"></fyn-common-graphics-image>
+        
+        <slot name="header"></slot>
+    </header>
+    
+    <main part="main">
+        <inner :for="{{ item of items }}" part="inner">
+            <span>{{ item }}</span>
+        </inner>
+    </main>
+    
+    <footer part="footer">
+        <slot name="footer">
+            <fyn-common-form-button action="cancel">Cancel</fyn-common-form-button>
+        </slot>
+    </footer>
+</inner>

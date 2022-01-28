@@ -1,5 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import { toggleAttribute } from '@fyn-software/core/function/dom.js';
 
 export default class Collapsible extends Component<Collapsible, {}>
 {
@@ -21,7 +22,7 @@ export default class Collapsible extends Component<Collapsible, {}>
     {
         this.shadow.on('[title], fyn-common-graphics-icon', {
             click: () => {
-                this.attributes.toggle('closed');
+                toggleAttribute(this, 'closed');
 
                 this.emit('toggle', { open: this.hasAttribute('closed') === false });
             },

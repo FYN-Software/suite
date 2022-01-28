@@ -1,9 +1,9 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
-export default class Checkbox extends FormAssociated<Checkbox, boolean | undefined> {
+export default class Checkbox extends FormAssociated<Checkbox, {}, boolean | undefined> {
     static localName: string;
     static styles: string[];
     toggle: boolean;
-    checked?: boolean;
+    get checked(): boolean | undefined;
     locked: boolean;
     closable: boolean;
     protected initialize(): Promise<void>;

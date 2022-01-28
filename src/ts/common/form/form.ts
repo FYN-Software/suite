@@ -62,7 +62,7 @@ export default class Form extends Component<Form, FormEvents>
         });
     }
 
-    public submit()
+    public submit(): any
     {
         const elements = this.elements;
 

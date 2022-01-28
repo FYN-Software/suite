@@ -7,12 +7,11 @@ declare type ButtonEvents = {
 export default class Button extends Component<Button, ButtonEvents> {
     static localName: string;
     static styles: string[];
-    icons: Array<string>;
-    iconType: string;
     action: string;
     tooltip: string;
     togglable: boolean;
     state: boolean;
+    disabled: boolean;
     initialize(): Promise<void>;
     ready(): Promise<void>;
 }

@@ -6,10 +6,10 @@ declare type DropdownEvents<TValue> = {
     };
 };
 export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TValue>, DropdownEvents<TValue>, TValue> {
-    static localName: string;
-    static styles: string[];
-    private _options;
-    private _container;
+    #private;
+    static readonly localName = "fyn-common-form-dropdown";
+    static readonly styles: string[];
+    private _internalOptions;
     options: Array<TValue>;
     index: number;
     search: string;
@@ -18,11 +18,6 @@ export default class Dropdown<TValue = any> extends FormAssociated<Dropdown<TVal
     filter: (filter: string, option: TValue) => Promise<boolean>;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
-    get optionElements(): Element[];
-    private _renderValue;
-    private _setWidth;
-    private _update;
-    private _findIndex;
 }
 export {};
 //# sourceMappingURL=dropdown.d.ts.map

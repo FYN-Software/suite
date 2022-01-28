@@ -1,6 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
-// import Template from '@fyn-software/component/template.js';
+import { indexOf } from '@fyn-software/core/function/dom.js';
 
 declare enum Select
 {
@@ -81,7 +81,7 @@ export default class Table extends Component<Table, {}>
         });
         this.shadow.on<HTMLInputElement>('[id|="row"]', {
             click: (e, t) => {
-                const index = t.parentElement?.parentElement?.index ?? -1;
+                const index = indexOf(t.parentElement?.parentElement) ?? -1;
 
                 switch (this.select)
                 {

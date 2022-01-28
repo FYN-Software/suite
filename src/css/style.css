@@ -1,4 +1,4 @@
-html {
+:where(html) {
     width: 100vw;
     height: 100vh;
     overflow: clip scroll;
@@ -7,20 +7,21 @@ html {
     font-family: 'Montserrat', sans-serif;
 }
 
-body {
+:where(body) {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: var(--plain-bg);
     color: var(--plain-fg);
+    accent-color: var(--primary-bg);
     overflow: clip visible;
 }
 
-a {
+:where(a) {
     color: var(--info-bg);
 }
 
-h1, h2, h3, h4, h5, h6, p {
+:where(h1, h2, h3, h4, h5, h6, p) {
     margin: 0;
     padding: 0;
 }
@@ -29,28 +30,18 @@ h1, h2, h3, h4, h5, h6, p {
     display: none !important;
 }
 
-@media (max-width: 768px) {
-    html {
-        padding-block-end: 3em;
-    }
-}
-
 @page {
     size: A4;
 }
 
 @media print {
-    html,
-    body,
-    body * {
+    :where(html, body, body *) {
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
         visibility: hidden;
     }
 
-    html,
-    body,
-    body * {
+    :where(html, body, body *) {
         break-inside: avoid;
         visibility: visible;
     }

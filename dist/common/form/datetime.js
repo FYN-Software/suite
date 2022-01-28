@@ -1,4 +1,5 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
+import { toggleAttribute } from '@fyn-software/core/function/dom.js';
 export default class Datetime extends FormAssociated {
     static localName = 'fyn-common-form-button';
     static styles = ['fyn.suite.base'];
@@ -10,7 +11,7 @@ export default class Datetime extends FormAssociated {
                 const rect = this.getBoundingClientRect();
                 this.style.setProperty('--x', `${rect.x + rect.width / 2}px`);
                 this.style.setProperty('--y', `${rect.bottom}px`);
-                this.attributes.toggle('open');
+                toggleAttribute(this, 'open');
             },
         });
         document.on({

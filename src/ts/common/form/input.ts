@@ -1,13 +1,12 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
-
-
+import { setAttributeOnAssert } from '@fyn-software/core/function/dom.js';
 
 export type InputEvents = {
     change: { old: string, new: string };
 };
 
-export default class Input extends FormAssociated<Input, InputEvents>
+export default class Input<TTYpe = string|number|Date> extends FormAssociated<Input<TTYpe>, InputEvents, TTYpe>
 {
     static localName = 'fyn-common-form-input';
     static styles = [ 'fyn.suite.base' ];
@@ -22,6 +21,25 @@ export default class Input extends FormAssociated<Input, InputEvents>
     public inputmode: string = '';
 
     protected async initialize()
+    {
+        this.observe({
+            value: (o: TTYpe, n: TTYpe) => {
+                const input = this.shadow.querySelector<HTMLInputElement>('input');
+
+                if(input === null)
+                {
+                    return;
+                }
+
+                input.value = String(this.value);
+                setAttributeOnAssert(this, String(this.value ?? '').length > 0, 'has-value');
+
+                this.emit('change', { old: o, new: n });
+            },
+        });
+    }
+
+    protected async ready(): Promise<void>
     {
         this.shadow.on<HTMLInputElement>('input', {
             options: {
@@ -51,8 +69,8 @@ export default class Input extends FormAssociated<Input, InputEvents>
                     e.preventDefault();
                 }
             },
-            keyup: _ => {
-                this.value = this.shadow.querySelector('input')!.value;
+            keyup: (e, t) => {
+                this.value = (t.valueAsDate ?? (t.valueAsNumber || undefined) ?? t.value) as unknown as TTYpe;
             },
         });
 
@@ -70,17 +88,13 @@ export default class Input extends FormAssociated<Input, InputEvents>
 
                 this.removeAttribute('focused');
             },
-        });
-    }
+            input: (e, t) => {
+                const v = (t.valueAsDate ?? (t.valueAsNumber || undefined) ?? t.value) as unknown as TTYpe;
 
-    protected async ready(): Promise<void>
-    {
-        this.observe({
-            value: (o: string, n: string) => {
-                this.shadow.querySelector('input')!.value = this.value;
-                this.attributes.setOnAssert(this.value.length > 0, 'has-value');
-
-                this.emit('change', { old: o, new: n });
+                if(v !== this.value)
+                {
+                    this.value = v;
+                }
             },
         });
     }

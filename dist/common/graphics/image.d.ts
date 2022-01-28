@@ -18,6 +18,7 @@ export default class Image extends Component<Image, {}> {
     fit: Fit;
     position: Position;
     src: string;
+    filterColor?: string;
     protected initialize(): Promise<void>;
     protected ready(): Promise<void>;
 }

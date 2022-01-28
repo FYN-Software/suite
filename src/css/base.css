@@ -1,3 +1,73 @@
 :host, * {
     box-sizing: border-box;
 }
+
+:where(a) {
+    color: var(--info-bg);
+}
+
+:where(h1, h2, h3, h4, h5, h6, p) {
+    margin: 0;
+    padding: 0;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* TODO(Chris Kruining) This is a bad move, but quick and dirty hack for now */
+[tooltip]:not([tooltip=""]) {
+    position: relative !important;
+}
+
+[tooltip]:not([tooltip=""])::before,
+[tooltip]:not([tooltip=""])::after {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -.75em;
+    pointer-events: none;
+    z-index: 1000;
+    font-size: 1em;
+}
+
+[tooltip]:not([tooltip=""])::before {
+    content: '';
+    border-top: .75em solid #333;
+    border-left: 1em solid transparent;
+    border-right: 1em solid transparent;
+    transform: translate(-50%, 0);
+}
+
+[tooltip]:not([tooltip=""])::after {
+    content: attr(tooltip);
+    padding: .5em 1em;
+    line-height: 1em;
+    background-color: #333;
+    color: #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: var(--radius);
+    transform: translate(-50%, -100%);
+}
+
+@media (hover)
+{
+    [tooltip]:not([tooltip=""])::before,
+    [tooltip]:not([tooltip=""])::after {
+        opacity: 0;
+    }
+
+    [tooltip]:not([tooltip=""]):hover::before,
+    [tooltip]:not([tooltip=""]):hover::after {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference)
+{
+    [tooltip]:not([tooltip=""])::before,
+    [tooltip]:not([tooltip=""])::after {
+        transition: opacity .3s ease-in-out;
+    }
+}

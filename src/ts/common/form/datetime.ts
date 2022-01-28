@@ -1,4 +1,5 @@
 import FormAssociated from '@fyn-software/component/formAssociated.js';
+import { toggleAttribute } from '@fyn-software/core/function/dom.js';
 
 export default class Datetime extends FormAssociated<Datetime, { change: { old: Date, new: Date } }, Date>
 {
@@ -18,7 +19,7 @@ export default class Datetime extends FormAssociated<Datetime, { change: { old: 
                 this.style.setProperty('--x', `${rect.x + rect.width / 2}px`);
                 this.style.setProperty('--y', `${rect.bottom}px`);
 
-                this.attributes.toggle('open');
+                toggleAttribute(this, 'open');
             },
         });
 

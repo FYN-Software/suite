@@ -1,6 +1,10 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
-import Media, { Preference } from '@fyn-software/core/media.js';
+import { prefers, Preference } from '@fyn-software/core/media.js';
+import Button from '../form/button.js';
+import { delay } from '@fyn-software/core/function/promise.js';
+import { indexOf } from '@fyn-software/core/function/dom.js';
+import { fromAsync } from '@fyn-software/core/function/array.js';
 
 export enum Position
 {
@@ -14,7 +18,6 @@ export enum Position
 export type Tab = {
     title: string,
     closable: boolean,
-    active: boolean,
     element: Element,
 };
 
@@ -26,6 +29,17 @@ export default class Tabs extends Component<Tabs, TabsEvents>
 {
     static localName = 'fyn-common-layout-tabs';
     static styles = [ 'fyn.suite.base' ];
+
+    #observer = new MutationObserver(mutations => {
+        for(const m of mutations.filter(m => m.attributeName === 'tab-title'))
+        {
+            const tab = this.tabs.find(t => t.element === m.target)!;
+
+            tab.title = (m.target as Element).getAttribute('tab-title') ?? '';
+        }
+    });
+    #animation?: Animation;
+    #timeline?: AnimationTimeline;
 
     @property()
     public index: number = -1;
@@ -42,58 +56,51 @@ export default class Tabs extends Component<Tabs, TabsEvents>
     @property()
     public position: Position = Position.none;
 
-    private _observer = new MutationObserver(mutations => {
-        for(const m of mutations.filter(m => m.attributeName === 'tab-title'))
-        {
-            const tab = this.tabs.find(t => t.element === m.target)!;
-
-            tab.title = (m.target as Element).getAttribute('tab-title') ?? '';
-        }
-    });
-    private _animation?: Animation;
-    private _timeline?: AnimationTimeline;
-
     async initialize()
     {
         this.observe({
             index: async (o: number, n: number) => {
                 this.$.content?.scrollTo({
-                    left: this.$.content.getBoundingClientRect().width * n,
+                    left: this.$.content.getBoundingClientRect().width * this.index,
                     top: 0,
-                    behavior: Media.prefers(Preference.reducedMotion) ? 'auto' : 'smooth',
+                    behavior: prefers(Preference.reducedMotion) ? 'auto' : 'smooth',
                 });
 
-                this.emit('switched', { index: n });
+                this.emit('switched', { index: this.index });
             },
             tabs: async () => {
                 await this.$.bar?.await('rendered');
 
-                this._setIndicatorAnimation();
+                this.#setIndicatorAnimation();
             },
             delimiter: () => {
-                this._setIndicatorAnimation();
+                this.#setIndicatorAnimation();
             },
         });
 
-        this.shadow.on('main > slot', {
-            slotchange: () => this._detect(),
+        this.shadow.on('#content > slot', {
+            slotchange: () => this.#detect(),
         });
+
+        await this.#detect();
     }
 
     async ready()
     {
-        this.shadow.on('_bar', {
+        this.shadow.on('#bar', {
             wheel: (e, t) => t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25,
         });
 
-        this.shadow.on('_bar > tab', {
+        this.shadow.on('#bar > tab', {
             click: (e, t) => {
-                this.index = this.docked && this.index === t.index
+                const i = Number.parseInt(t.getAttribute('index')!);
+
+                this.index = this.docked && this.index === i
                     ? -1
-                    : t.index;
+                    : i;
             },
             auxclick: (e, t) => {
-                const tab = this.tabs[t.index];
+                const tab = this.tabs[indexOf(t)!];
 
                 if(e.button === 1 && tab.closable)
                 {
@@ -102,9 +109,9 @@ export default class Tabs extends Component<Tabs, TabsEvents>
             },
         });
 
-        this.shadow.on('_bar > tab > fyn-common-form-button', {
+        this.shadow.on<Button>('#bar > tab > fyn-common-form-button', {
             click: (_, t) => {
-                const tab = this.tabs[t.parentElement!.index];
+                const tab = this.tabs[indexOf(t.parentElement!)!];
 
                 if(tab.closable)
                 {
@@ -161,7 +168,7 @@ export default class Tabs extends Component<Tabs, TabsEvents>
     public get pages()
     {
         return (async () => {
-            await Promise.delay(0);
+            await delay(0);
 
             return (this.shadow.querySelector('main > slot') as HTMLSlotElement)?.assignedElements({ flatten: true }) ?? [];
         })();
@@ -172,32 +179,31 @@ export default class Tabs extends Component<Tabs, TabsEvents>
         return this.position !== Position.none;
     }
 
-    private async _detect(): Promise<void>
+    async #detect(): Promise<void>
     {
-        const pages = await Array.fromAsync(this._pageIterator());
+        const pages = await fromAsync(this.#pageIterator());
+
+        this.#observer.disconnect();
+        for(const page of pages)
+        {
+            if (page.hasAttribute('tab-title'))
+            {
+                this.#observer.observe(page, { attributes: true });
+            }
+        }
 
         await (this.tabs = pages.map((p: Element, i: number) => ({
-            active: i === this.index,
             title: p.getAttribute('tab-title') ?? '',
             closable: p.hasAttribute('tab-closable') ?? false,
             element: p,
         })));
 
-        this._observer.disconnect();
-        for(const tab of this.tabs)
-        {
-            if (tab.element.hasAttribute('tab-title'))
-            {
-                this._observer.observe(tab.element, { attributes: true });
-            }
-        }
-
         await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), this.docked ? -1 : 0));
-    };
+    }
 
-    private async *_pageIterator(): AsyncGenerator<Element, void, never>
+    async *#pageIterator(): AsyncGenerator<Element, void, never>
     {
-        await Promise.delay(0);
+        await delay(0);
 
         const slot = this.shadow.querySelector('main > slot') as HTMLSlotElement;
 
@@ -220,19 +226,19 @@ export default class Tabs extends Component<Tabs, TabsEvents>
         }
     }
 
-    private _setIndicatorAnimation(): void
+    #setIndicatorAnimation(): void
     {
         const tabs = Array.from(this.$.bar!.querySelectorAll('tab')) as Array<HTMLElement>;
 
-        // this._timeline ??= new ScrollTimeline({
-        //     scrollSource: this.$.content,
-        //     orientation: 'inline',
-        //     fill: 'both',
-        //     timeRange: 1000,
-        // });
+        this.#timeline ??= new ScrollTimeline({
+            scrollSource: this.$.content,
+            orientation: 'inline',
+            fill: 'both',
+            timeRange: 1000,
+        });
 
-        this._animation?.cancel();
-        this._animation = this.$.indicator!.animate(
+        this.#animation?.cancel();
+        this.#animation = this.$.indicator!.animate(
             {
                 transform: tabs.map(({ offsetLeft }) => `translateX(${offsetLeft}px)`),
                 inlineSize: tabs.map(({ offsetWidth }) => `${offsetWidth}px`),
@@ -240,7 +246,7 @@ export default class Tabs extends Component<Tabs, TabsEvents>
             {
                 duration: 1000,
                 fill: 'both',
-                // timeline: this._timeline,
+                timeline: this.#timeline,
             }
         );
     }

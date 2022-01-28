@@ -1,6 +1,7 @@
 import { __decorate } from "tslib";
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { range } from '@fyn-software/component/decorators.js';
+import { contains } from '@fyn-software/core/function/rect.js';
 class Hlsa {
     hue = 180;
     saturation = 0;
@@ -84,8 +85,8 @@ export default class Color extends FormAssociated {
         const box = this.shadow.querySelector('box > gradient');
         const position = (x, y) => {
             const rect = box.getBoundingClientRect();
-            console.log(x, y, rect, rect.contains(x, y));
-            if (rect.contains(x, y) === true) {
+            console.log(x, y, rect, contains(rect, x, y));
+            if (contains(rect, x, y) === true) {
                 editedValue.saturation = (x - rect.left) / rect.width;
                 editedValue.lightness = 1 - (y - rect.top) / rect.height;
                 this.style.setProperty('--sat', `${editedValue.saturation * 100}%`);

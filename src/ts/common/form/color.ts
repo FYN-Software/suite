@@ -2,6 +2,7 @@ import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { range } from '@fyn-software/component/decorators.js';
 import Button from './button.js';
 import Slider from './slider.js';
+import { contains } from '@fyn-software/core/function/rect.js';
 
 interface IColor
 {
@@ -112,9 +113,9 @@ export default class Color extends FormAssociated<Color, {}, Hlsa>
         const position = (x: number, y: number) => {
             const rect = box.getBoundingClientRect();
 
-            console.log(x, y, rect, rect.contains(x, y));
+            console.log(x, y, rect, contains(rect, x, y));
 
-            if(rect.contains(x, y) === true)
+            if(contains(rect, x, y) === true)
             {
                 editedValue.saturation = (x - rect.left) / rect.width;
                 editedValue.lightness = 1 - (y - rect.top) / rect.height;

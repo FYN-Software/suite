@@ -1,9 +1,8 @@
 :host {
     --padding: 1em;
     display: grid;
-    grid-gap: .25em;
+    gap: .25em;
     position: relative;
-    /*margin-top: .8em;*/
     color: inherit;
     font-size: 1rem;
     border-radius: var(--radius);
@@ -14,8 +13,8 @@
     display: none;
 }
 
-:host([invalid]) {
-    border: 1px solid var(--failure-bg);
+:host(:is([invalid], .invalid)) {
+    border: 1px solid var(--negative-bg);
 }
 
 :host > label {
@@ -28,12 +27,13 @@
 }
 
 :host > fyn-common-form-button {
-    min-width: var(--min-width, 0);
-    padding: 0 var(--padding);
+    justify-content: space-between;
+    min-inline-size: var(--min-width, 0);
+    padding-inline: var(--padding);
     border-radius: inherit;
 }
 
-:host([flat]) > fyn-common-form-button {
+:host(:is([flat], .flat)) > fyn-common-form-button {
     color: var(--plain-fg);
     background-color: transparent;
 }
@@ -41,7 +41,7 @@
 :host > fyn-common-form-button > value {
     display: grid;
     justify-content: start;
-    min-width: 1em;
+    min-inline-size: 1em;
 }
 
 :host > fyn-common-form-button > fyn-common-form-input {
@@ -64,6 +64,7 @@
 
 :host > options {
     display: grid;
+    justify-content: start;
     contain: content;
     position: fixed;
     top: var(--y);
@@ -107,22 +108,22 @@
     color: inherit;
 }
 
-:host([open]) > fyn-common-form-button {
+:host(:is([open], .open)) > fyn-common-form-button {
     border-radius: var(--radius) var(--radius) 0 0;
     background-color: var(--plain-bg);
     box-shadow: 0 0 1em #000;
 }
 
-:host([open]) > options {
+:host(:is([open], .open)) > options {
     opacity: 1;
     pointer-events: all;
 }
 
-:host([loading]) > options > * {
+:host(:is([loading], .loading)) > options > * {
     display: none;
 }
 
-:host([loading]) > options::after {
+:host(:is([loading], .loading)) > options::after {
     content: 'LOADING CIRCLE';
     display: block;
 }

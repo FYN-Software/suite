@@ -2,7 +2,11 @@ import Component from '@fyn-software/component/component.js';
 import { property, range } from '@fyn-software/component/decorators.js';
 import Button from './button.js';
 
-export default class Progress extends Component<Progress, { submit: never, cancel: never }>
+export type Action = 'next'|'previous'|'submit'|'cancel';
+
+type ProgressEvents = { submit: never, cancel: never };
+
+export default class Progress extends Component<Progress, ProgressEvents>
 {
     static localName = 'fyn-common-form-progress';
     static styles = [ 'fyn.suite.base' ];
@@ -15,7 +19,7 @@ export default class Progress extends Component<Progress, { submit: never, cance
     public index: number = 0;
 
     @property()
-    public verification: any;
+    public verification: (action: Action, page: Element, index: number) => Promise<true|any> = async () => true;
 
     protected async initialize(): Promise<void>
     {
@@ -39,15 +43,10 @@ export default class Progress extends Component<Progress, { submit: never, cance
         });
 
         this.shadow.on('main > slot', {
-            slotchange: async () => {
-                await (this.index = -1);
-
-                const pages = this.pages;
-
-                this.steps = pages.map(s => s.getAttribute('step') ?? '-');
-                await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
-            },
+            slotchange: () => this.#detect(),
         });
+
+        await this.#detect();
     }
 
     protected async ready(): Promise<void>
@@ -70,7 +69,7 @@ export default class Progress extends Component<Progress, { submit: never, cance
                     ? 'submit'
                     : 'cancel'
 
-                if(await this.verification?.invoke(a, this.pages[this.index], this.index) !== true)
+                if(await this.verification(a, this.pages[this.index], this.index) !== true)
                 {
                     return;
                 }
@@ -117,5 +116,15 @@ export default class Progress extends Component<Progress, { submit: never, cance
         }
 
         return slot.assignedElements({ flatten: true });
+    }
+
+    async #detect()
+    {
+        await (this.index = -1);
+
+        const pages = this.pages;
+
+        this.steps = pages.map(s => s.getAttribute('step') ?? '-');
+        await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), 0));
     }
 }

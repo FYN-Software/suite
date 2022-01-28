@@ -1,6 +1,7 @@
 import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import { setAttributeOnAssert } from '@fyn-software/core/function/dom.js';
 export var Resize;
 (function (Resize) {
     Resize[Resize["none"] = 0] = "none";
@@ -18,7 +19,7 @@ export default class Docks extends Component {
     async ready() {
         this.shadow.on('fyn-common-layout-tabs.docked', {
             switched: ({ index }, t) => {
-                t.attributes.setOnAssert(index > -1, 'open');
+                setAttributeOnAssert(t, index > -1, 'open');
             },
         });
     }

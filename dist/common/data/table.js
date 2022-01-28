@@ -1,6 +1,7 @@
 import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import { indexOf } from '@fyn-software/core/function/dom.js';
 export default class Table extends Component {
     static localName = 'fyn-common-data-table';
     static styles = ['fyn.suite.base'];
@@ -46,7 +47,7 @@ export default class Table extends Component {
         });
         this.shadow.on('[id|="row"]', {
             click: (e, t) => {
-                const index = t.parentElement?.parentElement?.index ?? -1;
+                const index = indexOf(t.parentElement?.parentElement) ?? -1;
                 switch (this.select) {
                     case Select.multiple:
                         {

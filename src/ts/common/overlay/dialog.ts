@@ -2,13 +2,12 @@ import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
 import Button  from '../form/button.js';
 
-export enum Mode
-{
-    static,
-    grow,
-}
+type DialogEvents = {
+    shown: void;
+    closed: void;
+};
 
-export default class Dialog extends Component<Dialog, {}>
+export default class Dialog extends Component<Dialog, DialogEvents>
 {
     static localName = 'fyn-common-overlay-dialog';
     static styles = [ 'fyn.suite.base' ];
@@ -20,42 +19,19 @@ export default class Dialog extends Component<Dialog, {}>
     public img: string = '';
 
     @property()
-    public width: number = 0;
+    public inlineSize: number = 0;
 
     @property()
-    public height: number = 0;
+    public blockSize: number = 0;
 
     @property()
-    public left: number = 0;
+    public insetInlineStart: number = 0;
 
     @property()
-    public top: number = 0;
-
-    @property()
-    public mode: Mode = Mode.grow;
+    public insetBlockStart: number = 0;
 
     @property()
     public resizable: boolean = false;
-
-    static get animations(): AnimationConfig
-    {
-        return {
-            open: [
-                [ { opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(1)' } ],
-                {
-                    duration: 300,
-                    easing: 'ease-in-out',
-                },
-            ],
-            close: [
-                [],
-                {
-                    extend: 'open',
-                    direction: 'reverse',
-                },
-            ],
-        };
-    }
 
     protected async initialize(): Promise<void>
     {
@@ -63,26 +39,24 @@ export default class Dialog extends Component<Dialog, {}>
 
     protected async ready(): Promise<void>
     {
-        if(this.mode === Mode.grow)
-        {
-            this.width = this.offsetWidth;
-            this.height = this.offsetHeight;
-        }
+        this.insetBlockStart = document.body.offsetHeight / 2 - this.offsetHeight / 2;
+        this.insetInlineStart = document.body.offsetWidth / 2 - this.offsetWidth / 2;
 
-        this.top = document.body.offsetHeight / 2 - this.offsetHeight / 2;
-        this.left = document.body.offsetWidth / 2 - this.offsetWidth / 2;
-
-        const listener: EventListenerConfig<Button, Button['events']> = {
+        const listener:  EventListenerConfig<Button, EventsType<Button>> = {
             click: ({ action }) => {
                 switch(action)
                 {
                     case 'close':
+                    {
                         this.close();
                         break;
+                    }
 
                     default:
+                    {
                         this.emit(action);
                         break;
+                    }
                 }
             },
         };
@@ -91,26 +65,38 @@ export default class Dialog extends Component<Dialog, {}>
         this.on<Button>('[slot="footer"][action]', listener);
     }
 
-    public async open(): Promise<Animation|null>
+    public async open(): Promise<void>
     {
-        this.style.setProperty('--x', `${Math.max(0, window.innerWidth / 2 - this.width / 2)}px`);
-        this.style.setProperty('--y', `${Math.max(0, window.innerHeight / 2 - this.height / 2)}px`);
-        this.style.setProperty('--w', `${Math.min(this.width, window.innerWidth)}px`);
-        this.style.setProperty('--h', `${Math.min(this.height, window.innerHeight)}px`);
+        this.style.setProperty('--inset-inline-start', `${Math.max(0, window.innerWidth / 2 - this.inlineSize / 2)}px`);
+        this.style.setProperty('--inset-block-start', `${Math.max(0, window.innerHeight / 2 - this.blockSize / 2)}px`);
+        this.style.setProperty('--inline-size', `${Math.min(this.inlineSize, window.innerWidth)}px`);
+        this.style.setProperty('--block-size', `${Math.min(this.blockSize, window.innerHeight)}px`);
 
-        return this.hasAttribute('open') === false
-            ? this.animateKey('open', .25).stage(() => this.setAttribute('open', ''))
-            : null;
+        this.setAttribute('open', '');
+
+        for(const node of this.childNodes)
+        {
+            node.emit('shown');
+        }
+
+        this.emit('shown');
     }
 
-    public async close(): Promise<Animation|null>
+    public async close(): Promise<void>
     {
-        return this.hasAttribute('open') === true
-            ? this.animateKey('close', .25).stage(() => this.removeAttribute('open'))
-            : null;
+        this.removeAttribute('open');
+
+        for(const node of this.childNodes)
+        {
+            node.emit('closed');
+        }
+
+        this.emit('closed');
+
+        // return Promise.delay(300);
     }
 
-    async show(modal: boolean = false): Promise<boolean>
+    public async show<T = void>(): Promise<T|false>
     {
         let added = false;
 
@@ -121,21 +107,14 @@ export default class Dialog extends Component<Dialog, {}>
             document.body.appendChild(this);
         }
 
-        if(modal)
-        {
-            document.body.setAttribute('modal', '');
-        }
-
         await this.open();
 
-        const res = await this.await('cancel|success');
+        const res = await Promise.race([
+            this.await<T>('success'),
+            this.await('cancel').then<false>(() => false),
+        ]);
 
         await this.close();
-
-        if(modal)
-        {
-            document.body.removeAttribute('modal');
-        }
 
         if(added)
         {

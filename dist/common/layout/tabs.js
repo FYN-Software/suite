@@ -1,7 +1,10 @@
 import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
-import Media, { Preference } from '@fyn-software/core/media.js';
+import { prefers, Preference } from '@fyn-software/core/media.js';
+import { delay } from '@fyn-software/core/function/promise.js';
+import { indexOf } from '@fyn-software/core/function/dom.js';
+import { fromAsync } from '@fyn-software/core/function/array.js';
 export var Position;
 (function (Position) {
     Position[Position["none"] = 0] = "none";
@@ -13,61 +16,63 @@ export var Position;
 export default class Tabs extends Component {
     static localName = 'fyn-common-layout-tabs';
     static styles = ['fyn.suite.base'];
-    index = -1;
-    tabs = [];
-    delimiter = '';
-    closable = false;
-    position = Position.none;
-    _observer = new MutationObserver(mutations => {
+    #observer = new MutationObserver(mutations => {
         for (const m of mutations.filter(m => m.attributeName === 'tab-title')) {
             const tab = this.tabs.find(t => t.element === m.target);
             tab.title = m.target.getAttribute('tab-title') ?? '';
         }
     });
-    _animation;
-    _timeline;
+    #animation;
+    #timeline;
+    index = -1;
+    tabs = [];
+    delimiter = '';
+    closable = false;
+    position = Position.none;
     async initialize() {
         this.observe({
             index: async (o, n) => {
                 this.$.content?.scrollTo({
-                    left: this.$.content.getBoundingClientRect().width * n,
+                    left: this.$.content.getBoundingClientRect().width * this.index,
                     top: 0,
-                    behavior: Media.prefers(Preference.reducedMotion) ? 'auto' : 'smooth',
+                    behavior: prefers(Preference.reducedMotion) ? 'auto' : 'smooth',
                 });
-                this.emit('switched', { index: n });
+                this.emit('switched', { index: this.index });
             },
             tabs: async () => {
                 await this.$.bar?.await('rendered');
-                this._setIndicatorAnimation();
+                this.#setIndicatorAnimation();
             },
             delimiter: () => {
-                this._setIndicatorAnimation();
+                this.#setIndicatorAnimation();
             },
         });
-        this.shadow.on('main > slot', {
-            slotchange: () => this._detect(),
+        this.shadow.on('#content > slot', {
+            slotchange: () => this.#detect(),
         });
+        await this.#detect();
     }
     async ready() {
-        this.shadow.on('_bar', {
+        this.shadow.on('#bar', {
             wheel: (e, t) => t.scrollLeft += e.deltaY / Math.abs(e.deltaY) * 25,
         });
-        this.shadow.on('_bar > tab', {
+        this.shadow.on('#bar > tab', {
             click: (e, t) => {
-                this.index = this.docked && this.index === t.index
+                const i = Number.parseInt(t.getAttribute('index'));
+                this.index = this.docked && this.index === i
                     ? -1
-                    : t.index;
+                    : i;
             },
             auxclick: (e, t) => {
-                const tab = this.tabs[t.index];
+                const tab = this.tabs[indexOf(t)];
                 if (e.button === 1 && tab.closable) {
                     tab.element.remove();
                 }
             },
         });
-        this.shadow.on('_bar > tab > fyn-common-form-button', {
+        this.shadow.on('#bar > tab > fyn-common-form-button', {
             click: (_, t) => {
-                const tab = this.tabs[t.parentElement.index];
+                const tab = this.tabs[indexOf(t.parentElement)];
                 if (tab.closable) {
                     tab.element.remove();
                 }
@@ -105,32 +110,30 @@ export default class Tabs extends Component {
     }
     get pages() {
         return (async () => {
-            await Promise.delay(0);
+            await delay(0);
             return this.shadow.querySelector('main > slot')?.assignedElements({ flatten: true }) ?? [];
         })();
     }
     get docked() {
         return this.position !== Position.none;
     }
-    async _detect() {
-        const pages = await Array.fromAsync(this._pageIterator());
+    async #detect() {
+        const pages = await fromAsync(this.#pageIterator());
+        this.#observer.disconnect();
+        for (const page of pages) {
+            if (page.hasAttribute('tab-title')) {
+                this.#observer.observe(page, { attributes: true });
+            }
+        }
         await (this.tabs = pages.map((p, i) => ({
-            active: i === this.index,
             title: p.getAttribute('tab-title') ?? '',
             closable: p.hasAttribute('tab-closable') ?? false,
             element: p,
         })));
-        this._observer.disconnect();
-        for (const tab of this.tabs) {
-            if (tab.element.hasAttribute('tab-title')) {
-                this._observer.observe(tab.element, { attributes: true });
-            }
-        }
         await (this.index = Math.max(pages.findIndex(t => t.hasAttribute('active')), this.docked ? -1 : 0));
     }
-    ;
-    async *_pageIterator() {
-        await Promise.delay(0);
+    async *#pageIterator() {
+        await delay(0);
         const slot = this.shadow.querySelector('main > slot');
         for (const element of slot?.assignedElements({ flatten: true }) ?? []) {
             if (globalThis.getComputedStyle(element).display === 'contents') {
@@ -143,15 +146,22 @@ export default class Tabs extends Component {
             yield element;
         }
     }
-    _setIndicatorAnimation() {
+    #setIndicatorAnimation() {
         const tabs = Array.from(this.$.bar.querySelectorAll('tab'));
-        this._animation?.cancel();
-        this._animation = this.$.indicator.animate({
+        this.#timeline ??= new ScrollTimeline({
+            scrollSource: this.$.content,
+            orientation: 'inline',
+            fill: 'both',
+            timeRange: 1000,
+        });
+        this.#animation?.cancel();
+        this.#animation = this.$.indicator.animate({
             transform: tabs.map(({ offsetLeft }) => `translateX(${offsetLeft}px)`),
             inlineSize: tabs.map(({ offsetWidth }) => `${offsetWidth}px`),
         }, {
             duration: 1000,
             fill: 'both',
+            timeline: this.#timeline,
         });
     }
 }

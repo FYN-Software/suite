@@ -1,5 +1,6 @@
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import { setAttributeOnAssert, setClassOnAssert } from '@fyn-software/core/function/dom.js';
 
 type ButtonEvents = { click: { action: string } };
 
@@ -7,12 +8,6 @@ export default class Button extends Component<Button, ButtonEvents>
 {
     static localName = 'fyn-common-form-button';
     static styles = [ 'fyn.suite.base' ];
-
-    @property()
-    public icons: Array<string> = [];
-
-    @property()
-    public iconType: string = 'fas';
 
     @property()
     public action: string = '';
@@ -26,12 +21,16 @@ export default class Button extends Component<Button, ButtonEvents>
     @property()
     public state: boolean = false;
 
+    @property()
+    public disabled: boolean = false;
+
     async initialize()
     {
-        this.setAttribute("tabindex", "0");
+        this.setAttribute('tabindex', '0');
 
         this.observe({
-            state: () => this.attributes.setOnAssert(this.state, 'active'),
+            state: () => setAttributeOnAssert(this, this.state, 'active'),
+            disabled: () => setClassOnAssert(this, this.disabled, 'disabled'),
         });
 
         this.on({
@@ -46,6 +45,11 @@ export default class Button extends Component<Button, ButtonEvents>
 
                 e.stopPropagation();
                 e.stopImmediatePropagation();
+
+                if(this.disabled === true)
+                {
+                    return;
+                }
 
                 const ripple = this.shadow.querySelector('ripple > inner')! as HTMLElement;
                 ripple.removeAttribute('click');

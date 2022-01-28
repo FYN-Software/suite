@@ -1,19 +1,20 @@
 import { __decorate } from "tslib";
 import Component from '@fyn-software/component/component.js';
 import { property } from '@fyn-software/component/decorators.js';
+import { setAttributeOnAssert, setClassOnAssert } from '@fyn-software/core/function/dom.js';
 export default class Button extends Component {
     static localName = 'fyn-common-form-button';
     static styles = ['fyn.suite.base'];
-    icons = [];
-    iconType = 'fas';
     action = '';
     tooltip = '';
     togglable = false;
     state = false;
+    disabled = false;
     async initialize() {
-        this.setAttribute("tabindex", "0");
+        this.setAttribute('tabindex', '0');
         this.observe({
-            state: () => this.attributes.setOnAssert(this.state, 'active'),
+            state: () => setAttributeOnAssert(this, this.state, 'active'),
+            disabled: () => setClassOnAssert(this, this.disabled, 'disabled'),
         });
         this.on({
             options: {
@@ -25,6 +26,9 @@ export default class Button extends Component {
                 }
                 e.stopPropagation();
                 e.stopImmediatePropagation();
+                if (this.disabled === true) {
+                    return;
+                }
                 const ripple = this.shadow.querySelector('ripple > inner');
                 ripple.removeAttribute('click');
                 (async () => {
@@ -45,12 +49,6 @@ export default class Button extends Component {
 }
 __decorate([
     property()
-], Button.prototype, "icons", void 0);
-__decorate([
-    property()
-], Button.prototype, "iconType", void 0);
-__decorate([
-    property()
 ], Button.prototype, "action", void 0);
 __decorate([
     property()
@@ -61,4 +59,7 @@ __decorate([
 __decorate([
     property()
 ], Button.prototype, "state", void 0);
+__decorate([
+    property()
+], Button.prototype, "disabled", void 0);
 //# sourceMappingURL=button.js.map

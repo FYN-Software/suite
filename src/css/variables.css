@@ -1,7 +1,7 @@
 :root {
     color-scheme: dark light;
 
-    /*============== SUCCESS ================*/
+    /*=============== INFO =================*/
     --light-info-fg-rgb: 30, 30, 30;
     --light-info-bg-rgb: 91, 192, 222;
     --light-info-fg: rgb(var(--light-info-fg-rgb));
@@ -20,20 +20,20 @@
 
 
     /*============== SUCCESS ================*/
-    --light-success-fg-rgb: 26, 26, 26;
-    --light-success-bg-rgb: 92, 184, 92;
-    --light-success-fg: rgb(var(--light-success-fg-rgb));
-    --light-success-bg: rgb(var(--light-success-bg-rgb));
+    --light-positive-fg-rgb: 26, 26, 26;
+    --light-positive-bg-rgb: 92, 184, 92;
+    --light-positive-fg: rgb(var(--light-positive-fg-rgb));
+    --light-positive-bg: rgb(var(--light-positive-bg-rgb));
 
-    --dark-success-fg-rgb: var(--light-success-fg-rgb);
-    --dark-success-bg-rgb: var(--light-success-bg-rgb);
-    --dark-success-fg: rgb(var(--dark-success-fg-rgb));
-    --dark-success-bg: rgb(var(--dark-success-bg-rgb));
+    --dark-positive-fg-rgb: var(--light-positive-fg-rgb);
+    --dark-positive-bg-rgb: var(--light-positive-bg-rgb);
+    --dark-positive-fg: rgb(var(--dark-positive-fg-rgb));
+    --dark-positive-bg: rgb(var(--dark-positive-bg-rgb));
 
-    --success-bg-rgb: var(--light-success-bg-rgb);
-    --success-bg: rgb(var(--success-bg-rgb));
-    --success-fg-rgb: var(--light-success-fg-rgb);
-    --success-fg: rgb(var(--success-fg-rgb));
+    --positive-bg-rgb: var(--light-positive-bg-rgb);
+    --positive-bg: rgb(var(--positive-bg-rgb));
+    --positive-fg-rgb: var(--light-positive-fg-rgb);
+    --positive-fg: rgb(var(--positive-fg-rgb));
 
 
 
@@ -56,20 +56,20 @@
 
 
     /*============== FAILURE ================*/
-    --light-failure-fg-rgb: 23, 23, 23;
-    --light-failure-bg-rgb: 217, 83, 79;
-    --light-failure-fg: rgb(var(--light-failure-fg-rgb));
-    --light-failure-bg: rgb(var(--light-failure-bg-rgb));
+    --light-negative-fg-rgb: 23, 23, 23;
+    --light-negative-bg-rgb: 217, 83, 79;
+    --light-negative-fg: rgb(var(--light-negative-fg-rgb));
+    --light-negative-bg: rgb(var(--light-negative-bg-rgb));
 
-    --dark-failure-fg-rgb: var(--light-failure-fg-rgb);
-    --dark-failure-bg-rgb: var(--light-failure-bg-rgb);
-    --dark-failure-fg: rgb(var(--dark-failure-fg-rgb));
-    --dark-failure-bg: rgb(var(--dark-failure-bg-rgb));
+    --dark-negative-fg-rgb: var(--light-negative-fg-rgb);
+    --dark-negative-bg-rgb: var(--light-negative-bg-rgb);
+    --dark-negative-fg: rgb(var(--dark-negative-fg-rgb));
+    --dark-negative-bg: rgb(var(--dark-negative-bg-rgb));
 
-    --failure-bg-rgb: var(--light-failure-bg-rgb);
-    --failure-bg: rgb(var(--failure-bg-rgb));
-    --failure-fg-rgb: var(--light-failure-fg-rgb);
-    --failure-fg: rgb(var(--failure-fg-rgb));
+    --negative-bg-rgb: var(--light-negative-bg-rgb);
+    --negative-bg: rgb(var(--negative-bg-rgb));
+    --negative-fg-rgb: var(--light-negative-fg-rgb);
+    --negative-fg: rgb(var(--negative-fg-rgb));
 
 
 
@@ -132,19 +132,21 @@
 
 @media screen and (prefers-color-scheme: light) {
     :root {
+        color-scheme: light;
+
         --inversion: 0;
 
         --info-fg-rgb: var(--light-info-fg-rgb);
         --info-bg-rgb: var(--light-info-bg-rgb);
 
-        --success-fg-rgb: var(--light-success-fg-rgb);
-        --success-bg-rgb: var(--light-success-bg-rgb);
+        --positive-fg-rgb: var(--light-positive-fg-rgb);
+        --positive-bg-rgb: var(--light-positive-bg-rgb);
 
         --warning-fg-rgb: var(--light-warning-fg-rgb);
         --warning-bg-rgb: var(--light-warning-bg-rgb);
 
-        --failure-fg-rgb: var(--light-failure-fg-rgb);
-        --failure-bg-rgb: var(--light-failure-bg-rgb);
+        --negative-fg-rgb: var(--light-negative-fg-rgb);
+        --negative-bg-rgb: var(--light-negative-bg-rgb);
 
         --primary-fg-rgb: var(--light-primary-fg-rgb);
         --primary-bg-rgb: var(--light-primary-bg-rgb);
@@ -159,19 +161,21 @@
 
 @media screen and (prefers-color-scheme: dark) {
     :root {
+        color-scheme: dark;
+
         --inversion: 1;
 
         --info-fg-rgb: var(--dark-info-fg-rgb);
         --info-bg-rgb: var(--dark-info-bg-rgb);
 
-        --success-fg-rgb: var(--dark-success-fg-rgb);
-        --success-bg-rgb: var(--dark-success-bg-rgb);
+        --positive-fg-rgb: var(--dark-positive-fg-rgb);
+        --positive-bg-rgb: var(--dark-positive-bg-rgb);
 
         --warning-fg-rgb: var(--dark-warning-fg-rgb);
         --warning-bg-rgb: var(--dark-warning-bg-rgb);
 
-        --failure-fg-rgb: var(--dark-failure-fg-rgb);
-        --failure-bg-rgb: var(--dark-failure-bg-rgb);
+        --negative-fg-rgb: var(--dark-negative-fg-rgb);
+        --negative-bg-rgb: var(--dark-negative-bg-rgb);
 
         --primary-fg-rgb: var(--dark-primary-fg-rgb);
         --primary-bg-rgb: var(--dark-primary-bg-rgb);

@@ -1,6 +1,7 @@
 import { __decorate } from "tslib";
 import FormAssociated from '@fyn-software/component/formAssociated.js';
 import { property } from '@fyn-software/component/decorators.js';
+import { setAttributeOnAssert } from '@fyn-software/core/function/dom.js';
 export default class Input extends FormAssociated {
     static localName = 'fyn-common-form-input';
     static styles = ['fyn.suite.base'];
@@ -8,6 +9,19 @@ export default class Input extends FormAssociated {
     regex = '(?!\\n).';
     inputmode = '';
     async initialize() {
+        this.observe({
+            value: (o, n) => {
+                const input = this.shadow.querySelector('input');
+                if (input === null) {
+                    return;
+                }
+                input.value = String(this.value);
+                setAttributeOnAssert(this, String(this.value ?? '').length > 0, 'has-value');
+                this.emit('change', { old: o, new: n });
+            },
+        });
+    }
+    async ready() {
         this.shadow.on('input', {
             options: {
                 passive: false,
@@ -29,8 +43,8 @@ export default class Input extends FormAssociated {
                     e.preventDefault();
                 }
             },
-            keyup: _ => {
-                this.value = this.shadow.querySelector('input').value;
+            keyup: (e, t) => {
+                this.value = (t.valueAsDate ?? (t.valueAsNumber || undefined) ?? t.value);
             },
         });
         this.shadow.on('input', {
@@ -43,14 +57,11 @@ export default class Input extends FormAssociated {
             blur: (e, t) => {
                 this.removeAttribute('focused');
             },
-        });
-    }
-    async ready() {
-        this.observe({
-            value: (o, n) => {
-                this.shadow.querySelector('input').value = this.value;
-                this.attributes.setOnAssert(this.value.length > 0, 'has-value');
-                this.emit('change', { old: o, new: n });
+            input: (e, t) => {
+                const v = (t.valueAsDate ?? (t.valueAsNumber || undefined) ?? t.value);
+                if (v !== this.value) {
+                    this.value = v;
+                }
             },
         });
     }

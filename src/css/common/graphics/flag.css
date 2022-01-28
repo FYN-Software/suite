@@ -1,0 +1,11 @@
+:host {
+    display: grid;
+    grid-template-columns: 2em;
+    grid-auto-flow: column;
+    gap: 1em;
+    place-items: center start;
+}
+
+:host > img {
+    inline-size: 100%;
+}

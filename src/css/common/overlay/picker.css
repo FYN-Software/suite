@@ -1,0 +1,113 @@
+:host {
+    position: fixed;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    inset: 0;
+    background-color: transparent;
+    backdrop-filter: blur(0);
+    transition: background-color .5s ease-in-out, backdrop-filer .5s ease-in-out, pointer-events 0s .5s;
+    z-index: 100;
+}
+
+:host > inner {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-template-rows: auto 1fr auto;
+    grid-gap: 1em;
+    align-content: start;
+    box-shadow: 0 0 1em #0007;
+    background-color: var(--plain-bg);
+    padding: 1em;
+    color: var(--plain-fg);
+    inline-size: var(--inline-size, 60vw);
+    block-size: auto;
+    transform-origin: center;
+    font-size: 1rem;
+    z-index: 1000;
+    border-radius: var(--radius);
+    opacity: 0;
+    transform: scale(.4);
+    transition: transform .3s ease-in-out, opacity .3s ease-in-out;
+}
+
+:host > inner > handlers {
+    z-index: -1;
+    position: absolute;
+    inset-block-start: -2px;
+    inset-inline-start: -2px;
+    inline-size: calc(100% + 4px);
+    block-size: calc(100% + 4px);
+    background: transparent;
+}
+
+:host > inner > handlers > handler                 { display: block; position: absolute; background: inherit; }
+:host > inner > handlers > handler:nth-child(odd)  { inline-size: 5px; block-size: 5px; }
+:host > inner > handlers > handler:nth-child(3)    { inset-block-start: 0;   inset-inline-start: 0;                                                                         cursor: nwse-resize; }
+:host > inner > handlers > handler:nth-child(5)    { inset-block-start: 0;   inset-inline-end: 0;                                                                           cursor: nesw-resize; }
+:host > inner > handlers > handler:nth-child(7)    { inset-block-end: 0;     inset-inline-end: 0;                                                                           cursor: nwse-resize; }
+:host > inner > handlers > handler:nth-child(1)    { inset-block-end: 0;     inset-inline-start: 0;                                                                         cursor: nesw-resize; }
+:host > inner > handlers > handler:nth-child(4)    { inset-block-start: 0;   inset-inline-start: 5px;   inline-size: calc(100% - 10px);     block-size: 5px;                cursor: ns-resize; }
+:host > inner > handlers > handler:nth-child(6)    { inset-block-start: 5px; inset-inline-end: 0;       inline-size: 5px;                   block-size: calc(100% - 10px);  cursor: ew-resize; }
+:host > inner > handlers > handler:nth-child(8)    { inset-block-end: 0;     inset-inline-start: 5px;   inline-size: calc(100% - 10px);     block-size: 5px;                cursor: ns-resize; }
+:host > inner > handlers > handler:nth-child(2)    { inset-block-start: 5px; inset-inline-start: 0;     inline-size: 5px;                   block-size: calc(100% - 10px);  cursor: ew-resize; }
+
+:host > inner > :is(header, article, footer) {
+    display: grid;
+}
+
+:host > inner > header {
+    inline-size: 100%;
+    position: relative;
+}
+
+:host > inner > header > h1 {
+    color: inherit;
+    background-color: inherit;
+
+    font-size: 2.5em;
+    line-height: 1em;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    z-index: 1;
+}
+
+:host > inner > header > fyn-common-graphics-image {
+    --position: center;
+}
+
+:host > inner > main {
+    overflow-y: auto;
+}
+
+:host > inner > main > * {
+    max-width: 100%;
+}
+
+:host > inner > main > inner {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
+}
+
+:host > inner > footer {
+    justify-content: end;
+}
+
+:host([open]) {
+    pointer-events: auto;
+    background-color: #0003;
+    backdrop-filter: blur(45px);
+    transition-delay: .2s, .2s, 0s;
+}
+
+:host([open]) > inner {
+    opacity: 1;
+    transform: scale(1);
+}
